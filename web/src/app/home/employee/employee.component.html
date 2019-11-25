@@ -1,0 +1,506 @@
+<div class="app-title" >
+    <div>
+      <h1><i class="fa fa-users"></i> Team-Info</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+  
+      <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+
+<!-- <div class="col-1 p-0 pl-2 pull-right"><a href="/Dashboard" class="fa fa-arrow-left" aria-hidden="true" style="font-size: 16px;">Back</a></div> -->
+
+<div class="tab-pane fade show active" style="margin-top: 20px;" id="nav-empbasic" role="tabpanel"
+  aria-labelledby="nav-empbasic-tab">
+
+  <div class="row">
+    <div class="col-md-11" style="margin-bottom: 25px;">
+
+
+
+      <form class="form-inline ">
+        <div>
+          <input type="text" class="form-control" name="key" [(ngModel)]="searchProduct" size="50" placeholder="Search"
+            >
+
+        </div>
+      </form>
+    </div>
+    <div class="col-md-1 " style="padding-left:40px" *ngIf="role !='ROLE_MANAGER'">
+      <div class="float-right">
+        <button type="button" (click)="addempUnit(newUserForminfo)" style="background-color: #1d62a7;color: white;"
+          class="btn" data-toggle="modal" data-target="#myModal11">
+          Add Employee
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- <div *ngIf="role !='ROLE_USER'" class="row top table-responsive" style="margin-top:10px;margin-right: 0px; margin-left: 0px;">
+    <table class="table   text-center" style="border-radius: 3px;font-size:16px">
+      <thead class="two">
+
+        <tr class="table-light font-weight-bold">
+          <th>Employee Id </th>
+          <th>First Name</th>
+          <th>Middle Name</th>
+          <th>Last Name</th>
+          <th>Status</th>
+          <th>DOB</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Contact Number</th>
+          <th>More Info</th>
+        </tr>
+
+      </thead>
+
+      <tr
+        *ngFor="let empbasic of empbasicinfo  | search:searchProduct | paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index"
+        class="table-secondary">
+        <td>{{empbasic.employeeId}} </td>
+        <td>{{empbasic.firstname}} </td>
+        <td>{{empbasic.middlename}} </td>
+        <td>{{empbasic.lastname}}</td>
+        <td>{{empbasic.status}}</td>
+        <td>{{empbasic.dob  | date: 'dd/MM/yyyy'}}</td>
+
+        <td>{{empbasic.gender|titlecase}} </td>
+        <td>{{empbasic.email}}</td>
+        <td>{{empbasic.personalMobileNo}}</td>
+
+
+
+
+        <td><img src="/assets/pe.png" width="35px" [routerLink]="['employeeedit/',empbasic.employeeId]"></td>
+
+
+      </tr>
+    </table>
+    <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+    <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+    <select id="PerPage" [(ngModel)]="pageSize">
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="15">15</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="30">30</option>
+      <option [ngValue]="40">40</option>
+      <option [ngValue]="40">50</option>
+    </select>
+
+
+  </div> -->
+
+  <!-- cards to show employees -->
+<div *ngIf="loading" style="padding-top: 150px;">
+  <div class="loader mx-auto" ></div>
+</div>
+
+<div *ngIf="!loading">
+  <div class="row">
+    <div class="col-md-3 col-xs-12 col-sm-4 col-lg-3" *ngFor="let empbasic of empbasicinfo  | search:searchProduct"
+      style="padding-bottom: 20px;">
+      <div class="card shadow zoom scroll" style="padding: 20px 20px;">
+        <img src="data:image/png;base64,{{empbasic.image}}" height="100px;" width="100px;" class="mx-auto rounded-circle"
+          >
+
+        <table class="table table-borderless">
+          <tr>
+            <th>EmployeeID:</th>
+            <td>{{empbasic.employeeId}}</td>
+          </tr>
+          <tr>
+            <th>Name:</th>
+            <td>{{empbasic.firstname}} {{empbasic.lastname}}</td>
+          </tr>
+          <tr>
+            <th>Status:</th>
+            <td>{{empbasic.status}}</td>
+          </tr>
+          <!-- <tr>
+            <th>DOB:</th>
+            <td>{{empbasic.dob| date: 'dd/MM/yyyy'}}</td>
+          </tr> -->
+          <tr>
+            <th>Email:</th>
+            <td>{{empbasic.email}}</td>
+          </tr>
+          <tr>
+            <th>Mobile:</th>
+            <td>{{empbasic.personalMobileNo}}</td>
+          </tr>
+        </table>
+
+        <!-- </div> -->
+
+        <button class="btn mx-auto btn-sm" style="background-color: #1d62a7;color: white;padding: 5px 25px;"
+          [routerLink]="['employeeedit/',empbasic.employeeId]">More Info</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div>
+    <button *ngIf="isShow" class="toshowBTN btn" (click)="gotoTop()"> <i class="fa fa-sort-asc"></i>Back to top</button>
+  </div>
+  
+
+
+  <div *ngIf="role=='ROLE_USER'" class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+    <table class="table table-condensed  tile" class="t1">
+      <thead class="two">
+        <tr>
+          <th>Employee Id </th>
+          <th>First Name</th>
+          <th>Middle Name</th>
+          <th>Last Name</th>
+          <th>Status</th>
+          <th>DOB</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Contact Number</th>
+          <th>More Info</th>
+          <!-- <th>Delete</th> -->
+        </tr>
+      </thead>
+      <tr *ngFor="let empbasic of empinobj | paginate  ">
+        <td>{{empbasic.employeeId  </td>
+              <td>{{empbasic.firstname}} </td>
+        <td>{{empbasic.middlename}} </td>
+        <td>{{empbasic.lastname}}</td>
+        <td>{{empbasic.status}}</td>
+        <td>{{empbasic.dob}}</td>
+        <td>{{empbasic.gender|titlecase}} </td>
+        <td>{{empbasic.email}}</td>
+        <td>{{empbasic.personalMobileNo}}</td>
+
+
+
+
+
+        <td><img src="/assets/pe.png" width="35px" [routerLink="active" ]="['/employeeedit',empbasic.employeeId]"></td>
+
+
+      </tr>
+    </table>
+
+
+
+
+
+  </div>
+
+
+
+
+  <div class="container demo">
+    <div class="modal right fade" id="myModal11" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h3> Employee Info</h3>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              (click)="newUserForminfo.reset()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form class="tile" #newUserForminfo="ngForm" autocomplete="on">
+
+              <div class="row">
+                <div class="col-md-4" *ngIf="isUpdate">
+                  <label>Employee ID &ensp;: </label>
+                  <span><b>&ensp;{{a}}</b></span>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>First Name<span class="starColor"> *</span> </label>
+                    <input type="text" class="form-control" [(ngModel)]=" empinobj.firstname" name="emp1" required
+                      pattern="[a-zA-Z]*" placeholder="First Name" #first="ngModel">
+                    <span style="color:red" *ngIf="first.invalid && first.touched ">
+                      <span *ngIf="first.errors.required">
+                        Firstname is required
+                      </span>
+                      <span *ngIf="first.errors.pattern">
+                        Enter alphabets only.
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label> Middle Name </label>
+                    <input type="text" class="form-control" [(ngModel)]="empinobj.middlename" name="emp2"
+                      pattern="[a-zA-Z]*" placeholder="Middle Name" #middle="ngModel">
+                    <span style="color:red" *ngIf="middle.invalid && middle.touched ">
+                      <span *ngIf="middle.errors.pattern">
+                        Enter alphabets only.
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label> Last Name<span class="starColor"> *</span> </label>
+                    <input type="text" class="form-control" [(ngModel)]="empinobj.lastname" name="lastname" required
+                      pattern="[a-zA-Z]*" placeholder="Last Name" #last="ngModel">
+                    <span style="color:red" *ngIf="last.invalid && last.touched ">
+                      <span *ngIf="last.errors.required">
+                        Last Name is required.
+                      </span>
+                      <span *ngIf="last.errors.pattern">
+                        Enter alphabets only.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label> DOB<span class="starColor"> *</span> </label>
+                    <input class="form-control" [max]="maxDate" [min]="minDate" type="date" [(ngModel)]="empinobj.dob"
+                      name="empname" required #empdate="ngModel" onkeydown="return false">
+                    <span style="color:red" *ngIf="empdate.invalid && empdate.touched ">
+                      <span *ngIf="empdate.errors.required">
+                        Date is required.
+                      </span>
+                      <span *ngIf="empdate.errors.min">
+                        Enter valid date.
+                      </span>
+                      <span *ngIf="empdate.errors.max">
+                        Enter valid date.
+                      </span>
+                      <span>
+
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Status<span class="starColor"> *</span></label>
+                    <select class="form-control" [(ngModel)]="empinobj.status" #status1="ngModel" name="emp02" required>
+
+
+                      <option *ngFor="let estatus of employee_statuslist" [value]="estatus.id">
+                        {{ estatus.status |  titlecase }}</option>
+
+                    </select>
+                    <span style="color:red" *ngIf="status1.invalid && status1.touched ">
+                      <span *ngIf="status1.errors.required">
+                        Status is mandatory.
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label> Status Date<span class="starColor"> *</span> </label>
+
+
+
+                    <input class="form-control" type="text" [(ngModel)]="cDate" value="{{cdate}}" #stdate="ngModel"
+                      readonly>
+
+                    <span style="color:red" *ngIf="stdate.invalid && stdate.touched ">
+                      <span *ngIf="stdate.errors.required">
+                        Date is required.
+                      </span>
+                      <span *ngIf="stdate.errors.min">
+                        Enter valid date.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Gender<span class="starColor"> *</span></label>
+                    <select class="form-control" [(ngModel)]="empinobj.gender" name="emp03" required
+                      #Dropdown="ngModel">
+
+
+                      <option *ngFor="let egender of empgenderinfo" [value]="egender.id">
+                        {{ egender.gender | titlecase }}</option>
+
+                    </select>
+                    <span style="color:red" *ngIf="Dropdown.invalid && Dropdown.touched ">
+                      <span *ngIf="Dropdown.errors.required">
+                        Gender is mandatory.
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Designation<span class="starColor">*</span></label>
+                    <select class="form-control" [(ngModel)]="empinobj.title" name="Title" required
+                      placeholder="Qualification" #title="ngModel" [disabled]="user">
+
+                      <option *ngFor="let etitle of roleManagemenList" [value]="etitle.id">
+                        {{etitle.designation |titlecase}}</option>
+                    </select>
+                    <span style="color:red" *ngIf="title.invalid && title.touched ">
+                      <span *ngIf="title.errors.required">
+                        Designation is mandatory.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label> Reporting Manager<span class="starColor"> *</span> </label>
+                    <select type="text" class="form-control" [(ngModel)]="empinobj.reportingManager"
+                      name="reportingManager" placeholder="Reporting Manager" #rep="ngModel">
+                      <option *ngFor="let m of managerdata" value={{m.employeeId}}>{{m.firstname|titlecase}}</option>
+                    </select>
+
+                    <span style="color:red" *ngIf="last.invalid && last.touched ">
+                      <span *ngIf="last.errors.required">
+                        Reporting Manager requried
+
+
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Email ID<span class="starColor"> *</span> </label>
+                    <input type="text" class="form-control" [(ngModel)]="empinobj.email" name="email" email required
+                      placeholder="enter email id" #emaill="ngModel">
+                    <span style="color:red" *ngIf="emaill.invalid && emaill.touched ">
+                      <span *ngIf="emaill.errors.required">
+                        Email id is required
+                      </span>
+                      <span *ngIf="emaill.errors.email">
+                        enter valid email id
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Official Email ID<span class="starColor"> *</span> </label>
+                    <input type="text" class="form-control" [(ngModel)]="empinobj.officialEmail" name="officialEmail"
+                      email required placeholder="enter email id" #officialEmail="ngModel">
+                    <span style="color:red" *ngIf="officialEmail.invalid && officialEmail.touched ">
+                      <span *ngIf="officialEmail.errors.required">
+                        Email id is required
+                      </span>
+                      <span *ngIf="officialEmail.errors.email">
+                        enter valid email id
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Mobile Number<span class="starColor"> *</span> </label>
+                    <input type="text" class="form-control" [(ngModel)]=" empinobj.personalMobileNo"
+                      name="personalMobileNo" required pattern="[6-9]{1}[0-9]{9}" placeholder="phone number"
+                      #pno="ngModel">
+                    <span style="color:red" *ngIf="pno.invalid && pno.touched ">
+                      <span *ngIf="pno.errors.required">
+                        phone number is required
+                      </span>
+                      <span *ngIf="pno.errors.pattern">
+                        enter valid phone number
+                      </span>
+                    </span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="file"> ProfilePicUpload </label>
+                  <input type="file" class="form-control" [(ngModel)]="empinobj.image" accept="image/*" name="image"
+                    (change)="fileSelected($event)" style="height: 100%;">
+                </div>
+              </div>
+
+              <button class="btn float-right margin" *ngIf="isUpdate"
+                [disabled]="newUserForminfo.form.invalid" (click)="saveemployeeInfo(newUserForminfo.value)"
+                data-dismiss="modal" aria-label="Close" style="background-color: #1d62a7;color: white;">Save</button>
+
+
+              <button class="btn float-right" (click)="newUserForminfo.reset()" style="background-color: #1d62a7;color: white;">Clear</button>
+              <br /><br />
+              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>Back</button> -->
+              <!-- <button class="btn btn-primary" data-dismiss="modal">
+                  <span aria-hidden="true"></span>Back</button> -->
+            </form>
+
+
+
+
+          </div>
+
+        </div>
+        <!-- modal-content -->
+      </div>
+      <!-- modal-dialog -->
+    </div>
+    <!-- modal -->
+
+
+  </div>
+  <!-- container -->
+
+</div>
+<!-- empbasic ends-->
+<!-- 
+
+var enteredValue = $get('empinobj.dob');;
+var enteredAge = getAge(enteredValue.value);
+if( enteredAge > 18 ) {
+  alert("DOB not valid");
+  enteredValue.focus();
+  return false;
+}
+
+function getAge(DOB) {
+  var today = new Date();
+  var birthDate = new Date(DOB);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+  }    
+  return age;
+} -->

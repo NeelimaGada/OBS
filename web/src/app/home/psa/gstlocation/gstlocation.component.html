@@ -1,0 +1,151 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;GST Status</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value=!value; clear()" *ngIf="addb" class="btn ">Add GST Location</button>
+  </div>
+
+
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #gstLocation="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+
+          <th>GST Location</th>
+          <th>GST CODE</th>
+          <th>Status</th>
+          <th>Edit</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let gstLocationtypeTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!gstLocationtypeTable.isEditable">
+              {{gstLocationtypeTable.gstlocationName}}
+            </div>
+            <div *ngIf="gstLocationtypeTable.isEditable">
+              <input type="text" name="gstLocation_type" #gstLocation="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*" placeholder="Please enter GST"
+                [(ngModel)]="gstLocationtypeTable.gstLocation_type" class="form-control" />
+              <div style="color:red" *ngIf="gstLocation.invalid && gstLocation.touched ">
+                <span *ngIf="gstLocation.errors?.required">
+                  Please enter GST Location
+                </span>
+                <span *ngIf="gstLocation.errors?.pattern">
+                  Please enter valid GST Location
+                </span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="!gstLocationtypeTable.isEditable">
+              {{gstLocationtypeTable.gstcode}}
+            </div>
+            <div *ngIf="gstLocationtypeTable.isEditable">
+              <input type="text" name="gstLocation_type1" #gstLocation1="ngModel" required pattern="[0-9]{2}" placeholder="Please enter GST code"
+                [(ngModel)]="gstLocationtypeTable.gstLocation_type1" class="form-control" />
+              <div style="color:red" *ngIf="gstLocation.invalid && gstLocation.touched ">
+                <span *ngIf="gstLocation.errors?.required">
+                  Please enter GST Code
+                </span>
+                <span *ngIf="gstLocation.errors?.pattern">
+                  Please enter valid GST Code
+                </span>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <div >
+            {{gstLocationtypeTable.status}}
+          </div></td>
+          
+          <td> <span style="color:#1d62a7;font-size:20px" (click)='gstLocationtypeTable.isEditable =!gstLocationtypeTable.isEditable'
+              (click)="edit(gstLocationtypeTable.gstlocationId,gstLocationtypeTable.status)" *ngIf="!gstLocationtypeTable.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn " *ngIf="gstLocationtypeTable.isEditable"
+              (click)='gstLocationtypeTable.isEditable=!gstLocationtypeTable.isEditable' (click)= "updategstLocationtype(gstLocation.value)"
+              [disabled]="gstLocation.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="gstLocationtypeTable.isEditable"
+              (click)='gstLocationtypeTable.isEditable =!gstLocationtypeTable.isEditable' (click)="cancel()">Cancel</button>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addgstLocation" [(ngModel)]="gstLocation_type" type="text" class="form-control" #role="ngModel"
+              placeholder="Enter GST Location" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter GST Location</span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid GST Location</span>
+            </div></td>
+            <td *ngIf="value">
+            <input name="addgstLocation1" [(ngModel)]="gstLocation_type1" type="text" class="form-control" #role1="ngModel"
+            placeholder="Enter GST code" required pattern="[0-9]{2}">
+          <div *ngIf="role1.invalid && role1.touched">
+            <span *ngIf="role1.errors.required" style="color:red;"> Please enter first two digits of GST Number</span>
+            <span *ngIf="role1.errors.pattern" style="color:red;"> Please enter valid GST code</span>
+          </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="gstLocation.invalid"
+              (click)="setgstLocationtype(gstLocation.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

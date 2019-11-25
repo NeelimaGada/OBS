@@ -1,0 +1,63 @@
+<div class="background">
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card password_crd w-75">
+          <div class="card-body">
+            <h1 class="page-header card-title " style="color:white">Reset Password</h1>
+            <span *ngIf="errState" style="color: red">
+              Something went wrong! <button class="btn btn-warning" style="padding: 3px" (click)="goToLogin()">Click
+                me</button> to retry.<a href="/login"></a>
+            </span>
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
+              [mustMatch]="['password', 'confirmPassword']" novalidate>
+
+              <div class="form-group">
+                <input type="text" class="form-control one" name="Employee ID" (keypress)="number($event)"
+                  [(ngModel)]="model.employeeId" placeholder="Enter Employee ID" required>
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control one" name="OTP" [(ngModel)]="model.otp"
+                  placeholder="Enter One Time Password" required><i style="cursor: pointer;"></i>
+
+              </div>
+
+              <div class="form-group">
+                <input type="{{val1}}" placeholder="Enter New Password " class="form-control one" name="password"
+                  [(ngModel)]="model.password" #password="ngModel"
+                  [ngClass]="{ 'is-invalid': password.touched && password.invalid, 'is-valid':password.valid }" required
+                  minlength="6" /><i (click)="eyeA()" class="fa fa-eye icn_inpt" style="cursor: pointer;"></i>
+                  
+                <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                    <div *ngIf="password.touched && password.invalid" style="color: red;"></div>
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="{{val2}}" placeholder="Re-enter New Password " class="form-control one"
+                  name="confirmPassword" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel"
+                  [ngClass]="{ 'is-invalid': confirmPassword.dirty && confirmPassword.invalid, 'is-valid':confirmPassword.valid }"
+                  required /><i (click)="eyeB()" class="fa fa-eye icn_inpt" style="cursor: pointer;"></i>
+
+                <div *ngIf="f.submitted && confirmPassword.invalid" class="invalid-feedback">
+                  <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                  <div *ngIf="confirmPassword.errors.mustMatch">Passwords must match</div>
+                </div>
+              </div>
+              <span *ngIf="errResp" style="color: red">
+                {{errMsg}}
+              </span>
+              <div class="form-group ">
+                <button class="btn btn-success float-right " [disabled]="f.invalid">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

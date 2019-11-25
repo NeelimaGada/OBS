@@ -1,0 +1,129 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;Geographical List</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value=!value; clear()" *ngIf="addb" class="btn ">Add Location</button>
+  </div>
+
+
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #locationtype="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+
+          <th>Location</th>
+          <th>status</th>
+          <th>edit</th>
+         
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let locationtypeTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!locationtypeTable.isEditable">
+              {{locationtypeTable.geo}}
+            </div>
+            <div *ngIf="locationtypeTable.isEditable">
+              <input type="text" name="geo" #locationtype="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*"
+                [(ngModel)]="locationtypeTable.geo" class="form-control" />
+              <div style="color:red" *ngIf="locationtype.invalid && locationtype.touched ">
+                <span *ngIf="locationtype.errors?.required">
+                  Please enter location
+                </span>
+                <span *ngIf="locationtype.errors?.pattern">
+                  Please enter valid location
+                </span>
+              </div>
+            </div>
+          </td>
+
+
+          <td>
+            <div >
+            {{locationtypeTable.status}}
+          </div></td>
+          
+          <td> <span style="color:#1d62a7;font-size:20px" (click)='locationtypeTable.isEditable =!locationtypeTable.isEditable'
+              (click)="edit(locationtypeTable.geoId,locationtypeTable.status)" *ngIf="!locationtypeTable.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn " *ngIf="locationtypeTable.isEditable"
+              (click)='locationtypeTable.isEditable=!locationtypeTable.isEditable' (click)= "UpdateGeo(locationtype.value)"
+               
+              [disabled]="locationtype.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="locationtypeTable.isEditable"
+              (click)='locationtypeTable.isEditable =!locationtypeTable.isEditable' (click)="cancel()">Cancel</button>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addlocationtype" [(ngModel)]="geo" type="text" class="form-control" #role="ngModel"
+              placeholder="Please Enter Location" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter location </span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter location </span>
+            </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="locationtype.invalid"
+              (click)="SetGeo(locationtype.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

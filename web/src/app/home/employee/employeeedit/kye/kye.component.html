@@ -1,0 +1,1426 @@
+<!-- <p>
+  kye works!
+</p> -->
+<!-- anusha -->
+<!-- kye starts -->
+<!-- <div class="tab-pane fade  " id="nav-kye" role="tabpanel" aria-labelledby="nav-kye-tab"> -->
+
+
+<!-- modal -->
+<div class="modal fade float-left" id="myModal02" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog " role="document">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <!-- <h4 class="modal-title" id="myModalLabel2">Employee Experience</h4> -->
+        <h3>Employee KYE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newUserFormKye.reset()">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <form class="tile" #newUserFormKye="ngForm">
+          <div class="row">
+            <div class="col-md-6">
+
+
+              <div class="form-group" *ngIf=isUpdate class="div" style="background-color:brown">
+                <label> Emp Id: </label>
+
+                <span><b>{{empkyedetails.employee_Id}}</b></span>
+                <!-- <input type="text" class="form-control" [(ngModel)]="empkyedetails.employee_Id" name="empid"
+                        required placeholder="Emp Id" #empid4="ngModel" disabled>
+                        <span style="color:red" *ngIf="empid4.invalid && empid4.touched ">
+                        
+                           <span *ngIf="empid4.errors.required">
+                            Empoyee id is required.
+                           </span>
+                           
+                         </span> -->
+              </div>
+
+
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Emp Id: </label>
+                <span><b>{{eid}}</b></span>
+                <!-- <label> Emp Id: </label>
+                         <input type="text" class="form-control" [(ngModel)]="empkyedetails.employee_Id" name="empkyedetails.employee_Id"
+                         required placeholder="Emp Id" #empkye1="ngModel">
+                         <span style="color:red" *ngIf="empkye1.invalid && empkye1.touched ">
+                         
+                            <span *ngIf="empkye1.errors.required">
+                             Empoyee id is required.
+                            </span>
+                            
+                          </span> -->
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> UAN<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="empkyedetails.uan" name="empkyedetails.uan"
+                  required placeholder="Ex: 1234 5678 9123" #empkye2="ngModel" maxlength="12" pattern="[0-9]{12}">
+                <span style="color:red" *ngIf="empkye2.invalid && empkye2.touched ">
+
+                  <span *ngIf="empkye2.errors.required">
+                    UAN is required.
+                  </span>
+
+                 
+                  <span *ngIf="empkye2.errors.pattern">
+                    enter 12 digit number.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Place Of Issue<span class="starColor"> *</span> </label>
+                <select class="form-control" [(ngModel)]="empkyedetails.place_of_issue"
+                  name="empkyedetails.place_of_issue" required placeholder=" Place Of Issue" #empkye3="ngModel">
+                  <option *ngFor="let passport of passportCenterList" [value]="passport.id"> {{passport.centerName}}
+                  </option>
+                </select>
+                <span style="color:red" *ngIf="empkye3.invalid && empkye3.touched ">
+
+                  <span *ngIf="empkye3.errors.required">
+                    Place of issue is required
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Passport No<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="empkyedetails.passport_no"
+                  name="empkyedetails.passport_no" required placeholder="Ex: A1234567" pattern="^[A-Za-z]{1}[0-9]{7}$"
+                  minlength=8 maxlength="8" #empkye7="ngModel">
+                <span style="color:red" *ngIf="empkye7.invalid && empkye7.touched ">
+
+                  <span *ngIf="empkye7.errors.required">
+                    Passport no is required.
+                  </span>
+
+                  <span *ngIf="empkye7.errors.pattern">
+                    Passport number should be follow "A1234567".
+                  </span>
+
+                  <span *ngIf="empkye7.errors.minlength">
+                    Passport no should contain 8 Characters.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Passport Date Of Issue<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="empkyedetails.passport_date_of_Issue" onkeydown="return false"
+                  name="empkyedetails.passport_date_of_Issue" required placeholder="Passport Date Of Issue"
+                  #empkye8="ngModel">
+                <span style="color:red" *ngIf="empkye8.invalid && empkye8.touched ">
+
+                  <span *ngIf="empkye8.errors.required">
+                    Passport Date of issue is required.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> KYE Type<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="empkyedetails.kYE_Type"
+                  name="empkyedetails.kYE_Type" required placeholder="KYE Type" #empkye9="ngModel">
+                <span style="color:red" *ngIf="empkye9.invalid && empkye9.touched ">
+
+                  <span *ngIf="empkye9.errors.required">
+                    KYE Type is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Passport Date Of Expire<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="empkyedetails.passport_date_of_expiry" onkeydown="return false"
+                  name="empkyedetails.passport_date_of_expiry" required placeholder="Passport Date Of Expire"
+                  #empkye10="ngModel">
+
+
+                <span style="color:red" *ngIf="empkye10.invalid && empkye10.touched ">
+
+                  <span *ngIf="empkye10.errors.required">
+                    Please select.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> PAN Number<span class="starColor"> *</span> </label>
+
+                <input type="text" class="form-control" [(ngModel)]="empkyedetails.pan_number"
+                  name="empkyedetails.pan_number" required placeholder="Ex: ABCDE1234F"
+                  pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" minlength="10" maxlength="10" #empkye11="ngModel">
+                <span style="color:red" *ngIf="empkye11.invalid && empkye11.touched ">
+
+                  <span *ngIf="empkye11.errors.required">
+                    Pan no is required.
+                  </span>
+                  <span *ngIf="empkye11.errors.pattern">
+                    Enter Valid PAN (Eg:"ASDFA6765F").
+                  </span>
+                 
+
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Aadhar Number<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="empkyedetails.aadhar_number"
+                  name="empkyedetails.aadhar_number" required placeholder="Ex: 1234 5678 9123" pattern="[0-9]{12}"
+                  minlength="12" maxlength="12" #empkye12="ngModel">
+                <span style="color:red" *ngIf="empkye12.invalid && empkye12.touched ">
+
+                  <span *ngIf="empkye12.errors.required">
+                    Aadhar no is required.
+                  </span>
+
+                  <span *ngIf="empkye12.errors.pattern">
+                    Enter Numbers only
+                  </span>
+
+                  <span *ngIf="empkye12.errors.minlength">
+                    Aadhar no should contain 16 Numbers
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Passport Address<span class="starColor"> *</span> </label>
+                <textarea class="form-control" rows="5" cols="40" [(ngModel)]="empkyedetails.passport_address"
+                  name="empkyedetails.passport_address" required placeholder=" Passport Address"
+                  #empkye13="ngModel"></textarea>
+                <span style="color:red" *ngIf="empkye13.invalid && empkye13.touched ">
+
+                  <span *ngIf="empkye13.errors.required">
+                    Passport Address required
+                  </span>
+
+                </span>
+
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> Aadhar Address<span class="starColor"> *</span> </label>
+                <textarea class="form-control" rows="5" cols="40" [(ngModel)]="empkyedetails.aadhar_address"
+                  name="empkyedetails.aadhar_address" required placeholder=" Aadhar Address"
+                  #empkye14="ngModel"></textarea>
+                <span style="color:red" *ngIf="empkye14.invalid && empkye14.touched ">
+
+                  <span *ngIf="empkye14.errors.required">
+                    Aadhar Address required
+                  </span>
+
+                </span>
+
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label> KYE Address<span class="starColor"> *</span> </label>
+                <textarea class="form-control" rows="5" cols="40" class="form-control"
+                  [(ngModel)]="empkyedetails.kYE_address" name="empkyedetails.kYE_address" required
+                  placeholder="KYE Address" #empkye15="ngModel"></textarea>
+                <span style="color:red" *ngIf="empkye15.invalid && empkye15.touched ">
+
+                  <span *ngIf="empkye15.errors.required">
+                    KYE Address is required.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class=" col-md-4">
+              <div class="form-group">
+                <label>Pancard Upload </label>
+                <input type="file" class="form-control" [(ngModel)]="empkyedetails.pan_img" name="panfile"
+                  (change)="panfileSelected($event)" style="height: 100%;">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Aadhar Upload </label>
+                <input type="file" class="form-control" [(ngModel)]="empkyedetails.aadhar_img" name="aadharfile"
+                  (change)="aadharfileSelected($event)" style="height: 100%;">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Passport Upload </label>
+                <input type="file" class="form-control" [(ngModel)]="empkyedetails.passport_img" name="passport_img"
+                  (change)="passportfileSelected($event)" style="height: 100%;">
+              </div>
+            </div>
+
+          </div>
+
+
+          <br>
+
+
+
+
+
+          <!-- <button class="btn btn-primary  float-right margin" >Save</button> -->
+          <div class="row">
+
+
+            <button class="btn btn-primary  float-right" (click)="newUserFormKye.reset()">Clear</button>
+
+            <button class="btn btn-primary float-left" data-dismiss="modal" aria-label="Close" *ngIf=isCreated
+              (click)="saveEmpKye()" [disabled]="newUserFormKye.invalid">Save</button><br>
+            <button class="btn btn-info" data-dismiss="modal" aria-label="Close">Cancel</button>
+
+
+
+            <!-- <button class="btn btn-primary" data-dismiss="modal" aria-label="Close" *ngIf=isUpdate
+              (click)="updatekye(kye)">
+              Update
+            </button> -->
+
+            <!-- <button type="button" class="btn btn-success pull-right" (click)="viewResume()" data-toggle="modal"
+              data-target="#myModal">Review Resume</button> -->
+          </div>
+        </form>
+
+      </div>
+
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+
+<!-- view model -->
+<!-- Modal -->
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form #pass="ngForm" (submit)="updatekyeAadhar()">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Documents</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- <embed [src]="docUrl"/> -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Emp Id: </label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;{{eid}}</span>
+              </div>
+              <div >
+                  <label>Aadhar No:</label>
+                  <span>&nbsp;&nbsp;{{karr.aadhar_number}}</span>
+                </div>
+                <div >
+                  <label>Aadhar Address:</label>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;{{karr.aadhar_address}}</span>
+                </div>
+                <div class="form-group">
+                    <label>Aadhar Upload </label>
+                    <input type="file" class="form-control" [(ngModel)]="karr.aadhar_img" name="aadharfile"
+                      (change)="aadharfileSelected($event)" style="height: 100%;">
+                  </div>
+            </div>
+            <div class="col-md-6">
+                <div >
+                  <div *ngIf="pass">
+                    <img src="data:image/png;base64,{{karr.aadhar_img}}">
+                  </div>
+                  <div *ngIf="!pass">
+                    <img src="data:image/png;base64,{{karr.aadhar_img}}">
+                  </div>
+    
+                </div>
+              </div>
+          </div>
+      
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info" data-dismiss="modal" (click)="updatekyeAadhar()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form #pass="ngForm" (submit)="updatekyePan()">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Documents</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- <embed [src]="docUrl"/> -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Emp Id: </label>
+                <b>{{eid}}</b>
+              </div>
+              <div >
+                  <label>Pan No:</label>
+                  <span>{{karr.pan_number}}</span>
+                </div>
+                <div >
+                  <label>Pan Address:</label>
+                  <span>{{karr.kYE_address}}</span>
+                </div>
+              <div class="form-group">
+                  <label>Pancard Upload </label>
+                  <input type="file" class="form-control" [(ngModel)]="karr.pan_img" name="panfile"
+                    (change)="panfileSelected($event)" style="height: 100%;">
+                </div>
+            </div>
+            <div class="col-md-6">
+              <div >
+                <div *ngIf="pass">
+                  <img src="data:image/png;base64,{{karr.pan_img}}">
+                </div>
+                <div *ngIf="!pass">
+                  <img src="data:image/png;base64,{{karr.pan_img}}">
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div>
+
+          </div>
+          <div class=" col-md-4">
+           
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info" data-dismiss="modal" (click)="updatekyePan()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="myModal3" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form #pass="ngForm" (submit)="updatekye()">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Documents</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- <embed [src]="docUrl"/> -->
+
+          <div class="row">
+            <div class="col-md-6">
+              <div *ngIf="!isUpdate">
+                <label> Emp Id: </label>
+                <span><b>{{eid}}</b></span>
+              </div>
+              <div >
+                <label>Passport No:</label>
+                <span>{{karr.passport_no}}</span>
+              </div>
+              <div >
+                <label>Passport Address:</label>
+                <span>{{karr.passport_address}}</span>
+              </div>
+              <div>
+                <label>Passport Upload </label>
+                <input type="file" class="form-control" [(ngModel)]="karr.passport_img" name="passport_img"
+                  (change)="passportfileSelected($event)" style="height: 100%;">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div >
+                <div *ngIf="pass">
+                  <img src="data:image/png;base64,{{karr.passport_img}}">
+                </div>
+                <div *ngIf="!pass">
+                  <img src="data:image/png;base64,{{karr.passport_img}}">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info" data-dismiss="modal" (click)="updatekye()">Update</button>
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" *ngIf=isUpdate (click)="updatekye(kye)">Update</button> -->
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="row ">
+  <!-- <div class="col-md-11" style="margin-bottom: 25px;">
+    <form class="form-inline ">
+      <div class="input-group ">
+         <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"> 
+        <div class="input-group-btn">
+          <h1></h1>
+        </div>
+      </div>
+    </form>
+  </div> -->
+  <div class="col-md-1 " style="padding-left:40px">
+    <div class="input-group">
+      <div class="col-md-1 " style="padding-left:40px" *ngIf="user">
+
+        <div>
+          <button type="button" class="btn btn-primary" (click)="addeditkye(newUserFormKye)" data-toggle="modal"
+            data-target="#myModal02" *ngIf="kyevalue">Add</button>
+        </div>
+      </div>
+
+
+     
+
+
+
+      <!-- <button type="button" data-toggle="modal"
+        data-target="#myModal1" (click)="getEmpKye()">viewDocuments</button>   -->
+    </div>
+  </div>
+</div>
+<br>
+<div class="container col-12">
+
+
+  <div *ngFor="let empbasic of empbasicinfo">
+    
+ <!-- <div class="col-12">
+
+ 
+
+      <h5 class="d-inline">Employee Id : &nbsp; {{empbasic.employeeId}}</h5>
+    
+      <h5 class="d-inline float-right">Full Name : &nbsp;{{empbasic.firstname}} {{empbasic.middlename}} {{empbasic.lastname}}</h5>
+  
+
+</div> -->
+
+</div>
+</div>
+
+<!-- decline passport starts -->
+   
+<div id="declinepassport" class="modal fade scrollable" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #modalform="ngForm" >
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Decline Passport</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <input placeholder="Type reason to decline" [(ngModel)]="username" name="uname" #declinevalue="ngModel"
+                class="form-control" required minlength="3" 
+                [ngClass]="{'is-invalid': declinevalue.touched && declinevalue.invalid ,'is-valid':declinevalue.valid}">
+
+              <section *ngIf="declinevalue.touched && declinevalue.invalid">
+
+                <p *ngIf="declinevalue.errors.required" class="txt"> Reason required*</p>
+
+                <p *ngIf="declinevalue.errors.minlength" class="txt">atleast 3 characters</p>
+
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn" data-dismiss="modal" (click)="declinepassport(modalform);declinepass()"
+           [disabled]="declinevalue.invalid">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!-- decline passport close -->
+<!-- decline Aadhar starts -->
+   
+<div id="declineaadhar" class="modal fade scrollable" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #modalform="ngForm" >
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Decline Aadhar</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <input placeholder="Type reason to decline" [(ngModel)]="username" name="uname" #declinevalue="ngModel"
+                class="form-control" required minlength="3" 
+                [ngClass]="{'is-invalid': declinevalue.touched && declinevalue.invalid ,'is-valid':declinevalue.valid}">
+
+              <section *ngIf="declinevalue.touched && declinevalue.invalid">
+
+                <p *ngIf="declinevalue.errors.required" class="txt"> Reason required*</p>
+
+                <p *ngIf="declinevalue.errors.minlength" class="txt">atleast 3 characters</p>
+
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn" data-dismiss="modal" (click)="declineAadharreason(modalform);declineAadhar()"
+           [disabled]="declinevalue.invalid">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!-- decline Aadhar close -->
+<!-- decline pan starts -->
+<div id="declinepan" class="modal fade scrollable" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #modalform="ngForm" >
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Decline Pan</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <input placeholder="Type reason to decline" [(ngModel)]="username" name="uname" #declinevalue="ngModel"
+                class="form-control" required minlength="3" 
+                [ngClass]="{'is-invalid': declinevalue.touched && declinevalue.invalid ,'is-valid':declinevalue.valid}">
+
+              <section *ngIf="declinevalue.touched && declinevalue.invalid">
+
+                <p *ngIf="declinevalue.errors.required" class="txt"> Reason required*</p>
+
+                <p *ngIf="declinevalue.errors.minlength" class="txt">atleast 3 characters</p>
+
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn" data-dismiss="modal" (click)="declinepanreason(modalform);declinepan()"
+           [disabled]="declinevalue.invalid">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- decline pan close -->
+<main class="container col-12">
+    
+  <!-- <h4>KYE</h4> -->
+ 
+  <div class="card shadow">
+      
+      <div *ngIf="!user">
+          
+          <span style="font-size: 17px;"><b>KYE</b></span><button type="button" class="btn btn-sm  float-right" *ngIf="rolemanagerflag" (click)="addeditkye(newUserFormKye)" data-toggle="modal"
+            data-target="#myModal02"><i class="fa fa-plus"></i> Add</button>
+        </div>
+       <hr>
+    <div class="row">
+      <section class="col-2">
+        <h6>Passport</h6>
+      </section>
+      <section class="col-1">
+        <h5>:</h5>
+      </section>
+      <!-- <section class="col-2">
+        <h5>XYZ</h5>
+      </section> -->
+      <section class="col-2">
+        <h5><i class="fas fa-download" (click)="downloadpp()" style="color:#1d62a7"></i></h5>
+      </section>
+      <section class="col-2" *ngIf="emphide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span></h5>
+          <h5><span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+      </section>
+      <section class="col-2" *ngIf="hide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span></h5>
+          <h5><span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+      </section>
+      <section class="col-2" *ngIf="rolemanagerflag">
+     
+        <span data-toggle="modal" data-target="#myModal3"><i class="fas fa-edit" style="color:#1d62a7"></i></span>
+      </section>
+
+      <section class="col-1" *ngIf="hide">
+        <button  type="submit" class="btn btn-sm btn-success" (click)="acceptpass()" >Accept</button>
+      </section>
+      <section class="col-1" *ngIf="hide">
+          <button type="submit"   class="btn btn-sm" (click)="declinepass()" data-toggle="modal" data-target="#declinepassport">Decline</button>
+        </section>
+    </div>
+    <div class="row">
+      <section class="col-2">
+        <h6>Aadhar</h6>
+      </section>
+      <section class="col-1">
+        <h5>:</h5>
+      </section>
+      <!-- <section class="col-2">
+        <h5>XYZ</h5>
+      </section> -->
+      <section class="col-2">
+        <h5><i class="fas fa-download " (click)="downloadAd()" style="color:#1d62a7"></i></h5>
+      </section>
+      <section class="col-2" *ngIf="emphide">
+        <h5><span *ngIf="Access1" style="color: green"><i class="fa fa-check"></i></span></h5>
+        <h5><span *ngIf="!Access1" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+    </section>
+      <section class="col-2" *ngIf="hide">
+          <h5><span *ngIf="Access1" style="color: green"><i class="fa fa-check"></i></span></h5>
+          <h5><span *ngIf="!Access1" style="color: red"><i class="fa fa-times"></i></span></h5>
+      </section>
+      <section class="col-2" *ngIf="rolemanagerflag">
+        <!-- <h5><span data-toggle="modal" data-target="#editModal"  (click)="updatekye(kye)"><i class="fas fa-edit"></i></span></h5> -->
+        <span data-toggle="modal" data-target="#myModal1"><i class="fas fa-edit" style="color:#1d62a7"></i></span>
+      </section>
+      <section class="col-1" *ngIf="hide">
+          <button  type="submit"  class="btn btn-sm btn-success" (click)="acceptAadhar()">Accept</button>
+        </section>
+        <section class="col-1" *ngIf="hide">
+            <button type="submit"  class="btn btn-sm " (click)="declineAadhar()" data-toggle="modal" data-target="#declineaadhar">Decline</button>
+          </section>
+
+
+
+    </div>
+    <div class="row">
+      <section class="col-2">
+        <h6>Pan</h6>
+      </section>
+      <section class="col-1">
+        <h5>:</h5>
+      </section>
+      <!-- <section class="col-2">
+        <h5>XYZ</h5>
+      </section> -->
+      <section class="col-2">
+        <h5><i class="fas fa-download" style="color:#1d62a7" (click)="downloadpan()"></i></h5>
+      </section>
+      <section class="col-2" *ngIf="emphide">
+        <h5><span *ngIf="Access2" style="color: green"><i class="fa fa-check"></i></span></h5>
+        <h5><span *ngIf="!Access2" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+    </section>
+      <section class="col-2" *ngIf="hide">
+          <h5><span *ngIf="Access2" style="color: green"><i class="fa fa-check"></i></span></h5>
+          <h5><span *ngIf="!Access2" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+      </section>
+      <!-- <section class="col-2">
+        <h5><i class="fas fa-edit"></i></h5>
+      </section> -->
+      <section class="col-2" *ngIf="rolemanagerflag">
+        <!-- <h5><span data-toggle="modal" data-target="#editModal"  (click)="updatekye(kye)"><i class="fas fa-edit"></i></span></h5> -->
+        <span data-toggle="modal" data-target="#myModal2"><i class="fas fa-edit" style="color:#1d62a7"></i></span>
+      </section>
+      <!-- <section class="col-2" *ngIf="emphide">
+        <h5><span *ngIf="Access3" style="color: green"><i class="fa fa-check"></i></span></h5>
+        <h5><span *ngIf="!Access3" style="color: red"><i class="fa fa-times"></i></span></h5>
+
+    </section> -->
+      <section class="col-1" *ngIf="hide">
+          <button class="btn btn-sm btn-success" (click)="acceptpPan()">Accept</button>
+        </section>
+        <section class="col-1" *ngIf="hide">
+            <button class="btn btn-sm" (click)="declinePan()" data-toggle="modal" data-target="#declinepan">Decline</button>
+          </section>
+    </div>
+  </div>
+</main>
+{{panreason}}
+<br>
+  <!-- bank-info -->
+  <main class="container col-12">
+    <!-- <h4>Bank Info</h4> -->
+   
+      <br>
+     
+        <div class="card shadow">
+          <div class="row">
+          <span style="font-size: 17px;padding-left: 12px;"><b>Bank Info</b></span>
+          <div *ngIf="rolemanagerflag" class="ml-auto col-md-1" >
+              <span (click)="onAddOnboard()" style="color: blue;" *ngIf="addonboard"><i class="fa fa-plus"
+                style="font-size:20px"></i></span>&nbsp;&nbsp;
+            <span  (click)="onEdit()" *ngIf="!isEditEnable"><i *ngIf="doo" class="fa fa-edit"
+                style="font-size:20px;color:#1d62a7"></i></span>
+              </div>
+          </div>
+          <hr>
+
+          <div *ngIf="onb">
+          <form #bankk="ngForm">
+          <section class="row">
+
+            <div class="col-md-4">
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>Account Number:</b></p>
+  
+                <p *ngIf="!isEditEnable">{{bankdata.bank_account_no}}</p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" [(ngModel)]="bankdata.bank_account_no" name="account_no" required
+                  #acc_number="ngModel" pattern="[0-9]*" minlength="11" maxlength="14" >
+                  <div *ngIf="acc_number.invalid">
+                  <div *ngIf=acc_number.errors.required style="color:red">
+                    Account Number is Required
+                  </div>
+                  <div *ngIf=acc_number.errors.minlength style="color:red">
+                      Minlength should be 11
+                    </div>
+                      <div *ngIf=acc_number.errors.pattern style="color:red">
+                          Only Numbers are Allowed
+                        </div>
+                      </div>
+                        <!-- <div *ngIf=acc_number.errors.pattern&&acc_number.errors.maxlength style="color:red">
+                            Maxlength should be 12
+                          </div> -->
+              </div>
+              <!-- <div class="alert alert-danger" *ngIf="acc_number.errors?.required"></div> -->
+  
+              <!-- <div *ngIf="bankk.invalid">
+                Name is required.
+              </div>
+              <div *ngIf="bankk.errors.minlength">
+                Name must be at least 4 characters long.
+              </div> -->
+  
+  
+  
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>Branch :</b></p>
+                <p *ngIf="!isEditEnable">{{bankdata.bank_branch}}</p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="branch" [(ngModel)]="bankdata.bank_branch" required #BranchN="ngModel" pattern="[A-Za-z]{1}[A-Za-z ]*">
+
+                <div *ngIf="BranchN.invalid" style="color:red">
+                  <div *ngIf=BranchN.errors.required >
+                    Branch name is Required.
+                  </div>
+                  <div *ngIf=BranchN.errors.pattern >
+                    Enter alphabet only.
+                  </div>
+                     
+                      </div>
+
+              </div>
+  
+  
+            </div>
+            <div class="col-md-4">
+  
+  
+  
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>Bank Name :</b></p>
+                <p *ngIf="!isEditEnable">{{bankdata.bank_name}}</p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="bankname" [(ngModel)]="bankdata.bank_name" required #BkName="ngModel" >
+                <div *ngIf="BkName.invalid" style="color:red">
+                  <div *ngIf=BkName.errors.required >
+                    Bank name is Required
+                  </div>
+                  <!-- <div *ngIf=BkName.errors.pattern >
+                    Bank name should not starts with space
+                  </div> -->
+                  
+                     
+                      </div>
+
+              </div>
+  
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>City :</b></p>
+                <p *ngIf="!isEditEnable">{{bankdata.bank_city}}</p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="city" [(ngModel)]="bankdata.bank_city" required #BkCity="ngModel" pattern="[A-Za-z]{1}[A-Za-z ]*">
+
+                <div *ngIf="BkCity.invalid" style="color:red">
+                  <div *ngIf=BkCity.errors.required >
+                    Bank city is Required.
+                  </div>
+                  <div *ngIf=BkCity.errors.pattern>
+                    Enter alphabet only.
+                  </div>
+                     
+                      </div>
+
+              </div>
+  
+            </div>
+  
+            <div class="col-md-4">
+  
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>IFSC Code:</b></p>
+                <p *ngIf="!isEditEnable"> {{bankdata.bank_ifsc_code}}</p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="ifsccode" [(ngModel)]="bankdata.bank_ifsc_code" required #IFSC="ngModel" pattern="[A-Z]{4}[0-9]{7}*">
+
+                <div *ngIf="IFSC.invalid">
+                  <div *ngIf=IFSC.errors.required style="color:red">
+                    Ifsc Code is Required
+                  </div>
+                  <div *ngIf=IFSC.errors.pattern style="color:red">
+                    Enter valid pattern(Eg:SBIN9876576)
+                  </div>
+                  
+                     
+                      </div>
+
+
+              </div>
+              <div class="row ban">
+                <p style="padding-right: 5px;"><b>Is active:</b></p>
+                <p *ngIf="!isEditEnable">{{bankdata.is_active}} </p>
+              </div>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="isactive" [(ngModel)]="bankdata.is_active" required #ISACTIVE="ngModel" pattern="[A-Za-z]{1}[A-Za-z]*">
+
+                <div *ngIf="ISACTIVE.invalid">
+                  <div *ngIf=ISACTIVE.errors.required style="color:red">
+                    Status is Required
+                  </div>
+                  <div *ngIf=ISACTIVE.errors.pattern style="color:red">
+                    Status should be true or false
+                  </div>
+                  
+                     
+                      </div>
+
+              </div>
+  
+  
+  
+              <button class="btn  mt-3" *ngIf="isEditEnable" [disabled]="bankk.invalid"
+                (click)="updatebankInfo(bankk.value); isEditEnable=!isEditEnable">Submit</button>
+              <button class="btn  mx-5 mt-3" *ngIf="isEditEnable"
+                (click)="bankcancel(); isEditEnable=!isEditEnable" >cancel</button>
+            </div>
+          </section>
+        </form>
+        </div>
+
+        <div *ngIf="board">
+        <form #bankk11="ngForm">
+            <section class="row">
+  
+              <div class="col-md-4">
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>Account Number:</b></p>
+    
+                  
+                </div>
+            
+                  <input type="text" class="form-control" [(ngModel)]="bank_account_no" name="account_no" required
+                    #acc_number="ngModel" pattern="[0-9]*" minlength="11" maxlength="14" >
+                    <div *ngIf="acc_number.invalid && acc_number.touched">
+                    <div *ngIf=acc_number.errors.required style="color:red">
+                      Account Number is Required
+                    </div>
+                    <div *ngIf=acc_number.errors.minlength style="color:red">
+                        Minlength should be 11
+                      </div>
+                        <div *ngIf=acc_number.errors.pattern style="color:red">
+                            Only Numbers are Allowed
+                          </div>
+                        </div>
+                          <!-- <div *ngIf=acc_number.errors.pattern&&acc_number.errors.maxlength style="color:red">
+                              Maxlength should be 12
+                            </div> -->
+              
+                <!-- <div class="alert alert-danger" *ngIf="acc_number.errors?.required"></div> -->
+    
+                <!-- <div *ngIf="bankk.invalid">
+                  Name is required.
+                </div>
+                <div *ngIf="bankk.errors.minlength">
+                  Name must be at least 4 characters long.
+                </div> -->
+    
+    
+    
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>Branch :</b></p>
+                  
+                </div>
+               
+                  <input type="text" class="form-control" name="branch" [(ngModel)]="bank_branch" required #BranchN="ngModel" pattern="[A-Za-z]{1}[A-Za-z ]*">
+  
+                  <div *ngIf="BranchN.invalid && BranchN.touched" style="color:red">
+                    <div *ngIf=BranchN.errors.required >
+                      Branch name is Required.
+                    </div>
+                    <div *ngIf=BranchN.errors.pattern >
+                      Enter alphabet only.
+                    </div>
+                       
+                        </div>
+  
+               
+    
+    
+              </div>
+              <div class="col-md-4">
+    
+    
+    
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>Bank Name :</b></p>
+                 
+                </div>
+         
+                  <input type="text" class="form-control" name="bankname" [(ngModel)]="bank_name1" required #BkName="ngModel" >
+                  <div *ngIf="BkName.invalid && BkName.touched" style="color:red">
+                    <div *ngIf=BkName.errors.required >
+                      Bank name is Required
+                    </div>
+                    <!-- <div *ngIf=BkName.errors.pattern >
+                      Bank name should not starts with space
+                    </div> -->
+                    
+                       
+                        </div>
+  
+              
+    
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>City :</b></p>
+                
+                </div>
+            
+                  <input type="text" class="form-control" name="city" [(ngModel)]="bank_city" required #BkCity="ngModel" pattern="[A-Za-z]{1}[A-Za-z ]*">
+  
+                  <div *ngIf="BkCity.invalid && BkCity.touched" style="color:red">
+                    <div *ngIf=BkCity.errors.required >
+                      Bank city is Required.
+                    </div>
+                    <div *ngIf=BkCity.errors.pattern>
+                      Enter alphabet only.
+                    </div>
+                       
+                        </div>
+  
+            
+    
+              </div>
+    
+              <div class="col-md-4">
+    
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>IFSC Code:</b></p>
+                
+                </div>
+          
+                  <input type="text" class="form-control" name="ifsccode" [(ngModel)]="bank_ifsc_code" required #IFSC="ngModel" pattern="[A-Z]{4}[0-9]{7}*">
+  
+                  <div *ngIf="IFSC.invalid && IFSC.touched">
+                    <div *ngIf=IFSC.errors.required style="color:red">
+                      Ifsc Code is Required
+                    </div>
+                    <div *ngIf=IFSC.errors.pattern style="color:red">
+                      Enter valid pattern(Eg:SBIN9876576)
+                    </div>
+                    
+                       
+                        </div>
+  
+  
+              
+                <div class="row ban">
+                  <p style="padding-right: 5px;"><b>Is active:</b></p>
+                  
+                </div>
+              
+                  <input type="text" class="form-control" name="isactive" [(ngModel)]="is_active" required #ISACTIVE="ngModel" pattern="[A-Za-z]{1}[A-Za-z]*">
+  
+                  <div *ngIf="ISACTIVE.invalid && ISACTIVE.touched">
+                    <div *ngIf=ISACTIVE.errors.required style="color:red">
+                      Status is Required
+                    </div>
+                    <div *ngIf=ISACTIVE.errors.pattern style="color:red">
+                      Status should be true or false
+                    </div>
+                    
+                       
+                        </div>
+  
+              
+    
+    
+                <button class="btn btn-primary mt-3"  [disabled]="bankk11.invalid"
+                  (click)="Onsavebank(bankk11.value); board=!board">Submit</button>
+                <button class="btn btn-primary mx-5 mt-3" 
+                  (click)="bankcancel();board=!board" >cancel</button>
+              </div>
+            </section>
+          </form>
+  </div>
+  
+        </div>
+      
+
+  </main>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+      <table class="table table-hover  tile" *ngFor="let bank of bankdt"  style="width: 70%"> -->
+  <!--  <thead class="two" style="font-size: 16px"> -->
+  
+  <!-- <tr><td><b> Bank account no : </b> &nbsp;&nbsp;{{bank.bank_account_no}} </td> <td><b> Bank Name :</b> &nbsp;&nbsp;{{bank.bank_name}} </td> </tr>
+  <tr> <td><b> Bank City: </b> &nbsp;&nbsp;{{bank.bank_city}}</td> <td><b>Bank branch  :</b> &nbsp;&nbsp;{{bank.bank_branch}} </td> </tr>
+  <tr> <td><b>Ifsc code:</b> &nbsp;&nbsp;{{bank.bank_ifsc_code}}</td> <td><b>Is active  :</b> &nbsp;&nbsp;{{bank.is_active}}   </td> </tr> -->
+  
+  
+  <!--  </thead> -->
+  <!-- </table>
+        </div> -->
+  
+  
+  <!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+    <table class="table  table-condensed tile">
+      <thead>
+        <tr>
+          <th>Emp Id</th>
+          <th>Bank account no</th>
+          <th>Bank Name</th>
+          <th>Bank City</th>
+          <th>Bank branch</th>
+          <th>Ifsc code</th> -->
+  <!--<th>Account Status</th>-->
+  
+  <!-- <th>Is active</th>
+          <th>Edit</th> -->
+  <!-- <th>delete</th> -->
+  <!-- </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bank of bankdt| filter:key | paginate: { itemsPerPage: 100, currentPage:skillpage }; let i=index">
+          <td>
+            <div *ngIf="!bank.isEditable">
+              {{bank.employee_id}}
+            </div>
+  
+          </td>
+  
+          <td>{{bank.bank_account_no}}</td>
+          <td>{{bank.bank_name}}</td>
+          <td>{{bank.bank_city}}</td>
+          <td>{{bank.bank_branch}}</td>
+          <td>{{bank.bank_ifsc_code}}</td> -->
+  <!--<td>{{bank.bank_account_status}}</td>-->
+  <!-- <td>{{bank.is_active}}</td>
+  
+  
+          <td>
+            <img src="assets/pe.png" width="35px" data-toggle="modal" data-target="#myModalBank"
+              (click)=" getbankdetailsbyId(bank)"> </td> -->
+  <!-- <td>
+                <img src="assets/delete.png" width="20px" (click)="deletebanktddetails(bank);">
+              </td> -->
+  <!-- </tr>
+      </tbody>
+    </table>
+  
+  </div> -->
+  
+  <div class="modal right fade" id="myModalBank" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <h3>Bank Details</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newUserFormBank.reset()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+        </div>
+  
+        <div class="modal-body">
+  
+          <form class="tile" #newUserFormBank="ngForm" (ngSubmit)="onSubmitBank(newUserFormBank)" autocomplete="on">
+            <div class="row">
+              <div class="col-md-6" *ngIf="isupdateDependent">
+                <div class="form-group">
+                  <label> Emp Id: <span [(ngModel)]="bankdetailss.employee_id"
+                      name="employee_id">{{bankdetailss.employee_id}}</span></label>
+                  <!-- <input type="" class="form-control" [(ngModel)]="bankdetailss.employee_id" name="employee_id" required placeholder="Emp Id"> -->
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="createdByDependent">
+                <div class="form-group">
+                  <label> Emp Id: <span [(ngModel)]="bankdetailss.employee_id" name="employee_id">{{eid}}</span></label>
+                  <!-- <input type="text" class="form-control" [(ngModel)]="bankdetailss.employee_id" name="employee_id" required placeholder="Emp Id"> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Bank Account No<span class="starColor"> *</span></label>
+  
+                  <input type="number" class="form-control" pattern="[0-9]{9,18}"
+                    [(ngModel)]="bankdetailss.bank_account_no" name="bank_account_no" required
+                    placeholder="Bank Account No" #bankno="ngModel">
+                  <span style="color:red" *ngIf="bankno.invalid && bankno.touched ">
+                    <span *ngIf="bankno.errors.required">
+                      Bank Account No is required.
+                    </span>
+                    <span *ngIf="bankno.errors.pattern">
+                      Enter 18 digits.
+                    </span>
+                    <span *ngIf="bankno.errors.minlength">
+                      Please enter 18 digits.
+                    </span>
+                  </span>
+  
+  
+                </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Bank Name<span class="starColor"> *</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="bankdetailss.bank_name" name="bank_name" required
+                    pattern="[a-zA-Z ]*" placeholder="Bank Name" #bankname="ngModel">
+                  <span style="color:red" *ngIf="bankname.invalid && bankname.touched ">
+                    <span *ngIf="bankname.errors.required">
+                      Bank Name is required.
+                    </span>
+                    <span *ngIf="bankname.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Bank City<span class="starColor"> *</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="bankdetailss.bank_city" name="bank_city" required
+                    pattern="[a-zA-Z ]*" placeholder="Bank City" #bankcity="ngModel">
+                  <span style="color:red" *ngIf="bankcity.invalid &&bankcity.touched ">
+                    <span *ngIf="bankcity.errors.required">
+                      Bank Name is required.
+                    </span>
+                    <span *ngIf="bankcity.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Bank Branch<span class="starColor"> *</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="bankdetailss.bank_branch" pattern="[a-zA-Z ]*"
+                    name="bank_branch" required placeholder=" Bank Branch" #bankbranch="ngModel">
+                  <span style="color:red" *ngIf="bankbranch.invalid &&bankbranch.touched ">
+                    <span *ngIf="bankbranch.errors.required">
+                      Bank Branch is required.
+                    </span>
+                    <span *ngIf="bankbranch.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ifsc code<span class="starColor"> *</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="bankdetailss.bank_ifsc_code" name="bank_ifsc_code"
+                    required placeholder=" Ifsc code" #ifscCode="ngModel" pattern="^[A-Za-z]{4}[a-zA-Z0-9]{7}$">
+                  <!-- [A-Z|a-z]{4}[0][\d]{6}$ ^[A-Za-z]{4}0[A-Z0-9a-z]{6}$  ("^[^\s]{4}\d{7}$")-->
+                  <span style="color:red" *ngIf="ifscCode.invalid &&ifscCode.touched ">
+                    <span *ngIf="ifscCode.errors.required">
+                      Ifsc code is required.
+                    </span>
+                    <span *ngIf="ifscCode.errors.pattern">
+                      Enter Valid ifsc code.
+                    </span>
+                  </span>
+                </div>
+              </div>
+  
+  
+              <!--<div class="col-md-4">
+                    <div class="form-group">
+                      <label> Account Status<span class="starColor"> *</span></label>
+                      <input type="text" class="form-control" [(ngModel)]="bankdetailss.bank_account_status" name="bank_account_status" required placeholder="Account Status"
+                        #accountstatus="ngModel">
+                      <span style="color:red" *ngIf="accountstatus.invalid &&accountstatus.touched ">
+                        <span *ngIf="accountstatus.errors.required">
+                          Account Status is required.
+                        </span>
+                      </span>
+                    </div>
+                  </div>-->
+  
+  
+  
+  
+              <!-- <div class="row"> -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="sel2">Is active<span class="starColor"> *</span></label>
+                  <select class="form-control" id="sel2" [(ngModel)]="bankdetailss.is_active" name="is_active" required
+                    placeholder="Is active" #active="ngModel">
+                    <option>true</option>
+                    <option>false</option>
+                  </select>
+  
+                  <span style="color:red" *ngIf="active.invalid &&active.touched ">
+                    <span *ngIf="active.errors.required">
+                      Is active is required.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <!--  </div> -->
+  
+            </div>
+            <button type="submit" class="btn btn-primary float-right margin" [disabled]="newUserFormBank.form.invalid"
+              *ngIf="!isupdateDependent" (click)="Onsavebank()" data-dismiss="modal"
+              style="margin-left:74px;">Save</button>
+            <button type="submit" class="btn btn-primary float-right margin" [disabled]="newUserFormBank.form.invalid"
+              *ngIf="isupdateDependent" (click)="updatebankdetails()" data-dismiss="modal"
+              style="margin-left:75px;">update</button>
+  
+            <button class="btn btn-primary  float-right" (click)="newUserFormBank.reset()">Clear</button>
+  
+            <button class="btn btn-info" data-dismiss="modal" aria-label="Close" (click)="savedata();">Back</button>
+          </form>
+  
+  
+  
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  <!-- bank data ends -->
+  <!-- ts bank details -->

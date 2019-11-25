@@ -1,0 +1,727 @@
+<div>
+  <div class="card shadow" style="padding:20px ;">
+    <span style="font-size: 17px;"><b>Contact Management System</b></span>
+    <hr>
+
+    <div class="row" style="padding: 10px 0px 10px 0px;">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <!-- <div>
+            <mat-form-field>
+              <mat-label>Select Customer</mat-label>
+              <mat-select (selectionChange)="selectedCustomer($event.value)">
+                <mat-option value="1001">TCS</mat-option>
+                <mat-option value="1002">Wipro</mat-option>
+                <mat-option value="1003">TechM</mat-option>
+                <mat-option value="1004">Cognizent</mat-option>
+                <mat-option value="1005">Capgemini</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+        </div>
+
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <button class="btn float-right" style="background-color: #1d62a7;color: white;" data-toggle="modal"
+          data-target="#myModal">Create Contact</button>
+      </div>
+
+                           <!--mymodal starts-->
+
+      <div class="modal" id="myModal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Contact Creation</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="contactForm.reset(); status=!status">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="contactForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- <mat-form-field>
+                      <mat-label>Select Customer</mat-label>
+                      <mat-select (selectionChange)="selectedCustomer($event.value)">
+                        <mat-option value="1001">TCS</mat-option>
+                        <mat-option value="1002">Wipro</mat-option>
+                        <mat-option value="1003">TechM</mat-option>
+                        <mat-option value="1004">Cognizent</mat-option>
+                        <mat-option value="1005">Capgemini</mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
+                    <mat-form-field>
+                      <mat-label>Select Customer</mat-label>
+                      <mat-select formControlName="selectCustomer" (selectionChange)="selectedCustomer($event.value)" disableOptionCentering>
+                        <mat-option *ngFor="let data of customersAllData" [value]="data.customerId">
+                          {{data.customerName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div *ngIf="status">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Contact Name</label>
+                        <input type="text" class="form-control" placeholder="Contact Name"
+                          formControlName="contactName">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactName').invalid && contactForm.get('contactName').touched">
+                          <span *ngIf="contactForm.get('contactName').errors.required">
+                            name is required.
+                          </span>
+                          <span *ngIf="contactForm.get('contactName').errors.pattern">
+                            enter alphabets only
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Contact Department</label>
+                        <input type="text" class="form-control" placeholder="Conatct Department"
+                          formControlName="contactDepartment">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactDepartment').invalid && contactForm.get('contactDepartment').touched">
+                          <span *ngIf="contactForm.get('contactDepartment').errors.required">
+                            contact department is required.
+                          </span>
+                          <span *ngIf="contactForm.get('contactDepartment').errors.pattern">
+                            enter alphabets only
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <br>
+                      <div class="form-group">
+                        <mat-form-field>
+                          <mat-label>Select Designation</mat-label>
+                          <mat-select formControlName="contactDesignation" disableOptionCentering>
+                            <mat-option *ngFor="let d of empDesignationlist" [value]="d.id">{{d.designation}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactDesignation').invalid && contactForm.get('contactDesignation').touched">
+
+                          <span *ngIf="contactForm.get('contactDesignation').errors.required">
+                            designation is required.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+              </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Personal Email</label>
+                        <input type="text" class="form-control" placeholder="Personal Email"
+                          formControlName="contactPersonalEmail">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactPersonalEmail').invalid && contactForm.get('contactPersonalEmail').touched">
+                          <span *ngIf="contactForm.get('contactPersonalEmail').errors.required">
+                            email id is required.
+                          </span>
+                          <span *ngIf="contactForm.get('contactPersonalEmail').errors.pattern">
+                            email should be valid
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Official Email</label>
+                        <input type="text" class="form-control" placeholder="Official Email"
+                          formControlName="contactOfficialEmail">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactOfficialEmail').invalid && contactForm.get('contactOfficialEmail').touched">
+                          <span *ngIf="contactForm.get('contactOfficialEmail').errors.required">
+                            email id is required.
+                          </span>
+                          <span *ngIf="contactForm.get('contactOfficialEmail').errors.pattern">
+                            email should be valid
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Personal Mobile Number</label>
+                        <input type="text" class="form-control" placeholder="Mobile number"
+                          formControlName="contactMobileNo" (keypress)="number($event)" maxlength="10">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('contactMobileNo').invalid && contactForm.get('contactMobileNo').touched">
+                          <span *ngIf="contactForm.get('contactMobileNo').errors.required">
+                            mobile number is required.
+                          </span>
+                          <span *ngIf="contactForm.get('contactMobileNo').errors.pattern">
+                            mobile number should be valid.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Alternate Mobile Number</label>
+                        <input type="text" class="form-control" placeholder="Alt Mobile number"
+                          formControlName="alternateMobileNo" (keypress)="number($event)" maxlength="10">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('alternateMobileNo').invalid && contactForm.get('alternateMobileNo').touched">
+                          <span *ngIf="contactForm.get('alternateMobileNo').errors.required">
+                            alternate mobile number is required.
+                          </span>
+                          <span *ngIf="contactForm.get('alternateMobileNo').errors.pattern">
+                            alternate mobile number should be valid.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>BDM </label>
+                        <input type="text" class="form-control" placeholder="BDM" formControlName="bdm">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('bdm').invalid && contactForm.get('bdm').touched">
+                          <span *ngIf="contactForm.get('bdm').errors.required">
+                            BDM is required.
+                          </span>
+                          <span *ngIf="contactForm.get('bdm').errors.pattern">
+                            enter alphabets only
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> DOB </label>
+                        <input type="text" class="form-control" placeholder="DOB : dd/mm" formControlName="dob">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('dob').invalid && contactForm.get('dob').touched">
+                          <span *ngIf="contactForm.get('dob').errors.required">
+                            DOB is required.
+                          </span>
+                          <span *ngIf="contactForm.get('dob').errors.pattern">
+                            please enter valid date of birth.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label> Anniversary </label>
+                        <input type="text" class="form-control" placeholder="Anniversary : dd/mm"
+                          formControlName="anniversary">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('anniversary').invalid && contactForm.get('anniversary').touched">
+                          <span *ngIf="contactForm.get('anniversary').errors.required">
+                            anniversary is required.
+                          </span>
+                          <span *ngIf="contactForm.get('anniversary').errors.pattern">
+                            please enter valid date of anniversary.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+
+                        <mat-form-field>
+                          <mat-label>Select States</mat-label>
+                          <mat-select formControlName="state" disableOptionCentering>
+                            <mat-option *ngFor="let d of StateList" [value]="d.id">{{d.stateName}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <br>
+                        <span style="color:red"
+                          *ngIf="contactForm.get('state').invalid && contactForm.get('state').touched">
+                          <span *ngIf="contactForm.get('state').errors.required">
+                            state is required.
+                          </span>
+                        </span>
+                        <!-- <span style="color:red"  *ngIf="contactForm.get('state').invalid && contactForm.get('state').touched"></span>
+                        <span *ngIf="contactForm.get('state').errors.required">State is required.</span>   -->
+
+
+
+                      </div>
+
+                    </div>
+                    <!-- <div class="col-4">
+                        <div class="form-group">
+                     <label> State </label>
+                                  <input type="text" class="form-control" placeholder="state" formControlName="state">
+                                  </div>
+                    </div> -->
+
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label> Pincode</label>
+                        <input type="text" class="form-control" placeholder="Pincode" formControlName="pincode"
+                          (keypress)="number($event)" maxlength="6">
+                        <span style="color:red"
+                          *ngIf="contactForm.get('pincode').invalid && contactForm.get('pincode').touched">
+                          <span *ngIf="contactForm.get('pincode').errors.required">
+                            pincode is required.
+                          </span>
+                          <span *ngIf="contactForm.get('pincode').errors.pattern">
+                            pincode should be valid(Ex:123456).
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Address1 </label>
+                        <textarea class="form-control" rows="5" cols="40" class="form-control"
+                          formControlName="address1" name=address1 placeholder="Address1"></textarea>
+                        <span style="color:red"
+                          *ngIf="contactForm.get('address1').invalid && contactForm.get('address1').touched">
+                          <span *ngIf="contactForm.get('address1').errors.required">
+                            address1 is required.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Address2 </label>
+                        <textarea class="form-control" rows="5" cols="40" class="form-control"
+                          formControlName="address2" name=address2 placeholder="Address2"></textarea>
+                        <span style="color:red"
+                          *ngIf="contactForm.get('address2').invalid && contactForm.get('address2').touched">
+                          <span *ngIf="contactForm.get('address2').errors.required">
+                            address2 is required.
+                          </span>
+
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label> Address3 </label>
+                        <textarea class="form-control" rows="5" cols="40" class="form-control"
+                          formControlName="address3" name=address3 placeholder="Address3"></textarea>
+                        <!-- <span style="color:red"
+                          *ngIf="contactForm.get('address3').invalid && contactForm.get('address3').touched">
+                          <span *ngIf="contactForm.get('address3').errors.required">
+                            Address3 is required.
+                          </span>
+
+                        </span> -->
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </form>
+
+            </div>
+            <div class="modal-footer">
+              <button class=" btn float-right" style="background-color: #1d62a7; color: white;" data-dismiss="modal"
+                type="submit" [disabled]="contactForm.invalid"
+                (click)="saveCustomerContactInfo(contactForm.value) ;status=!status">Create</button><br>
+              <button class="btn" data-dismiss="modal" style="background-color: #1d62a7; color: white;"
+                aria-label="Close" (click)="status=!status">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--mymodal ends-->
+    </div>
+
+
+
+    <!-- <button class="btn col-md-1" (click)="download_pdf()"><i class="fa fa-file-pdf-o m-2" aria-hidden="true"></i>Export
+      Pdf</button> -->
+    <input placeholder="Search" class="col-5 form-control">
+
+    <div class="table-responsive">
+      <table class="table" id="my_table">
+        <thead style="background-color: #1d62a7;color: white;">
+
+          <th>Contact Id</th>
+          <th>Customer Id</th>
+          <th>Contact Name</th>
+          <th>Personal Email</th>
+          <th>Official Email</th>
+          <th>Contact Designation</th>
+          <th>Contact Department</th>
+          <th>personal Mobile Number</th>
+          <th>Alternate Mobile Number</th>
+          <th>Date of Birth</th>
+          <th>Date of Anniversary</th>
+          <th>BDM</th>
+          <th>State</th>
+          <th>Address</th>
+
+          <th>Edit</th>
+          <th>Delete</th>
+        </thead>
+        <tbody>
+
+          <tr
+            *ngFor="let contactInfoTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+            class="text-center">
+            <td *ngFor="let g of table_heading">{{contactInfoTable[g]}}</td>
+          </tr>
+          <tr *ngFor='let g of data'>
+            <td>{{g.contactId}}</td>
+            <td>{{g.customerId}}</td>
+            <td>{{g.contactName}}</td>
+            <td>{{g.personalEmail}}</td>
+            <td>{{g.officialEmail}}</td>
+            <td>{{g.designation}}</td>
+            <td>{{g.department}}</td>
+            <td>{{g.permanentMobileNumber}}</td>
+            <td>{{g.alternateMobileNumber}}</td>
+            <td>{{g.dob}}</td>
+            <td>{{g.doa}}</td>
+            <td>{{g.bdm}}</td>
+            <td>{{g.state}}</td>
+            <td>{{g.address1}}<br>{{g.address2}}<br>{{g.address3}}<br>{{g.pincode}}</td>
+
+            <td><img src="/assets/pe.png" style="width: 35px;" data-toggle="modal" (click)=selectedId(g.contactId)
+                data-target="#myModal1"></td>
+            <td><i class="fa fa-trash" aria-hidden="true" (click)="deleteContactInfo(g)"></i></td>
+
+         <!--mymodal1 starts-->
+            <div class="modal" id="myModal1" data-keyboard="false" data-backdrop="static">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3>Contact details</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                      (click)="contactForm.reset()">
+                      <span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="contactForm">
+                      <label>Customer Contact Id: {{contactId}}</label>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Contact name</label>
+                            <input type="text" class="form-control" placeholder="contact name"
+                              formControlName="contactName">
+                            <span style="color:red"
+                              *ngIf="contactForm.get('contactName').invalid && contactForm.get('contactName').touched">
+                              <span *ngIf="contactForm.get('contactName').errors.required">
+                                name is required.
+                              </span>
+
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label> Contact Department</label>
+                            <input type="text" class="form-control" placeholder="Conatct Department"
+                              formControlName="contactDepartment">
+                            <span style="color:red"
+                              *ngIf="contactForm.get('contactDepartment').invalid && contactForm.get('contactDepartment').touched">
+                              <span *ngIf="contactForm.get('contactDepartment').errors.required">
+                                Contact Department is required.
+                              </span>
+
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <br>
+                          <div class="form-group">
+                            <mat-form-field>
+                              <mat-label>Select Designation</mat-label>
+                              <mat-select formControlName="contactDesignation">
+                                <mat-option *ngFor="let d of empDesignationlist" [value]="d.id">{{d.designation}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                            <span style="color:red"
+                              *ngIf="contactForm.get('contactDesignation').invalid && contactForm.get('contactDesignation').touched">
+                              <span *ngIf="contactForm.get('contactDesignation').errors.required">
+                                Designation is required.
+                              </span>
+
+                            </span>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label> Personal Email</label>
+                            <input type="text" class="form-control" placeholder="Personal Email"
+                              formControlName="contactPersonalEmail">
+                            <span style="color:red"
+                              *ngIf="contactForm.get('contactPersonalEmail').invalid && contactForm.get('contactPersonalEmail').touched">
+                              <span *ngIf="contactForm.get('contactPersonalEmail').errors.required">
+                                Personal Email is required.
+                              </span>
+
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label> Official Email</label>
+                            <input type="text" class="form-control" formControlName="contactOfficialEmail">
+                            <span style="color:red"
+                              *ngIf="contactForm.get('contactOfficialEmail').invalid && contactForm.get('contactOfficialEmail').touched">
+                              <span *ngIf="contactForm.get('contactOfficialEmail').errors.required">
+                                Official Email is required.
+                              </span>
+
+
+
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>BDM </label>
+                            <input type="text" class="form-control" placeholder="BDM" formControlName="bdm">
+                            <span style="color:red"
+                              *ngIf="contactForm.get('bdm').invalid && contactForm.get('bdm').touched">
+                              <span *ngIf="contactForm.get('bdm').errors.required">
+                                BDM is required.
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                     
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Personal Mobile Number</label>
+                              <input type="text" class="form-control" placeholder="Mobile number"
+                                formControlName="contactMobileNo" (keypress)="number($event)" maxlength="10">
+                              <span style="color:red"
+                                *ngIf="contactForm.get('contactMobileNo').invalid && contactForm.get('contactMobileNo').touched">
+                                <span *ngIf="contactForm.get('contactMobileNo').errors.required">
+                                  Mobile Number is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Alternate Mobile Number</label>
+                              <input type="text" class="form-control" placeholder="Alt Mobile number"
+                                formControlName="alternateMobileNo" (keypress)="number($event)" maxlength="10">
+                              <span style="color:red"
+                                *ngIf="contactForm.get('alternateMobileNo').invalid && contactForm.get('alternateMobileNo').touched">
+                                <span *ngIf="contactForm.get('alternateMobileNo').errors.required">
+                                  Alternate Mobile Number is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> DOB </label>
+                              <input type="text" class="form-control" placeholder="DOB : dd/mm" formControlName="dob">
+                              <span style="color:red"
+                                *ngIf="contactForm.get('dob').invalid && contactForm.get('dob').touched">
+                                <span *ngIf="contactForm.get('dob').errors.required">
+                                  DOB is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Anniversary </label>
+                              <input type="text" class="form-control" placeholder="Anniversary : dd/mm"
+                                formControlName="anniversary">
+                              <span style="color:red"
+                                *ngIf="contactForm.get('anniversary').invalid && contactForm.get('anniversary').touched">
+                                <span *ngIf="contactForm.get('anniversary').errors.required">
+                                  Anniversary is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-4">
+                            <div class="form-group">
+
+                              <mat-form-field>
+                                <mat-label>Select States</mat-label>
+                                <mat-select formControlName="state">
+                                  <mat-option *ngFor="let d of StateList" [value]="d.id">{{d.stateName}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <br>
+
+                            </div>
+
+                          </div>
+                          <div class="col-4">
+                            <div class="form-group">
+                              <label> Pincode</label>
+                              <input type="text" class="form-control" placeholder="Pincode" formControlName="pincode"
+                                (keypress)="number($event)">
+                              <span style="color:red"
+                                *ngIf="contactForm.get('pincode').invalid && contactForm.get('pincode').touched">
+                                <span *ngIf="contactForm.get('pincode').errors.required">
+                                  Pincode is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+
+
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Address1 </label>
+                              <textarea class="form-control" rows="5" cols="40" class="form-control"
+                                formControlName="address1" name=address1 placeholder="Address1"></textarea>
+                              <span style="color:red"
+                                *ngIf="contactForm.get('address1').invalid && contactForm.get('address1').touched">
+                                <span *ngIf="contactForm.get('address1').errors.required">
+                                  Address1 is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Address2 </label>
+                              <textarea class="form-control" rows="5" cols="40" class="form-control"
+                                formControlName="address2" name=address2 placeholder="Address2"></textarea>
+                              <span style="color:red"
+                                *ngIf="contactForm.get('address2').invalid && contactForm.get('address2').touched">
+                                <span *ngIf="contactForm.get('address2').errors.required">
+                                  Address2 is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label> Address3 </label>
+                              <textarea class="form-control" rows="5" cols="40" class="form-control"
+                                formControlName="address3" name=address3 placeholder="Address3"></textarea>
+                              <span style="color:red"
+                                *ngIf="contactForm.get('address3').invalid && contactForm.get('address3').touched">
+                                <span *ngIf="contactForm.get('address3').errors.required">
+                                  Address3 is required.
+                                </span>
+
+                              </span>
+                            </div>
+                          </div>
+
+                        </div>
+
+
+                      
+
+                    </form>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button class=" btn float-right" style="background-color: #1d62a7; color: white;"
+                      data-dismiss="modal" type="submit" [disabled]="contactForm.invalid"
+                      (click)="updateCustomerContactInfo(contactForm.value)">Update</button><br>
+                    <button class="btn" data-dismiss="modal" style="background-color: #1d62a7; color: white;"
+                      aria-label="Close">Cancel</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
+
+            <!--mymodal1 ends-->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>

@@ -1,0 +1,90 @@
+<!-- empbasic starts-->
+<!-- <div class="tab-pane fade show " id="nav-empbasic" role="tabpanel" aria-labelledby="nav-empbasic-tab">
+  <br>
+  <div class="row">
+    <div class="col-md-11" style="margin-bottom: 25px;">
+      <form class="form-inline ">
+        <div class="input-group ">
+          <!-- <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"> -->
+
+<!-- <div class="container">
+          <div class="row" >
+            <div *ngFor="let empbasic of empbasicinfo" >
+              
+            
+              <div class="d-inline-block">
+                <h5>Employee Id:{{empbasic.employeeId}}</h5>
+              </div>
+           
+          
+           
+          <div  class="d-inline-block marginLeft">
+            <h5>Full Name:{{empbasic.firstname}} {{empbasic.middlename}} {{empbasic.lastname}}</h5>
+          </div>
+          </div>
+          
+          </div>
+          </div>
+           -->
+
+<!-- <div class="col-1 p-0 pl-2 pull-right" ><button class="btn btn-primary" (click)="backClicked()"><i class="fa fa-arrow-left pr-1" style="font-size: 10px"></i>Back</button> </div> -->
+<div class="app-title">
+    <div>
+      <h1><i class="fa fa-user"></i> Personal Details</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+  
+      <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+
+<div class="row">
+    <span class="col-1 p-0 pl-2 ml-auto" (click)="backClicked()" style="font-size: 16px;cursor: pointer;"><i
+      class="fa fa-arrow-left pr-1"></i>Back</span>
+</div>
+<br>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <table class="table table-hover  tile">
+    <thead class="two" style="background-color:  #1D62A7; color: white !important">
+      <tr style="font-size: 17px;">
+        <th>Employee Id </th>
+        <th>First Name</th>
+        <th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Status</th>
+        <th>DOB</th>
+        <th>Gender</th>
+        <th>Designation</th>
+
+
+
+        <!-- <th>Edit</th> -->
+        <!-- <th>Delete</th> -->
+      </tr>
+    </thead>
+    <tr
+      *ngFor="let empbasic of empbasicinfo |  filter:key | paginate: { itemsPerPage: 4, currentPage: p }; let i=index">
+
+      <td>{{empbasic.employeeId}} </td>
+      <td>{{empbasic.firstname}} </td>
+      <td>{{empbasic.middlename}} </td>
+      <td>{{empbasic.lastname}}</td>
+      <td>{{empbasic.status}}</td>
+      <td>{{empbasic.dob | date: 'dd/MM/yyyy'}}</td>
+      <td>{{empbasic.gender|titlecase}} </td>
+      <td>{{empbasic.title}}</td>
+
+
+
+      <!-- <td><img src="/assets/pe.png" width="35px" data-toggle="modal" data-target="#myModal11"
+                    (click)="getbyIdbasicdata(empbasic)"></td> -->
+      <!-- <td><img src="/assets/delete.png" width="25px"(click)="deleteemp(empbasic)"></td> -->
+
+    </tr>
+  </table>
+
+
+</div>

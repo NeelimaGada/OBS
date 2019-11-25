@@ -1,0 +1,306 @@
+<!-- <div class="row"  style="margin-top: 25px">
+    <div class="col-sm-12"  style="margin-bottom: 25px;">Employee Id &nbsp;:<input type="text"></div>
+    <div class="col-sm-6" style="margin-bottom: 25px;" >Name &nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Location &nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Experience&nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Skill &nbsp;:<input type="text"></div>
+  </div>
+<form #empSearch="ngForm" id="contact-form" method="post" action="contact.php" (submit)="getReport(empSearch)"
+    role="form">
+
+    <div class="messages"></div>
+
+    <div class="controls">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="form_name">Emp Id *</label>
+                    <input id="form_name" type="text" name="name" class="form-control"
+                        placeholder="Please enter your emp Id *" [(ngModel)]="empId" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Name *</label>
+                    <input id="form_name" type="text" name="name" class="form-control"
+                        placeholder="Please enter your firstname *" [(ngModel)]="empName" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Lastname *</label>
+                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your lastname *" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Location *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="location"
+                        placeholder="Please enter your Location *" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Skill *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="skil"
+                        placeholder="Please enter your Skill *" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Experience *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="experience"
+                        placeholder="Please enter your Experience *" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="float: right;">
+            <button class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+</form>
+<input type="checkbox" [(ngModel)]="EmpId" name="Id">EmpId &nbsp;
+&nbsp;&nbsp;<input type="checkbox" [(ngModel)]="EmpName" name="empname">EmpName
+
+
+&nbsp;<input type="checkbox" [(ngModel)]="Experience" name="exp">Experience
+
+&nbsp;<input type="checkbox" [(ngModel)]="Location" name="loc">Location
+
+&nbsp;<input type="checkbox" [(ngModel)]="Skills" name="skills">Skills
+
+&nbsp;<table class="table">
+    <thead>
+    <tr>
+        <th *ngIf="EmpId">EmpId</th>
+        <th *ngIf="EmpName">EmpName</th>
+        <th *ngIf="Experience">Experince</th>
+        <th *ngIf="Location">Location</th>
+        <th *ngIf="Skills">Skill</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let r of employeeReports ; let i = index">
+        <td *ngIf="EmpId">{{r.empId}}</td>
+        <td *ngIf="EmpName">{{r.empName}}</td>
+        <td *ngIf="Experience">{{r.experience}}</td>
+        <td *ngIf="Location">{{r.location}}</td>
+        <td *ngIf="Skills">{{r.skil}}</td>
+    </tr>
+    </tbody>
+
+</table>
+<button (click)="getExcel(employeeReports,i)">Download excel </button>
+    <button (click)="getPdf(employeeReports,i)">Download PDF </button> -->
+
+
+<!-- <div class="row"  style="margin-top: 25px">
+    <div class="col-sm-12"  style="margin-bottom: 25px;">Employee Id &nbsp;:<input type="text"></div>
+    <div class="col-sm-6" style="margin-bottom: 25px;" >Name &nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Location &nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Experience&nbsp;:<input type="text"></div>
+    <div class="col-sm-6">Skill &nbsp;:<input type="text"></div>
+  </div>
+<form #empSearch="ngForm" id="contact-form" method="post" action="contact.php" (submit)="getReport(empSearch)"
+    role="form">
+
+    <div class="messages"></div>
+
+    <div class="controls">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="form_name">Emp Id *</label>
+                    <input id="form_name" type="text" name="name" class="form-control"
+                        placeholder="Please enter your emp Id *" [(ngModel)]="empId" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Name *</label>
+                    <input id="form_name" type="text" name="name" class="form-control"
+                        placeholder="Please enter your firstname *" [(ngModel)]="empName" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Lastname *</label>
+                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your lastname *" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Location *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="location"
+                        placeholder="Please enter your Location *" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Skill *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="skil"
+                        placeholder="Please enter your Skill *" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Experience *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" [(ngModel)]="experience"
+                        placeholder="Please enter your Experience *" required="required"
+                        data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="float: right;">
+            <button class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+</form>
+<input type="checkbox" [(ngModel)]="EmpId" name="Id">EmpId &nbsp;
+&nbsp;&nbsp;<input type="checkbox" [(ngModel)]="EmpName" name="empname">EmpName
+
+
+&nbsp;<input type="checkbox" [(ngModel)]="Experience" name="exp">Experience
+
+&nbsp;<input type="checkbox" [(ngModel)]="Location" name="loc">Location
+
+&nbsp;<input type="checkbox" [(ngModel)]="Skills" name="skills">Skills
+
+&nbsp;<table class="table">
+    <thead>
+    <tr>
+        <th *ngIf="EmpId">EmpId</th>
+        <th *ngIf="EmpName">EmpName</th>
+        <th *ngIf="Experience">Experince</th>
+        <th *ngIf="Location">Location</th>
+        <th *ngIf="Skills">Skill</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let r of employeeReports ; let i = index">
+        <td *ngIf="EmpId">{{r.empId}}</td>
+        <td *ngIf="EmpName">{{r.empName}}</td>
+        <td *ngIf="Experience">{{r.experience}}</td>
+        <td *ngIf="Location">{{r.location}}</td>
+        <td *ngIf="Skills">{{r.skil}}</td>
+    </tr>
+    </tbody>
+
+</table>
+<button (click)="getExcel(employeeReports,i)">Download excel </button>
+    <button (click)="getPdf(employeeReports,i)">Download PDF </button> -->
+
+
+   
+    <div>
+            <div class="app-title">
+                    <div>
+                      <h1><i class="fa fa-file"></i>&nbsp;Employee Report</h1>
+                      <p class="pl-4">Ojas Business Suite</p>
+                    </div>
+                    <ul class="app-breadcrumb breadcrumb">
+                      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+                  
+                      <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+                    </ul>
+                  </div>
+          
+            
+     
+    
+    <div class="card">
+        <div class="row" style="margin:10px;">
+            
+            <div class="col-3">
+                <h4>Select Services</h4>
+                <mat-form-field>
+                    <mat-label>Select Services</mat-label>
+                    <mat-select (selectionChange)="selected_service($event.value)">
+                        <mat-option *ngFor="let s of finalservices" [value]="s.serviceName">{{s.serviceName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+    
+            <div class="col-3">
+                <h4>Select Fields</h4>
+                <mat-form-field>
+                    <mat-label>Select Fields</mat-label>
+                    <mat-select [(ngModel)]="selected_fields" (selectionChange)="selected_fields_fun()" #field="ngModel" multiple>
+                            
+                                   <div style="padding: 15px;"><input type="checkbox" (click)="selectAll(checkAll.checked, field, fkey)" #checkAll>&nbsp;&nbsp;Select All</div> 
+                                    <!-- <mat-option (click)="selectAll(yearSelect, years)" #checkAll> Select All-->
+                                   
+                        <mat-option *ngFor="let f of fkey" [value]="f">{{f}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="doc col-3" *ngIf="status">
+                    <abbr title="Download PDF"> <i class="fa fa-file-pdf-o m-2" (click)="download_pdf()"
+                            aria-hidden="true"></i></abbr>
+                    <abbr title="Export Excel"> <i class="fa fa-file-excel-o" (click)="download_excel()"
+                            aria-hidden="true"></i></abbr>
+                </div>
+    
+        </div>
+    
+    
+    </div>
+        <div class="doc">
+        <div class="row" *ngIf="status" >
+       
+    
+            <div class="table-responsive">
+                <table class="table text-center" id="my_table" style="border-radius: 3px;font-size:17px">
+                    <thead>
+                        <th *ngFor="let h of table_heading" class="table-light">{{h| replace:'_' : ' '| titlecase}}</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of table_data  | paginate: { itemsPerPage: ippr, currentPage: p }"
+                            class="table-secondary">
+                            <td *ngFor="let g of table_heading">{{d[g]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <label *ngIf="pstatus">Items Per Page</label>
+                <select [(ngModel)]="ippr" *ngIf="pstatus">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                </select>
+                <pagination-controls (pageChange)="p = $event" style="float:right" *ngIf="pstatus"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    </div>
+    

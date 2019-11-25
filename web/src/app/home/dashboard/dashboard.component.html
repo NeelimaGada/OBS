@@ -1,0 +1,1168 @@
+<div *ngIf="role=='ROLE_ADMIN'">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i>Admin Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer;">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Employee Status</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div style="display: block;" class="piechart">
+
+        <canvas baseChart [data]="pieChartData" [colors]="bidDistributionStatColors" [labels]="pieChartLabels2"
+          [chartType]="pieChartType" [options]="pieChartOptions" [legend]="pieChartLegend">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Reports</h4>
+        <br>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (click)="clickLineData()">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Exit Employee</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData5" [labels]="barChartLabels5" [options]="barChartOptions5"
+          [legend]="barChartLegend5" [chartType]="barChartType5" (click)="clickLineData()">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Events</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData2" [labels]="" [options]="barChartOptions2" [colors]="barChartColors2"
+          [legend]="barChartLegend2" [chartType]="barChartType2">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Employees Monthly Count</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="display: block; " class="piechart">
+        <canvas baseChart [data]="pieChartData1" [colors]="pieChartColor" [labels]="pieChartLabels1"
+          [chartType]="pieChartType1" [options]="pieChartOptions1" [legend]="pieChartLegend1">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Gender Distribution</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="lineChartData4" [labels]="lineChartLabels4" [options]="lineChartOptions4"
+          [colors]="lineChartColors4" [legend]="lineChartLegend4" [chartType]="lineChartType4">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Years In Service Distribution</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+ <!--project reasource chart -->
+ <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData8" [labels]="barChartLabels8" [options]="barChartOptions8"
+          [colors]="barChartColors8" [legend]="barChartLegend8" [chartType]="barChartType8">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Revenue</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData9" [labels]="barChartLabels9" [options]="barChartOptions9"
+          [colors]="barChartColors9" [legend]="barChartLegend9" [chartType]="barChartType9">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Resource Count</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+      <div class="col-md-6">
+          <div style="display: block;" class="barchart"  >
+             <canvas baseChart
+                   [datasets]="barChartData11"
+                   [labels]="barChartLabels11"
+                   [options]="barChartOptions11"
+                 
+                   [legend]="barChartLegend11"
+                   [chartType]="barChartType11">
+           </canvas>
+              <br>
+              <h4 Style="color:#154979;text-align: center">Project Info</h4>
+              <br>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div style="display: block;" class="barchart"  >
+             <canvas baseChart
+                   [datasets]="barChartData12"
+                   [labels]="barChartLabels12"
+                   [options]="barChartOptions12"
+                 
+                   [legend]="barChartLegend12"
+                   [chartType]="barChartType12">
+           </canvas>
+              <br>
+              <h4 Style="color:#154979;text-align: center">Project Info</h4>
+              <br>
+        </div>
+        </div>
+  </div> -->
+  <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData15" [labels]="barChartLabels15" [options]="barChartOptions15"
+          [colors]="barChartColors15" [legend]="barChartLegend15" [chartType]="barChartType15">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project status</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div style="display: block;" class="barchart">
+         <canvas baseChart 
+           [datasets]="barChartData88"
+           [labels]="barChartLabels88"
+           [options]="barChartOptions88"
+           [colors]="barChartColors88"
+           [legend]="barChartLegend88"
+           [chartType]="barChartType88">
+         </canvas>
+         <br>
+         <h4 Style="color:#154979;text-align: center">Customer contract </h4>
+         <br>
+       </div>
+     </div>
+    
+  </div>
+
+  
+  <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData19" [labels]="barChartLabels19" [options]="barChartOptions19"
+          [colors]="barChartColors19" [legend]="barChartLegend19" [chartType]="barChartType19">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Revenue</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+
+      <div style="display: block;" class="piechart">
+
+        <canvas baseChart [data]="pieChartData21" [colors]="bidDistributionStatColors21"
+          [labels]="pieChartstatuslabel21" [chartType]="pieChartType" [options]="pieChartOptions"
+          [legend]="pieChartLegend">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Contract Status</h4>
+        <br>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- <p>Contact</p>
+  <div class="row">
+
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]=" barChartContactData" [labels]="barChartContactLabels"
+          [options]="barChartOptionsContact" [colors]="barChartColors2" [legend]="barChartLegendContact"
+          [chartType]="barChartType2">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">#Customer Contact</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData78" [labels]="barChartLabels78" [options]="barChartOptions78"
+          [colors]="barChartColors78" [legend]="barChartLegend78" [chartType]="barChartType78">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Customer contact </h4>
+        <br>
+      </div>
+    </div>
+
+  </div> -->
+
+ 
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData6" [labels]="barChartLabels6" [options]="barChartOptions6"
+          [legend]="barChartLegend6" [chartType]="barChartType6">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">BDM Wise Customer contact count</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartCustomerData " [labels]="barChartLabels3"
+          [options]="barChartOptionsCustomer" [colors]="barChartColors3" [legend]="barChartLegendCustomer"
+          [chartType]="barChartType3">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Customer Count By Monthly</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="row">
+     
+  </div>
+
+
+
+</div>
+
+<div *ngIf="role=='ROLE_HR'">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i>HR Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer;">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Employee Status</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div style="display: block;" class="piechart">
+
+        <canvas baseChart [data]="pieChartData" [colors]="bidDistributionStatColors" [labels]="pieChartLabels2"
+          [chartType]="pieChartType" [options]="pieChartOptions" [legend]="pieChartLegend">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Reports</h4>
+        <br>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (click)="clickLineData()">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Exit Employee</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData5" [labels]="barChartLabels5" [options]="barChartOptions5"
+          [legend]="barChartLegend5" [chartType]="barChartType5" (click)="clickLineData()">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Events</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- <div class="col-md-6">
+          <div style="display: block;" class="barchart" >
+            <canvas baseChart  
+            [datasets]="barChartData2"
+            [labels]="barChartLabels2"
+            [options]="barChartOptions2"
+            [colors]="barChartColors2"
+            [legend]="barChartLegend2"
+            
+            [chartType]="barChartType2"
+           >
+          </canvas>
+              <br>
+              <h4 Style="color:#154979;text-align: center">Employees Monthly Count</h4>
+              <br>
+            </div>
+       </div>      -->
+    <div class="col-md-6">
+      <div style="display: block; " class="piechart">
+        <canvas baseChart [data]="pieChartData1" [colors]="pieChartColor" [labels]="pieChartLabels1"
+          [chartType]="pieChartType1" [options]="pieChartOptions1" [legend]="pieChartLegend1">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Gender Distribution</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="row">
+    <!-- <div class="col-md-6">
+      <div style="display: block;" class="barchart" >
+        <canvas baseChart 
+        [datasets]="lineChartData4"
+        [labels]="lineChartLabels4"
+        [options]="lineChartOptions4"
+        [colors]="lineChartColors4"
+        [legend]="lineChartLegend4"
+        [chartType]="lineChartType4" >
+      </canvas>
+          <br>
+          <h4 Style="color:#154979;text-align: center">Years In Service Distribution</h4>
+          <br>
+        </div>
+   </div>      -->
+  </div>
+
+
+
+
+</div>
+
+
+
+<div *ngIf="role=='ROLE_USER'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Employee Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="role=='ROLE_MANAGER'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Reporting Manager Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer;">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <a class="nav-link">
+            <i class="fa fa-bell notification_icn"><span></span></i>
+        </a> -->
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="leave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div *ngIf="role=='ROLE_SALES'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Sales Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="role=='ROLE_DM'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Delivery Manager Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="role=='ROLE_BDM'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> BDM Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <!-- <div class="float-right">
+          <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+              Settings
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+              <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+              <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+              <a></a>
+            </div>
+          </div> 
+        </div>
+          -->
+
+  </div>
+  <!-- <div class="row">
+        <div class="col-md-6 col-lg-3">
+        <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"  style="background-color: #1d62a7;"></i>
+        <div class="info">
+        <a  routerLink="personaldetails/"><h4>Personal Details</h4></a>
+        
+        </div>
+        </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+        <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"  style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a  routerLink="userleave/"> <h4>Leaves</h4></a>
+       
+        </div>
+        </div>
+        </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"  style="background-color: #1d62a7;"></i>
+        <div class="info">
+        <a routerLink="career/"><h4>directory  </h4></a>
+        
+        </div>
+        </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"  style="background-color: #1d62a7;"></i>
+          <div class="info">
+          <a routerLink="ucarrers/"><h4>careers </h4></a>
+          
+          </div>
+          </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+         
+          
+
+
+
+
+       </div> -->
+  <!--project reasource chart -->
+  <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData8" [labels]="barChartLabels8" [options]="barChartOptions8"
+          [colors]="barChartColors8" [legend]="barChartLegend8" [chartType]="barChartType8">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Revenue</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData9" [labels]="barChartLabels9" [options]="barChartOptions9"
+          [colors]="barChartColors9" [legend]="barChartLegend9" [chartType]="barChartType9">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Resource Count</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+      <div class="col-md-6">
+          <div style="display: block;" class="barchart"  >
+             <canvas baseChart
+                   [datasets]="barChartData11"
+                   [labels]="barChartLabels11"
+                   [options]="barChartOptions11"
+                 
+                   [legend]="barChartLegend11"
+                   [chartType]="barChartType11">
+           </canvas>
+              <br>
+              <h4 Style="color:#154979;text-align: center">Project Info</h4>
+              <br>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div style="display: block;" class="barchart"  >
+             <canvas baseChart
+                   [datasets]="barChartData12"
+                   [labels]="barChartLabels12"
+                   [options]="barChartOptions12"
+                 
+                   [legend]="barChartLegend12"
+                   [chartType]="barChartType12">
+           </canvas>
+              <br>
+              <h4 Style="color:#154979;text-align: center">Project Info</h4>
+              <br>
+        </div>
+        </div>
+  </div> -->
+  <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData15" [labels]="barChartLabels15" [options]="barChartOptions15"
+          [colors]="barChartColors15" [legend]="barChartLegend15" [chartType]="barChartType15">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project status</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div style="display: block;" class="barchart">
+         <canvas baseChart 
+           [datasets]="barChartData88"
+           [labels]="barChartLabels88"
+           [options]="barChartOptions88"
+           [colors]="barChartColors88"
+           [legend]="barChartLegend88"
+           [chartType]="barChartType88">
+         </canvas>
+         <br>
+         <h4 Style="color:#154979;text-align: center">Customer contract </h4>
+         <br>
+       </div>
+     </div>
+    
+  </div>
+
+  
+  <div class="row">
+    <div class="col-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData19" [labels]="barChartLabels19" [options]="barChartOptions19"
+          [colors]="barChartColors19" [legend]="barChartLegend19" [chartType]="barChartType19">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Project Revenue</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+
+      <div style="display: block;" class="piechart">
+
+        <canvas baseChart [data]="pieChartData21" [colors]="bidDistributionStatColors21"
+          [labels]="pieChartstatuslabel21" [chartType]="pieChartType" [options]="pieChartOptions"
+          [legend]="pieChartLegend">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Contract Status</h4>
+        <br>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- <p>Contact</p>
+  <div class="row">
+
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]=" barChartContactData" [labels]="barChartContactLabels"
+          [options]="barChartOptionsContact" [colors]="barChartColors2" [legend]="barChartLegendContact"
+          [chartType]="barChartType2">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">#Customer Contact</h4>
+        <br>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData78" [labels]="barChartLabels78" [options]="barChartOptions78"
+          [colors]="barChartColors78" [legend]="barChartLegend78" [chartType]="barChartType78">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Customer contact </h4>
+        <br>
+      </div>
+    </div>
+
+  </div> -->
+
+ 
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartData6" [labels]="barChartLabels6" [options]="barChartOptions6"
+          [legend]="barChartLegend6" [chartType]="barChartType6">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">BDM Wise Customer contact count</h4>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div style="display: block;" class="barchart">
+        <canvas baseChart [datasets]="barChartCustomerData " [labels]="barChartLabels3"
+          [options]="barChartOptionsCustomer" [colors]="barChartColors3" [legend]="barChartLegendCustomer"
+          [chartType]="barChartType3">
+        </canvas>
+        <br>
+        <h4 Style="color:#154979;text-align: center">Customer Count By Monthly</h4>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="row">
+     
+  </div>
+
+
+</div>
+<div *ngIf="role=='ROLE_FINANCE'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Finance Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="role=='ROLE_BUHEAD'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> BU Head Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="role=='ROLE_SBUHEAD'">
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> SBU Head Dashboard</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+
+
+    <div class="float-right">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+          Settings
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/employeeedit/{{loggeduser}}">My Info</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+          <a class="dropdown-item" (click)="logoutAction()" style="cursor: pointer">Logout</a>
+          <a></a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="personaldetails/">
+            <h4>Personal Details</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-file fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="userleave/">
+            <h4>Leaves</h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="career/">
+            <h4>directory </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"
+          style="background-color: #1d62a7;"></i>
+        <div class="info">
+          <a routerLink="ucarrers/">
+            <h4>careers </h4>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

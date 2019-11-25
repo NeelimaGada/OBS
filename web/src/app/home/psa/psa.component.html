@@ -1,0 +1,52 @@
+
+<div  class="app-title">
+  <div>
+      <h1><i class="fa fa-cogs"></i> Professional Services Automation</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+      </ul>
+  </div>
+
+<!-- <div class="row m-0"> -->
+<!-- <div class="col-11 p-0 pl-4 pt-3"><b> Employee Details </b></div> -->
+<!-- <div class="col-1 p-0 pl-4 pt-3"><i class="fa fa-bell" style="font-size: 20px;"> <div class="circle"></div></i>  </div> -->
+<!-- </div> -->
+<!-- <div class="row m-0"> -->
+<!-- <div class="col-11 p-0  pl-4 pt-1"><p style="font-size: 13px;color: #a1a1a1">Home / Employee Details / User Managements</p></div> -->
+<!-- <div class="col-1 p-0 pl-2" ><button class="btn btn-primary" (click)="backClicked()"><i class="fa fa-arrow-left pr-1" style="font-size: 10px"></i>Back</button> </div> -->
+
+<div class="pull-right"><p (click)="backClicked()" style="font-size: 16px;cursor: pointer;"><i class="fa fa-arrow-left pr-1"  ></i>Back</p></div>
+<!-- </div> -->
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light" id="topheader">
+<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav"
+aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav nav-tabs emd_edt">
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link  " routerLink="customer">Customer</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="contact">Customer Contact</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="contract">Customer Contract</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="project">Project</a>
+  </li>
+</ul>
+</div>
+</nav>
+<br>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,123 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-dashboard"></i>Role Management </h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form >
+      
+        <input class="form-control" type="text" [(ngModel)]="key1" size="50" name="key1" placeholder="Search" [disabled]="searchfield">
+      </form>
+    </div>
+      <div class="col-8 text-right">
+        <button class="btn" type="button" *ngIf="addb" (click)="value=!value;clear()">Add Role</button>
+      </div>
+   
+  
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <form #rolename="ngForm" (submit)="setRole(rolename.value)">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+        <tr>
+          <th (click)="sort('status')" >Role</th>
+          <th >Status</th>
+          <th>Edit</th>
+          <!-- <th>Delete</th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let field of roleManagemenList | orderBy: order:reverse:'case-insensitive' 
+                       |  filter:key1    | paginate: { itemsPerPage: pageSize, currentPage: p }  ; let i=index" class="text-center">
+          <td>
+            <div *ngIf="!field.isEditable">
+              {{field.roleName}}
+            </div>
+            <div *ngIf="field.isEditable">
+              <input type="text" class="form-control" name="roleName" [(ngModel)]="field.roleName" 
+              #role="ngModel" required pattern="[A-Za-z]{1}[A-Za-z. ]*"/>
+
+              <div style="color:red" *ngIf="role.invalid && role.touched ">
+                <span *ngIf="role.errors.required">
+                  Please enter role
+                </span>
+                <span *ngIf="role.errors.pattern">
+                  Please enter valid role
+                </span>
+              </div>
+            </div>
+
+
+
+          </td>
+          <td>Active</td>
+          <td>
+            <button class="btn " *ngIf="field.isEditable"
+              (click)="field.isEditable=!field.isEditable;saveUpdateValue(rolename.value);" [disabled]="rolename.invalid">Update</button>&nbsp;
+            <button class="btn " (click)="field.isEditable=!field.isEditable" (click)="cancel()"
+              *ngIf="field.isEditable">Cancel</button>
+            <span style="color:#1d62a7;font-size:20px" (click)='field.isEditable =!field.isEditable'
+              (click)="edit(field.id)" *ngIf="!field.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <!-- <i class="fa fa-pencil" aria-hidden="true"  (click)='field.isEditable =!field.isEditable' *ngIf="!field.isEditable"></i> -->
+
+          </td>
+
+
+          <!-- <td><img src="assets/delete.png" width="20" (click)="deleteRole()" /></td> -->
+          <!-- <i class="fa fa-trash" aria-hidden="true"  style="color:red" (click)="deleteFieldValue(i)"></i>   -->
+
+        </tr>
+
+
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addText" [(ngModel)]="roleName" type="text" class="form-control" #role="ngModel"
+              pattern="[A-Za-z]{1}[A-Za-z. ]*" placeholder="Enter Role Status" required>
+
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color: red"> Role is required </span>
+              <span *ngIf="role.errors.pattern" style="color: red"> Please enter valid role </span>
+            </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="rolename.invalid">Save</button>&nbsp;
+            <button type="submit" class="btn  " (click)=cancelbulist()>Cancel</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>
+<!-- private pageSize: number = 5; -->

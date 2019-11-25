@@ -1,0 +1,16 @@
+.in{
+  padding:5px 20px 0px 0px;
+}
+.btnStyle{
+  background-color: #1d62a7;
+  color: white;
+}
+.table tr.active td{
+  background-color: rgb(178, 241, 202);
+  color: black;
+}
+
+.table tr.reject td{
+  background-color: rgb(253, 204, 204);
+  color: black
+}

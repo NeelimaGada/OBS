@@ -1,0 +1,69 @@
+<div class="app-title">
+        <div>
+          <h1><i class="fa fa-handshake"></i>&nbsp;Organization Structure</h1>
+          <p class="pl-4">Ojas Business Suite</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      
+          <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+<main class="jumbotron bg-light">
+    <h3>Organization Structure</h3>
+    <hr>
+    <div class="row">
+        <div id='treeparent' class="col-md-4 col-sm-4 col-lg-4">
+            <ejs-treeview id="tree" [fields]="field" [cssClass]='cssClass' (nodeClicked)="getNode($event)">
+                <ng-template #nodeTemplate="" let-data="">
+                    <div>
+
+                        <div class="ename" style="font-size: 15px">{{data.name}} ({{data.id}})</div>
+                        <!-- <div>
+                            <img class="eimage" src="/assets/pics/{{data.eimg}}" alt="{{data.eimg}}"/>
+                        </div> -->
+                    </div>
+                </ng-template>
+            </ejs-treeview>
+        </div>
+        <div class="col-md-8" *ngIf="clicked">
+            <!--  <div class="jumbotron"> -->
+            <div class="jumbotron img">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <!-- <img class="img-fluid" src="{{employee.eimg}}" alt="{{dpText}}" /> -->
+                       
+                       <span> <img *ngIf="!noImage" class="img-fluid" style="height: 180px;width: 150px" src="{{employee.eimg}}" />
+                        <div *ngIf="noImage"><img class="img-fluid" style="height: 200px;width: 200px" src = "/assets/pics/{{icon}}"></div>
+                       </span>
+                                        
+                    </div>
+                    <div class="col-md-8">
+                        <div class="table">
+						<strong style="font-size: 20px"> {{employee.name}} ({{employee.id}}) </strong>
+                            <tbody>
+                                <tr>
+                                    <td>Email Id </td>
+                                    <td>: &nbsp;{{empContact.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile No </td>
+                                    <td>: &nbsp; {{empContact.personalMobileNo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Designation </td>
+                                    <td>: &nbsp;{{employee.job}}</td>
+                                </tr>
+                                <tr>
+                                        <td>Domain </td>
+                                        <td>: &nbsp;{{employee.domain}}</td>
+                                    </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

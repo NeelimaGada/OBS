@@ -1,0 +1,200 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>Employee Education</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+<div class="row " style="margin-bottom: 25px;">
+  <div  class="col-4" >
+    <form >
+        <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+          [disabled]="searchfield">
+      </form>
+  </div>
+      <div class="col-8 text-right">
+        <button type="submit" (click)="value=!value;clear()" *ngIf="addb" class="btn">Add Employee Education</button>
+      </div>
+    
+  
+  
+</div>
+<div class="table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <form #educationForm="ngForm">
+    <table class="table table-condensed tile" style="width:100%;">
+      <thead style="background-color: #1d62a7;color:white;text-align: center;">
+        <tr>
+
+          <th>Education Type</th>
+          <th>Status</th>
+          <th>Edit</th>
+          <!-- <th>Delete</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let bulist of EmpEduSaveList| filter:key | paginate: { itemsPerPage: 5, currentPage: p }| orderBy: order:reverse:'case-insensitive'| filter:searchText;let i = index" >
+          <td>
+              <div *ngIf="!bulist.isEditable">
+                  {{bulist.degree}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.degree" *ngIf="bulist.isEditable"/>
+          </td>
+          <td>
+              <div *ngIf="!bulist.isEditable">
+                  {{bulist.pg}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.pg" *ngIf="bulist.isEditable"/>
+          </td>
+          <td>
+              <div *ngIf="!bulist.isEditable">
+                  {{bulist.degree_stream}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.degree_stream" *ngIf="bulist.isEditable"/>
+
+          </td>
+          <td>
+            <div *ngIf="!bulist.isEditable">
+                {{bulist.pg_stream}}
+            </div>
+            <input type="text" [(ngModel)]="bulist.pg_stream" *ngIf="bulist.isEditable"/>
+
+        </td>
+          <td>
+              <button  class="btn" style="background: #009ee2;border:#009ee2;color:white;" *ngIf="bulist.isEditable" (click)="bulist.isEditable=!bulist.isEditable;saveUpdatedValues(bulist);">Save</button>
+              <img src="assets/pe.png" width = "30" (click)='bulist.isEditable =!bulist.isEditable' *ngIf="!bulist.isEditable">
+          </td>
+          <td><img src="assets/delete.png" width = "20" (click)=" deleteEmpEdu(bulist)"/></td>
+        </tr> -->
+        <tr
+          *ngFor="let bulist of EmpQualArray| filter:key | paginate: { itemsPerPage: pageSize, currentPage: p }| orderBy: order:reverse:'case-insensitive'| filter:searchText;let i = index" class="text-center">
+
+          <td>
+            <div *ngIf="!bulist.isEditable">
+              {{bulist.educationType}}
+            </div>
+
+            <div *ngIf="bulist.isEditable">
+              <input type="text" class="form-control" name="educationType" #edu="ngModel" required
+                pattern="[A-Za-z]{1}[A-Za-z. ]*" [(ngModel)]="bulist.educationType" />
+
+              <div style="color:red" *ngIf="edu.invalid && edu.touched ">
+                <span *ngIf="edu.errors.required">
+                  Please enter education type
+                </span>
+                <span *ngIf="edu.errors.pattern">
+                  Please enter valid education type
+                </span>
+              </div>
+            </div>
+
+
+          </td>
+
+
+
+
+
+
+
+          <td>Active</td>
+          <!-- <select >
+            
+            <option *ngIf="!bulist.isEditable">Active</option>
+            <option *ngIf="!bulist.isEditable">Inactive</option>
+      
+            </select> -->
+          <!--  <td>
+                 <button  class="btn" style="background: #009ee2;border:#009ee2;color:white;" *ngIf="bulist.isEditable" 
+                (click)="bulist.isEditable=!bulist.isEditable;setEmpEducation(bulist);">Update</button>
+                <img src="assets/pe.png" width = "30" (click)='bulist.isEditable =!bulist.isEditable' *ngIf="!bulist.isEditable"> 
+            </td>-->
+          <!-- <td><img src="assets/delete.png" width = "20" (click)=" deleteEmpEdu(bulist)"/></td> -->
+
+
+
+          <td>
+
+            <span style="color:#1d62a7;font-size:20px" *ngIf="!bulist.isEditable"
+              (click)="(bulist.isEditable=!bulist.isEditable) && edit(bulist.id)"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+            <div *ngIf="bulist.isEditable">
+              <button type="submit" class="btn " (click)="setEmpEducation(educationForm.value)"
+                [disabled]="educationForm.invalid">update</button>&nbsp;&nbsp;
+              <button type="submit" class="btn " (click)="cancel()"
+                (click)="(bulist.isEditable=!bulist.isEditable)">Cancel</button>
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <!-- <td>
+              <input  [(ngModel)]="educationType" *ngIf="value" type="text" class="form-control" placeholder="Enter Education Type" required >
+              
+            </td> -->
+          <!-- <td *ngIf="value">
+        
+              <input name="educationType" [(ngModel)]="educationType" type="text"
+                #cost="ngModel"pattern="[A-Za-z]*" class="form-control" placeholder="Enter Cost educationType" required>
+  
+              <div style="color:red" *ngIf="cost.invalid && cost.touched ">
+                <span *ngIf="cost.errors.required">
+                    Please enter educationType
+                </span>
+                <span *ngIf="cost.errors.pattern">
+                    Please enter alphabet only
+                </span>
+               
+  
+              </div>
+            </td> -->
+
+          <td *ngIf="value">
+            <input type="text" [(ngModel)]="educationType" placeholder="Enter Education Type" name="educationType"
+              class="form-control" #education="ngModel" pattern="[A-Za-z]{1}[A-Za-z. ]*" required>
+            <div *ngIf="education.invalid && education.touched" style="color: red">
+              <span *ngIf="education.errors.required">
+                Please Enter Valid Education
+              </span>
+              <span *ngIf="education.errors.pattern">
+                Please Enter Alphabets Only
+              </span>
+            </div>
+          </td>
+          <!-- </form> -->
+
+
+
+          <td>
+            <button type="submit" class="btn  " *ngIf="value" (click)="saveEmpEducationalQual()"
+              [disabled]="educationForm.invalid">Save</button>
+            <button type="submit" class="btn " *ngIf="value" (click)="cancelbulist()">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event" background="#009688"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>
+<!-- private pageSize: number = 5; -->
+
+
+
+<!-- end-->

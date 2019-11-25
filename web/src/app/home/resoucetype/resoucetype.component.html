@@ -1,0 +1,137 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>Resource Type</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form class="form-inline ">
+        <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+          [disabled]="searchfield">
+        </form>
+      </div>
+      <div class="col-8 text-right">
+        <button type="submit" (click)="value=!value;clear()" *ngIf="addb" class="btn">Add Resource Type</button>
+      </div>
+  
+</div>
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <form #busunitfor="ngForm">
+
+    <table class="table  table-condensed tile" style="width:100%">
+
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+
+          <th>Resource type</th>
+
+          <th>Status</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let rtlist of getResourceList | orderBy: order:reverse:'case-insensitive' |  filter:key 
+             | paginate: { itemsPerPage: pageSize, currentPage: p }" class="text-center">
+          <td>
+            <div *ngIf="!rtlist.isEditable">
+              {{rtlist.resourceTypeName}}
+            </div>
+            <div *ngIf="rtlist.isEditable">
+              <input type="text" name="resourceTypeName" [(ngModel)]="rtlist.resourceTypeName" class="form-control"
+                #res="ngModel" required pattern="[A-Za-z]{1}[A-Za-z. ]*" />
+              <div style="color:red" *ngIf="res.invalid && res.touched ">
+                <span *ngIf="res.errors.required">
+                  Please enter resourse type
+                </span>
+                <span *ngIf="res.errors.pattern">
+                  Please enter valid resourse type
+                </span>
+              </div>
+            </div>
+
+          </td>
+          <td>
+            <!-- <button class="btn" style="background: #009ee2;border:#009ee2;color:white;"
+              *ngIf="rtlist.isEditable" (click)="rtlist.isEditable=!rtlist.isEditable;updateResource(rtlist);">Update</button>
+            <img src="assets/pe.png" width="30" (click)='rtlist.isEditable =!rtlist.isEditable'
+              *ngIf="!rtlist.isEditable"> -->
+            Active
+          </td>
+
+
+          <td>
+
+            <button class="btn " *ngIf="rtlist.isEditable"
+              (click)="rtlist.isEditable=!rtlist.isEditable;updateResource(busunitfor.value);"
+              [disabled]="busunitfor.invalid">Update</button>&nbsp;
+            <button class="btn " (click)="rtlist.isEditable=!rtlist.isEditable" (click)="cancel()"
+              *ngIf="rtlist.isEditable">Cancel</button>
+            <span style="color:#1d62a7;font-size:20px" (click)='rtlist.isEditable =!rtlist.isEditable'
+              (click)="edit(rtlist.id)" *ngIf="!rtlist.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+          </td>
+        </tr>
+        <!-- <tr>
+              
+
+           <td><input id="resourcetype" name="resourcetype" [(ngModel)]="res" 
+            *ngIf="value" type="text" class="form-control" placeholder="Enter resourcetype" required ></td>
+   
+            <td><button type="submit" class="btn btn-primary " *ngIf="value" (click)="setResource()">Save</button>
+            <button type="submit" class="btn btn-default " *ngIf="value" (click)=cancelrtlist()>Cancel</button></td>
+            
+          
+           </tr>  -->
+        <tr>
+          <td *ngIf="value">
+
+            <input name="resourceTypeName" [(ngModel)]="resourceTypeName" type="text" #cost="ngModel"
+              pattern="[A-Za-z]{1}[A-Za-z. ]*" class="form-control" placeholder="Enter Cost Center" required>
+
+            <div style="color:red" *ngIf="cost.invalid && cost.touched ">
+              <span *ngIf="cost.errors.required">
+                Please enter resourseType
+              </span>
+              <span *ngIf="cost.errors.pattern">
+                Please enter valid resourse type
+              </span>
+
+
+            </div>
+
+          </td>
+          <td><button type="submit" class="btn  mr-2" *ngIf="value" (click)="setResource(busunitfor.value)"
+              [disabled]="busunitfor.invalid">Save</button>
+            <button type="submit" class="btn  " *ngIf="value" (click)=cancelrtlist()>Cancel</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+
+
+
+</div>
+
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

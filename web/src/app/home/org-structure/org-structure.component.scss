@@ -1,0 +1,35 @@
+.custom .e-list-item .e-icons {
+    background-image: url(http://jsplayground.syncfusion.com/13.3.0.7/themes/web/images/ui-icons/ui-icons-default.png);
+    background-repeat: no-repeat;
+}
+
+.custom .e-list-item .e-icon-expandable {
+    background-position: -79px -40px;
+}
+
+.custom .e-list-item .e-icon-collapsible {
+    background-position: -79px -40px;
+}
+
+.custom .e-list-item .e-text-content .e-icon-expandable:before,
+.custom .e-list-item .e-text-content .e-icon-collapsible:before {
+	//content: '';
+}
+
+#treeparent {
+    display: block;
+    max-width: 400px;
+    max-height: 730px;
+    
+    overflow: auto;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+}
+.image{
+    width: 200px;
+
+}
+.img{
+    background-color: #1d62a7;
+    color: white;
+}

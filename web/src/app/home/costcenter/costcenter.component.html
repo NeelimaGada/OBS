@@ -1,0 +1,148 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Cost Center</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+  <div class="row" style="margin-bottom: 25px;">
+      <div class="col-4">
+           <form>
+           <input type="text" class="form-control " name="key" [(ngModel)]="key" size="50" placeholder="Search"
+          [disabled]="searchfield">
+        </form>
+      </div>
+      <div class="col-8 text-right">
+        <button type="button" (click)="value=!value;clear()" *ngIf="addbb" class="btn "
+          style="background-color: #1d62a7; color:white">Add Cost Center</button>
+      </div>
+  </div>
+
+
+<div class="row top table-responsive text-center" style="margin-right: 0px; margin-left: 0px;">
+  <!-- <div *ngIf="hide" class="pull-right col-6">
+                <span style="color:blue;font-size:20px"><i class="fa fa-edit"></i></span>
+              </div> -->
+  <form #costcentername="ngForm">
+    <table class="table table-condensed tile" style="width:100%;">
+      <thead class="two" style="background-color: #1d62a7;color:white">
+        <tr>
+          <th>
+            Cost Center
+
+          </th>
+
+          <th *ngIf="hide"> Status</th>
+          <th *ngIf="hide">
+            Edit
+          </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let bulist of coscentergetlist |paginate: { itemsPerPage: pageSize, currentPage: p } | orderBy: order:reverse:'case-insensitive'| filter:key; let i=index ">
+          <td>
+            <div *ngIf="!bulist.isEditable">
+              {{bulist.costCenterCode}}
+            </div>
+            <div *ngIf="bulist.isEditable">
+              <input type="text" class="form-control" maxlength="4" minlength="4" name="costCenterCode" required
+                [(ngModel)]="bulist.costCenterCode" #editcost="ngModel" pattern="[0-9]*" />
+              <div style="color:red" *ngIf="editcost.invalid && editcost.touched ">
+                <span *ngIf="editcost.errors.required">
+                  Please enter cost center code
+                </span>
+                <span *ngIf="editcost.errors.pattern">
+                  Enter only numeric values.
+                </span>
+                <span *ngIf="editcost.errors.maxlength">
+                  Personal Mobile No is required.
+                </span>
+                <span *ngIf="editcost.errors.minlength">
+                  Enter minimum 4 digits
+                </span>
+
+
+              </div>
+
+
+
+            </div>
+          </td>
+
+          <td *ngIf="hide">
+
+            Active
+          </td>
+          <td *ngIf="hide">
+
+            <span style="color:#1d62a7;font-size:20px" *ngIf="!bulist.isEditable"
+              (click)="(bulist.isEditable=!bulist.isEditable) && edit(bulist.id);"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+            <div *ngIf="bulist.isEditable">
+              <button type="submit" class="btn " style="background-color: #1d62a7; color:white"
+                (click)="saveUpdateValues(costcentername.value)"
+                [disabled]="costcentername.invalid">update</button>&nbsp;&nbsp;
+              <button type="submit" class="btn " style="background-color: #1d62a7; color:white" (click)="cancel()"
+                (click)="(bulist.isEditable=!bulist.isEditable)">Cancel</button>
+            </div>
+
+          </td>
+
+        </tr>
+        <tr>
+          <td *ngIf="value">
+
+            <input name="costCenterCode" maxlength="4" minlength="4" [(ngModel)]="costCenterCode" type="text"
+              #cost="ngModel" pattern="[0-9]*" class="form-control" placeholder="Enter Cost Center" required>
+
+            <div style="color:red" *ngIf="cost.invalid && cost.touched ">
+              <span *ngIf="cost.errors.required">
+                CostCenterId required
+              </span>
+              <span *ngIf="cost.errors.pattern">
+                Enter only 4 numeric values.
+              </span>
+              <span *ngIf="cost.errors.minlength">
+                Enter minimum 4 digits
+              </span>
+
+
+            </div>
+
+          </td>
+          <td *ngIf="value">
+            <button type="submit" class="btn" style="background-color: #1d62a7; color:white"
+              (click)="setCostcenterData(costcentername.value)"
+              [disabled]="costcentername.invalid">Save</button>&nbsp;&nbsp;
+            <button type="submit" class="btn" style="background-color: #1d62a7; color:white"
+              (click)="cancelbulist()">Cancel</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </form>
+
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

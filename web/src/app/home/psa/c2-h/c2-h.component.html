@@ -1,0 +1,127 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;C2H</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value=!value; clear()" *ngIf="addb" class="btn ">Add C2H</button>
+  </div>
+
+
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #c2hStatusform="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+
+          <th>C2H</th>
+          <th>Status</th>
+          <th>Edit</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let c2hTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!c2hTable.isEditable">
+              {{c2hTable.c2hstatus}}
+            </div>
+            <div *ngIf="c2hTable.isEditable">
+              <input type="text" name="c2hstatus" #c2hStatusform="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*"
+                [(ngModel)]="c2hTable.c2hstatus" class="form-control" />
+              <div style="color:red" *ngIf="c2hStatusform.invalid && c2hStatusform.touched ">
+                <span *ngIf="c2hStatusform.errors.required">
+                  Please enter C2H
+                </span>
+                <span *ngIf="c2hStatusform.errors.pattern">
+                  Please enter valid C2H
+                </span>
+              </div>
+            </div>
+          </td>
+
+
+          <td>
+            <div>
+            {{c2hTable.status}}
+          </div></td>
+          
+          <td> <span style="color:#1d62a7;font-size:20px" (click)='c2hTable.isEditable =!c2hTable.isEditable'
+              (click)="edit(c2hTable.c2hstatusId,c2hTable.status)" *ngIf="!c2hTable.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn " *ngIf="c2hTable.isEditable"
+              (click)='c2hTable.isEditable=!c2hTable.isEditable' (click)= "updateC2H(c2hStatusform.value)"
+              [disabled]="c2hStatusform.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="c2hTable.isEditable"
+              (click)='c2hTable.isEditable =!c2hTable.isEditable' (click)="cancel()">Cancel</button>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addC2Hstatus" [(ngModel)]="c2hstatus" type="text" class="form-control" #role="ngModel"
+              placeholder="Enter C2H" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter C2H </span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid C2H </span>
+            </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="c2hStatusform.invalid"
+              (click)="setC2H(c2hStatusform.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

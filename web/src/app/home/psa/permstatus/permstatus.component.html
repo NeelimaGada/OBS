@@ -1,0 +1,130 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;Permanent Status</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value=!value;clear()" *ngIf="addb" class="btn">Add Permanent Status</button>
+  </div>
+
+
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #perms="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+          <th>permanent Status</th>
+          <th>Status</th>
+          <th>Edit</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let permlist of tabledata| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!permlist.isEditable">
+              {{permlist.permstatus}}
+            </div>
+            <div *ngIf="permlist.isEditable">
+              <input type="text" name="permstatusdata" #permmode="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*"
+                [(ngModel)]="permlist.permstatus" class="form-control" />
+              <div style="color:red" *ngIf="permmode.invalid && permmode.touched ">
+                <span *ngIf="permmode.errors.required">
+                  Please enter permanent status
+                </span>
+                <span *ngIf="permmode.errors.pattern">
+                  Please enter valid permanent status
+                </span>
+              </div>
+            </div>
+          </td>
+
+
+          <td>
+            <div>
+            {{permlist.status}}   
+          </div></td>
+          
+          <td>
+            
+             <span style="color:#1d62a7;font-size:20px" (click)='permlist.isEditable =!permlist.isEditable'
+              (click)="edit(permlist.permstatusId,permlist.status)" *ngIf="!permlist.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn" *ngIf="permlist.isEditable"
+              (click)='permlist.isEditable=!permlist.isEditable' (click)= "updatepermstatus(perms.value)"
+              [disabled]="perms.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="permlist.isEditable"
+              (click)='permlist.isEditable =!permlist.isEditable' (click)="cancel()">Cancel</button>
+
+          </td>
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addpermstatus" [(ngModel)]="permstatusdata" type="text" class="form-control" #role="ngModel"
+              placeholder="Enter perm status" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter permanent status </span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid permanent status </span>
+            </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="perms.invalid"
+              (click)="setpermstatus(perms.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

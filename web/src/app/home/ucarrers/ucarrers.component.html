@@ -1,0 +1,153 @@
+<div class="app-title">
+    <div>
+      <h1><i class="fa fa-address-book"></i>&nbsp;Careers</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+  
+      <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+<div class="col-1 p-0 pl-2 pull-right"  (click)="backClicked()" style="font-size: 16px;cursor: pointer;"><i class="fa fa-arrow-left pr-1" ></i>Back </div>
+<br>
+    <table  class="table table-responsive" >
+        <thead style="background-color: #1d62a7">
+        <tr>
+            <th>Employee_Id </th>
+            <th>Project_Name</th>
+            <th>Contract_Id</th>
+            <th>Rate_Id</th>
+            <th>Start_Date</th>
+            <th>end_Date</th>
+            <th>Billing_Id</th>
+            <th>Project_Tech_Stack</th>
+            <th>Customer</th>
+            <th>Location</th>
+            <th>GST_Applicable</th>
+            <th>Project_Type</th>
+            <th>Project_Status</th>
+            <th>BDM_Contact</th>
+             <!-- <th>Flag</th> -->
+             <!-- <th>created By</th>
+             <th>updatedBy</th>
+             <th>created Date</th>
+             <th>updated Date</th> -->
+             <th>Isinternal</th>
+             <!-- <th>Edit</th> -->
+             <!-- <th>Delete</th> -->
+         </tr>
+        </thead>
+        <tbody style="color: black">
+      
+         <tr *ngFor="let user of projectDetailsLi | filter:key | paginate: { itemsPerPage: pageSize, currentPage:p }; let i=index">
+            <td>
+                {{user.employeeId}}
+              </td>
+          <td>
+              {{user.projectName}}
+          </td>
+
+          <td >
+              {{user.contractId}}
+          </td>
+          <td>
+              {{user.rateId}}
+          </td>
+          <td>
+              {{user.startDate | date:"M/d/yy"}}
+          </td>
+          <td>
+              {{user.endDate | date:"M/d/yy"}}
+          </td>
+          <td>
+              {{user.billingId}}
+            </td>
+            <!-- <td>
+            <div *ngIf="!user.isEditable">
+              {{user.employeeId}}
+            </div>
+            <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+            </td> -->
+            <td>
+                {{user.projectTechStack}}
+            </td>
+            <td>
+                {{user.customer}}
+            </td>
+            <td>
+                {{user.location}}
+            <td>
+                {{user.gstApplicable}}
+              </td>
+              <td>
+                  {{user.projectType}}
+              </td>
+              <td>
+                  {{user.projectStatus}}
+                </td>
+              <td>
+                  {{user.bdmContact}}
+                </td>
+                <!-- <td>
+                <div *ngIf="!user.isEditable">
+                  {{user.flag}}
+                </div>
+                <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                </td> -->
+                <!-- <td>
+                <div *ngIf="!user.isEditable">
+                  {{user.createdBy}}
+                </div>
+                <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                </td> -->
+                <!-- <td>
+                  <div *ngIf="!user.isEditable">
+                    {{user.updatedBy}}
+                  </div>
+                  <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                  </td> -->
+        
+                <!-- <td>
+                  <div *ngIf="!user.isEditable">
+                    {{user.createdDate}}
+                  </div>
+                  <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                  </td> -->
+                  <!-- <td>
+                    <div *ngIf="!user.isEditable">
+                      {{user.updatedDate}}
+                    </div>
+                    <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                    </td> -->
+                  <td>
+                      {{user.isInternal}}
+                    </td>
+                  
+        
+        
+        <td>
+            <!-- <button class="btn btn-primary" (click)='bulist.isEditable =!bulist.isEditable' *ngIf="!bulist.isEditable">Edit</button> -->
+            <button  class="btn" style="background: #009ee2;border:#009ee2;color:white;" *ngIf="user.isEditable" (click)="user.isEditable=!user.isEditable">Save</button>
+           <!--  <img src="assets/pe.png" width="30px" data-toggle="modal" data-target="#myModalProject" (click) = "getdatabyId1(user);" > -->
+            </td>
+           <!-- <td><img src="assets/delete.png" width="20px" (click)="deleteproj(user)"/></td> -->
+          </tr>
+   
+        
+          </tbody>
+        </table>
+  
+  <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+  <div class="row">
+    <label class="ml-3">Items per Page: </label>&nbsp;&nbsp;&nbsp;
+
+
+    <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="15">15</option>
+      <option [ngValue]="20">20</option>
+    </select>
+
+  </div>

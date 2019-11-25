@@ -1,0 +1,1708 @@
+<div class="container col-12">
+<!-- <div class="tab-pane fade show " id="nav-empbasic" role="tabpanel" aria-labelledby="nav-empbasic-tab">
+  <br>
+  <div class="row">
+    <div class="col-md-11" style="margin-bottom: 25px;">
+      <form class="form-inline ">
+        <div class="input-group ">
+          
+          <div class="input-group-btn">
+            <h1></h1>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-1 " style="padding-left: 40px;" *ngIf="!user">
+      <div class="input-group add">
+        
+        <button class="btn" (click)="getbyIdbasicdata(empObj)" data-toggle="modal"
+          data-target="#myModal11" [disabled]="user">
+          Edit </button>
+      </div>
+    </div>
+    <div *ngIf="!user">
+
+      <div class="col-md-1 " style="padding-left:40px">
+        <div class="input-group add">
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="container">
+    <div class="row">
+     <!--  <div *ngFor="let empbasic of empbasicinfo"> -->
+<!-- <div class="d-inline-block">
+          <h5>Employee Id:{{ empObj.employeeId }}</h5>
+        </div>
+        <div class="d-inline-block " style="margin-left: 500px;">
+          <h5>Full Name:{{empObj.firstname}} {{empObj.middlename}} {{empObj.lastname}}</h5>
+        </div> -->
+<!-- </div> -->
+<!-- 
+    </div>
+  </div> -->
+
+<br>
+
+<div class="row">
+  <!-- //basic info -->
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-body" style="text-align:justify">
+
+        <div class="float-right col-md-2">
+          <span (click)="onEdit()"  style="color:#1d62a7" *ngIf="!user&&!isEditEnable"><i class="fa fa-edit"
+              style="font-size:20px"></i></span>
+        </div>
+        <span style="font-size: 17px;"><b>Basic Info</b>
+          <hr></span>
+
+
+        <!--
+     <div class="form-group">
+                     <label>First Name<span class="starColor"> *</span> </label>
+                     <input type="text" class="form-control" [(ngModel)]="empinobj.firstname" name="emp1" required pattern="[A-Za-z]*" placeholder="First Name" #first="ngModel">
+                     <span style="color:red" *ngIf="first.invalid && first.touched ">
+                       <span *ngIf="first.errors.required">
+                         Firstname is required
+                       </span>
+                       <span *ngIf="first.errors.pattern">
+                         Enter alphabets only.
+                       </span>
+                     </span>
+                   </div>
+  -->
+
+        <form #empData="ngForm" (ngSubmit)="updatecardinfo(); isEditEnable=!isEditEnable">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                
+                <p><b>First Name :</b> </p>
+                <p *ngIf="!isEditEnable">{{empObj.firstname}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control"  [(ngModel)]="empObj.firstname" required name="emp1"
+                  pattern="[A-Za-z\ ]*" placeholder="First Name" #first="ngModel">
+
+                <span style="color:red" *ngIf="first.invalid && first.touched ">
+                  <span *ngIf="first.errors.required">
+                    Firstname is required
+                  </span>
+                  <span *ngIf="first.errors.pattern">
+                    Enter alphabets only.
+                  </span>
+                </span>
+              </div>
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.firstname" required name="emp1"
+                  pattern="[A-Za-z\ ]*" placeholder="First Name" #first="ngModel">
+              </div>
+
+            <div class="row">
+                <p><b>Middle Name :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.middlename}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control" name="middlename" [(ngModel)]="empObj.middlename" required
+                  name="emp2" pattern="[A-Za-z\ ]*" placeholder="Middle Name" #middle="ngModel">
+                <span style="color:red" *ngIf="middle.invalid && middle.touched ">
+                  <span *ngIf="middle.errors.pattern">
+                    Enter alphabets only.
+                  </span>
+                </span>
+              </div>
+
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled name="middlename" [(ngModel)]="empObj.middlename" required
+                  name="emp2" pattern="[A-Za-z\ ]*" placeholder="Middle Name" #middle="ngModel">
+              </div>
+
+              <div class="row">
+                <p><b>Last Name :</b> </p>
+                <p *ngIf="!isEditEnable">{{empObj.lastname}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control" name="lastname" [(ngModel)]="empObj.lastname" required
+                  name="lastname" required pattern="[A-Za-z\ ]*" placeholder="Last Name" #last="ngModel">
+                <span style="color:red" *ngIf="last.invalid && last.touched ">
+                  <span *ngIf="last.errors.required">
+                    Last Name is required.
+                  </span>
+                  <span *ngIf="last.errors.pattern">
+                    Enter alphabets only.
+                  </span>
+                </span>
+              </div>
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="lastname" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.lastname" required
+                  name="lastname" required pattern="[A-Za-z\ ]*" placeholder="Last Name" #last="ngModel">
+              </div>
+
+
+              <div class="row">
+                <p><b>DOB :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.dob | date:"dd-MM-yyyy"}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input class="form-control" [max]="maxDate" [min]="minDate" type="date" [(ngModel)]="empObj.dob"
+                  name="empname" required placeholder="DD/MM/YYYY" #empdate="ngModel" onkeydown="return false">
+                <span style="color:red" *ngIf="empdate.invalid && empdate.touched ">
+                  <span *ngIf="empdate.errors.required">
+                    Gender is mandatory.
+                  </span>
+                </span>
+              </div>
+              <div *ngIf="isEditEnable">
+                  <input class="form-control" [max]="maxDate" [min]="minDate" type="date" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.dob"
+                  name="empname" required placeholder="DD/MM/YYYY" #empdate="ngModel" onkeydown="return false">
+              </div>
+
+
+              <div class="row">
+                <p><b>Gender :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.gender|titlecase}}</p>
+              </div>
+              <select *ngIf="isEditEnable&&role!='ROLE_MANAGER'" class="form-control" [(ngModel)]="gen" name="emp03" required
+                #Dropdown="ngModel">
+
+
+                <option *ngFor="let egender of empgenderinfo" [value]="egender.id">{{ egender.gender|titlecase }}
+                </option>
+
+              </select>
+              <span class="help-block" style="color:red" *ngIf="Dropdown.invalid && Dropdown.touched ">
+                <span *ngIf="Dropdown.errors.required">
+                  Gender is mandatory.
+                </span>
+              </span>
+             
+                  <select *ngIf="isEditEnable&&role=='ROLE_MANAGER'"  disabled class="form-control" [(ngModel)]="gen" name="emp03"  required
+                #Dropdown="ngModel">
+                <option  *ngFor="let egender of empgenderinfo" [value]="egender.id">{{ egender.gender|titlecase }}
+                  </option>
+              </select> 
+           
+
+
+              <div class="row">
+                <p><b>Employee Status :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.status |titlecase}}</p>
+              </div>
+              <select *ngIf="isEditEnable&&role!='ROLE_MANAGER'" class="form-control" [(ngModel)]="stat" #status1="ngModel" name="emp02"
+                required>
+
+
+                <option *ngFor="let estatus of employee_statuslist" [value]="estatus.id">{{ estatus.status|titlecase }}
+                </option>
+
+              </select>
+              <span style="color:red" *ngIf="status1.invalid && status1.touched ">
+                <span *ngIf="status1.errors.required">
+                  Status is mandatory.
+                </span>
+              </span>
+
+
+              <select *ngIf="isEditEnable&&role=='ROLE_MANAGER'" disabled class="form-control" [(ngModel)]="stat" #status1="ngModel" name="emp02"
+              required>
+
+
+              <option *ngFor="let estatus of employee_statuslist" [value]="estatus.id">{{ estatus.status|titlecase }}
+              </option>
+
+            </select>  
+
+            </div>
+
+
+
+
+      
+
+            <div class="col-md-6">
+
+              <div class="row">
+                <p><b>Designation :</b></p>
+                <p *ngIf="!isEditEnable"> {{empObj.title|titlecase}}</p>
+              </div>
+              <select *ngIf="isEditEnable" class="form-control" [(ngModel)]="des" name="Title" required
+                placeholder="Qualification" #title="ngModel" [disabled]="user">
+
+                <option *ngFor="let etitle of empDesignationlist" [value]="etitle.id">{{etitle.designation|titlecase}}
+                </option>
+              </select>
+              <span style="color:red" *ngIf="title.invalid && title.touched ">
+                <span *ngIf="title.errors.required">
+                  Designation is mandatory.
+                </span>
+              </span>
+              <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="title" [(ngModel)]="empObj.title" required>
+              </div> -->
+
+              <div class="row">
+                <p><b>Reporting Manager :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.reportingManager}}</p>
+              </div>
+              <select *ngIf="isEditEnable" type="text" class="form-control" [(ngModel)]="empObj.reportingManager"
+                name="reportingManager" placeholder="Reporting Manager" #rep="ngModel">
+                <option *ngFor="let m of managerdata" value={{m.employeeId}}>
+                  {{m.firstname|titlecase}}&nbsp;{{m.lastname|titlecase}}</option>
+              </select>
+              <span style="color:red" *ngIf="rep.invalid && rep.touched ">
+
+                <span *ngIf="rep.errors.required">
+                  Name is required.
+                </span>
+                <span *ngIf="rep.errors.pattern">
+                  Enter alphabets only.
+                </span>
+              </span>
+              <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="reportingManager" [(ngModel)]="empObj.reportingManager" required>
+              </div> -->
+
+
+              <div class="row">
+                <p><b>Email :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.email}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control" [(ngModel)]="empObj.email" name="email"
+                  pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z]+.[a-zA-Z.]+$" placeholder="enter email id" #emaill="ngModel"
+                  required>
+                <span style="color:red" *ngIf="emaill.invalid && emaill.touched ">
+                  <span *ngIf="emaill.errors.required">
+                    Email id is required
+                  </span>
+                  <span *ngIf="emaill.errors.pattern">
+                    Enter valid email id
+                  </span>
+                </span>
+              </div>
+               
+                <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.email" name="email" 
+                    pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z]+.[a-zA-Z.]+$" placeholder="enter email id" #emaill="ngModel"
+                    required>
+                 </div>
+
+
+              
+
+
+              <div class="row">
+                <p><b>Official Email :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.officialEmail}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control" [(ngModel)]="empObj.officialEmail"
+                  pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z-]+.[a-zA-Z.]+$" name="officialEmail" placeholder="enter email id"
+                  #officialEmail="ngModel" required>
+                <span style="color:red" *ngIf="officialEmail.invalid && officialEmail.touched ">
+                  <span *ngIf="officialEmail.errors.required">
+                    Email id is required
+                  </span>
+                  <span *ngIf="officialEmail.errors.pattern">
+                    Enter valid email id
+                  </span>
+                </span>
+               
+              </div>
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.officialEmail"
+                  pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z-]+.[a-zA-Z.]+$" name="officialEmail" placeholder="enter email id"
+                  #officialEmail="ngModel" required>
+               </div>
+
+
+
+              <div class="row">
+                <p><b>Personal MobileNo :</b></p>
+                <p *ngIf="!isEditEnable">{{empObj.personalMobileNo}}</p>
+              </div>
+              <div *ngIf="isEditEnable&&role!='ROLE_MANAGER'">
+                <input type="text" class="form-control" [(ngModel)]="empObj.personalMobileNo" name="personalMobileNo"
+                  required pattern="[6-9]{1}[0-9]{9}" placeholder="phone number" #pno="ngModel" numbersOnly>
+                <span style="color:red" *ngIf="pno.invalid && pno.touched ">
+                  <span *ngIf="pno.errors.required">
+                    phone number is required
+                  </span>
+                  <span *ngIf="pno.errors.pattern">
+                    enter valid phone number
+                  </span>
+                </span>
+            </div>
+            <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled [(ngModel)]="empObj.personalMobileNo" name="personalMobileNo"
+                required pattern="[6-9]{1}[0-9]{9}" placeholder="phone number" #pno="ngModel" numbersOnly>
+             </div>
+
+
+              <!-- <div class="row">
+              <p><b>Status Update Date :</b></p>
+              <p *ngIf="!isEditEnable">{{empObj.statusDate}}</p>
+              <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="firstname" [(ngModel)]="empObj.statusDate" [disabled]="rolemanager">
+              </div>
+            </div> -->
+
+
+              <br>
+              <div class="float-right">
+                <button class="btn" *ngIf="isEditEnable" (click)="updatecardinfo()" type="submit"
+                  [disabled]="!empData.form.valid">Submit</button>
+                &nbsp;&nbsp;
+                <button class="btn" *ngIf="isEditEnable"
+                  (click)="getempdataa();isEditEnable=!isEditEnable">cancel</button>
+              </div>
+            </div>
+
+
+
+
+
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div class="col-md-6">
+    <!-- Onboarding -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="float-right col-md-2">
+              <span (click)="onAddOnboard()"  style="color:#1d62a7" *ngIf="addonboard"><i class="fa fa-plus"
+                  style="font-size:20px"></i></span>&nbsp;&nbsp;
+              <span (click)="onEdit1()"  style="color:#1d62a7" *ngIf="!user  && !isEditEnable1"><i *ngIf="doo" class="fa fa-edit"
+                  style="font-size:20px"></i></span>
+            </div>
+            <span style="font-size: 17px;"><b>Onboarding</b>
+              <hr></span>
+            <div *ngIf="onb">
+              <form #OnempData="ngForm" (ngSubmit)="updateonboard1();isEditEnable1=!isEditEnable1">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Joining Date :</b></p>
+                      <p *ngIf="!isEditEnable1">{{onboarddetailsss.joiningDate  | date:"dd-MM-yyyy"}}</p>
+
+                    </div>
+                    <div *ngIf="isEditEnable1&&role!='ROLE_MANAGER'">
+                      <input type="date" [min]="minDate1" [max]="maxDate1" class="form-control" name="joiningDate"
+                        [(ngModel)]="onboarddetailsss.joiningDate" name="joiningDate" placeholder="dd/mm/yyyy"
+                        #joining="ngModel" [disabled]="user" onkeydown="return false" required>
+                      <span style="color:red" *ngIf="joining.invalid && joining.touched ">
+                        <span *ngIf="joining.errors.required">
+                          Joining Date is required
+                        </span>
+                      </span>
+                    </div>
+                    
+           <div *ngIf="isEditEnable1">
+     <input type="date" [min]="minDate1" [max]="maxDate1" *ngIf="role=='ROLE_MANAGER'" disabled class="form-control" name="joiningDate" [(ngModel)]="onboarddetailsss.joiningDate" name="joiningDate"  placeholder="dd/mm/yyyy"
+    #joining="ngModel" [disabled]="user" onkeydown="return false" required>
+   
+   </div>
+
+
+
+                    <div class="row">
+                      <p><b>ResourceType :</b></p>
+                      <p *ngIf="!isEditEnable1">{{onboarddetailsss.resourceType}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable1&&role!='ROLE_MANAGER'">
+                      <select class="form-control" placeholder="Select resource type" name="resourceType"
+                        [(ngModel)]="rid" (change)="selectOption($event.target.value)" #resource="ngModel"
+                        [disabled]="user" required>
+                        <option [disabled]="butDisabled">--Select--</option>
+                        <option *ngFor="let resourcetypelist of getResourceList" [value]="resourcetypelist.id">
+                          {{ resourcetypelist.resourceTypeName}} </option>
+
+
+
+                        <!-- <option *ngFor="let etitle of empDesignationlist" [value]="etitle.id">{{etitle.designation|titlecase}}
+                    </option> -->
+                      </select>
+                      <span style="color:red" *ngIf="resource.invalid && resource.touched ">
+                        <span *ngIf="resource.errors.required">
+                          resource type is required.
+                        </span>
+                      </span>
+                    </div>
+
+                    <div *ngIf="isEditEnable1"> 
+                        <select class="form-control" *ngIf="role=='ROLE_MANAGER'" disabled placeholder="Select resource type" name="resourceType"
+                        [(ngModel)]="rid" (change)="selectOption($event.target.value)" #resource="ngModel"
+                        [disabled]="user" required>
+                        <option [disabled]="butDisabled">--Select--</option>
+                        <option *ngFor="let resourcetypelist of getResourceList" [value]="resourcetypelist.id">
+                          {{ resourcetypelist.resourceTypeName}} </option>
+
+
+
+                        <!-- <option *ngFor="let etitle of empDesignationlist" [value]="etitle.id">{{etitle.designation|titlecase}}
+                    </option> -->
+                      </select>
+                    </div>
+          
+
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="resourceType" [(ngModel)]="onboarddetailsss.resourceType ">
+                </div> -->
+                    <div class="row">
+                      <p><b>Costcenter :</b> </p>
+                      <p *ngIf="!isEditEnable1">{{onboarddetailsss.costCenterId}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable1">
+                      <select class="form-control" [(ngModel)]="onboarddetailsss.costCenterId" name="costCenter"
+                        #cost="ngModel" (change)="selectBu($event.target.value)" required>
+                        <option value="undefined" [disabled]="butDisabled">--Select--</option>
+                        <option value="{{costCenter.id}}" *ngFor="let costCenter of costCenterList">
+                          {{costCenter.costCenterCode}}
+                        </option>
+                      </select>
+                      <span style="color:red" *ngIf="cost.invalid && cost.touched ">
+                        <span *ngIf="cost.errors.required">
+                          Costcenter is required!
+                        </span>
+                      </span>
+                    </div>
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="costCenterId" [(ngModel)]="onboarddetailsss.costCenterId">
+                </div> -->
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Business Unit :</b></p>
+                      <p *ngIf="!isEditEnable1">{{onboarddetailsss.buId}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable1">
+                      <select class="form-control" [(ngModel)]="onboarddetailsss.buId" name="bu" #bu="ngModel"
+                        (change)="selectSbu($event.target.value)" required>
+                        <option value="undefined" selected disabled>--Select--</option>
+                        <option value="{{bun.id}}" *ngFor="let bun of buDrop">{{bun.businessUnitName}}
+                        </option>
+                      </select>
+                      <span style="color:red" *ngIf="bu.invalid && bu.touched ">
+                        <span *ngIf="bu.errors.required">
+                          Business unit is required!
+                        </span>
+                      </span>
+                    </div>
+                    <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="buId" [(ngModel)]="onboarddetailsss.buId">
+            </div> -->
+                    <div class="row">
+                      <p><b>Sub Business Unit :</b></p>
+                      <p *ngIf="!isEditEnable1">{{onboarddetailsss.sbuId}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable1">
+                      <select class="form-control" [(ngModel)]="onboarddetailsss.sbuId" name="sbu" #sbu="ngModel"
+                        required>
+                        <option value="undefined" selected disabled>--Select--</option>
+                        <option value="{{sbun.id}}" *ngFor="let sbun of sbuDrop">{{sbun.name}}
+                        </option>
+                      </select>
+                      <span style="color:red" *ngIf="sbu.invalid && sbu.touched ">
+                        <span *ngIf="sbu.errors.required">
+                          Sub Business Unit is required!
+                        </span>
+                      </span>
+                    </div>
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="sbuId" [(ngModel)]="onboarddetailsss.sbuId">
+            </div> -->
+                    <div class="row">
+                      <p *ngIf="!user"><b>Bond Status :</b></p>
+
+                      <p *ngIf="!user && !isEditEnable1">{{onboarddetailsss.bondStatus}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable1&&role!='ROLE_MANAGER'">
+                      <select class="form-control" id="sel2" [(ngModel)]=" onboarddetailsss.bondStatus"
+                        name="bondStatus" placeholder="bondStatus" #activ="ngModel">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </select>
+                      <span style="color:red" *ngIf="activ.invalid && activ.touched ">
+                        <span *ngIf="activ.errors.required">
+                          Bond Status is required.
+                        </span>
+                      </span>
+                    </div>
+         <div *ngIf="isEditEnable1">
+                 <select class="form-control" id="sel2" [(ngModel)]=" onboarddetailsss.bondStatus"
+                        name="bondStatus" placeholder="bondStatus" #activ="ngModel"  *ngIf="role=='ROLE_MANAGER'" disabled>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </select>
+         </div>
+                    <!-- <div *ngIf="!user&&isEditEnable">
+                <input type="text" class="form-control" name="bondStatus" [(ngModel)]="onboarddetailsss.bondStatus">
+            </div> -->
+                    <br>
+                    <div class="float-right" *ngIf="isEditEnable1">
+                      <button class="btn" *ngIf="isEditEnable1" (click)="updateonboard1()" type="submit"
+                        [disabled]="!OnempData.form.valid">Submit</button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn" *ngIf="isEditEnable1"
+                        (click)="getboardingdetailsbyId();isEditEnable1=!isEditEnable1">cancel</button>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+            <div *ngIf="board">
+
+              <form #onboard="ngForm" (submit)="saveemploymentdetailsOnboarding(onboard.value);board=!board">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Joining Date :</b></p>
+
+                    </div>
+
+                    <input type="date" [min]="minDate1" [max]="maxDate1" class="form-control" name="joiningDate"
+                      [(ngModel)]="joiningDate" name="joiningDate" placeholder="dd/mm/yyyy" #joining="ngModel"
+                      [disabled]="user" onkeydown="return false" required>
+                    <span style="color:red" *ngIf="joining.invalid && joining.touched ">
+                      <span *ngIf="joining.errors.required">
+                        Joining Date is required
+                      </span>
+                    </span>
+
+
+
+
+                    <div class="row">
+                      <p><b>ResourceType :</b></p>
+
+                    </div>
+
+                    <select class="form-control" placeholder="Select resource type" name="resourceType"
+                      [(ngModel)]="rid1" (change)="selectOption($event.target.value)" #resource="ngModel"
+                      [disabled]="user" required>
+                      <option [disabled]="butDisabled">--Select--</option>
+                      <option *ngFor="let resourcetypelist of getResourceList" [value]="resourcetypelist.id">
+                        {{ resourcetypelist.resourceTypeName}} </option>
+
+
+
+                      <!-- <option *ngFor="let etitle of empDesignationlist" [value]="etitle.id">{{etitle.designation|titlecase}}
+                        </option> -->
+                    </select>
+                    <span style="color:red" *ngIf="resource.invalid && resource.touched ">
+                      <span *ngIf="resource.errors.required">
+                        resource type is required.
+                      </span>
+                    </span>
+
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                        <input type="text" class="form-control" name="resourceType" [(ngModel)]="onboarddetailsss.resourceType ">
+                    </div> -->
+                    <div class="row">
+                      <p><b>Costcenter :</b> </p>
+
+                    </div>
+
+                    <select class="form-control" [(ngModel)]="costCenterId" name="costCenter" #cost="ngModel"
+                      (change)="selectBu($event.target.value)" required>
+                      <option value="undefined" [disabled]="butDisabled">--Select--</option>
+                      <option value="{{costCenter.id}}" *ngFor="let costCenter of costCenterList">
+                        {{costCenter.costCenterCode}}
+                      </option>
+                    </select>
+                    <span style="color:red" *ngIf="cost.invalid && cost.touched ">
+                      <span *ngIf="cost.errors.required">
+                        Costcenter is required!
+                      </span>
+                    </span>
+
+                    <!-- <div *ngIf="isEditEnable">
+                        <input type="text" class="form-control" name="costCenterId" [(ngModel)]="onboarddetailsss.costCenterId">
+                    </div> -->
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Business Unit :</b></p>
+
+                    </div>
+
+                    <select class="form-control" [(ngModel)]="buId" name="bu" #bu="ngModel"
+                      (change)="selectSbu($event.target.value)" required>
+                      <option value="undefined" selected disabled>--Select--</option>
+                      <option value="{{bun.id}}" *ngFor="let bun of buDrop">{{bun.businessUnitName}}
+                      </option>
+                    </select>
+                    <span style="color:red" *ngIf="bu.invalid && bu.touched ">
+                      <span *ngIf="bu.errors.required">
+                        Business unit is required!
+                      </span>
+                    </span>
+
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="buId" [(ngModel)]="onboarddetailsss.buId">
+                </div> -->
+                    <div class="row">
+                      <p><b>Sub Business Unit :</b></p>
+
+                    </div>
+
+                    <select class="form-control" [(ngModel)]="sbuId" name="sbu" #sbu="ngModel" required>
+                      <option value="undefined" selected disabled>--Select--</option>
+                      <option value="{{sbun.id}}" *ngFor="let sbun of sbuDrop">{{sbun.name}}
+                      </option>
+                    </select>
+                    <span style="color:red" *ngIf="sbu.invalid && sbu.touched ">
+                      <span *ngIf="sbu.errors.required">
+                        Sub Business Unit is required!
+                      </span>
+                    </span>
+
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="sbuId" [(ngModel)]="onboarddetailsss.sbuId">
+                </div> -->
+                    <div class="row">
+                      <p><b>Bond Status :</b></p>
+
+
+                    </div>
+
+                    <select class="form-control" id="sel2" [(ngModel)]=" bondStatus" name="bondStatus"
+                      placeholder="bondStatus" #activ="ngModel">
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                    <span style="color:red" *ngIf="activ.invalid && activ.touched ">
+                      <span *ngIf="activ.errors.required">
+                        Bond Status is required.
+                      </span>
+                    </span>
+
+                    <!-- <div *ngIf="!user&&isEditEnable">
+                    <input type="text" class="form-control" name="bondStatus" [(ngModel)]="onboarddetailsss.bondStatus">
+                </div> -->
+                    <br>
+                    <div class="float-right">
+                      <button class="btn" type="submit" [disabled]="onboard.invalid">Submit</button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn"
+                        (click)="cancelonboarding();board=!board">cancel</button>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Contact-info-->
+
+
+
+
+
+    <br>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="float-right col-md-2">
+              <span (click)="onAddContact()"  style="color:#1d62a7" *ngIf="addContact"><i class="fa fa-plus"
+                  style="font-size:20px"></i></span>&nbsp;&nbsp;
+              <span (click)="onEdit2()" style="color:#1d62a7" *ngIf="!user &&!isEditEnable2&&role!='ROLE_MANAGER'"><i *ngIf="iss" class="fa fa-edit"
+                  style="font-size:20px"></i></span>
+            </div>
+            <span style="font-size: 17px;"><b>Contact Details</b>
+              <hr></span>
+            <div *ngIf="tocon">
+              <form #newUserFormcontact="ngForm" (ngSubmit)="updateContactdetails();isEditEnable2=!isEditEnable2"
+                autocomplete="on">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Alternate Mobile No :</b></p>
+                      <p *ngIf="!isEditEnable2">{{contactList[0].alternateMobileNo}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" class="form-control" name="alternateMobileNo"
+                        [(ngModel)]="ContactInfo.alternateMobileNo" pattern="[[6-9]\d{9}$]*"
+                        placeholder="Alternate MobileNo" #alternate="ngModel">
+                      <span style="color:red" *ngIf="alternate.invalid && alternate.touched ">
+                        <span *ngIf="alternate.errors.pattern">
+                          Enter Valid Mobile No
+                        </span>
+                      </span>
+                    </div>
+
+
+                    <div class="row">
+                      <p *ngIf="!user"><b>Permanent Address :</b></p>
+                      <p *ngIf="!user &&!isEditEnable2">{{contactList[0].permanentAddressLine1 |titlecase}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" class="form-control" [(ngModel)]="ContactInfo.permanentAddressLine1"
+                        name="permanentAddressLine1" placeholder="Address" #current="ngModel" required>
+                      <span style="color:red" *ngIf="current.invalid && current.touched ">
+                        <span *ngIf="current.errors.required">
+                          Permanent Address is required
+                        </span>
+                      </span>
+                    </div>
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="resourceType" [(ngModel)]="onboarddetailsss.resourceType ">
+                </div> -->
+                    <div class="row">
+                      <p><b>Current Address1 :</b></p>
+                      <p *ngIf="!isEditEnable2">{{contactList[0].currentAddressLine1 | titlecase}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" class="form-control" rows="5" cols="40"
+                        [(ngModel)]="ContactInfo.currentAddressLine1" name="currentAddressLine1" placeholder="Address"
+                        #currentadd="ngModel" required>
+                      <span style="color:red" *ngIf="currentadd.invalid && currentadd.touched ">
+                        <span *ngIf="currentadd.errors.required">
+                          Current Address1 is required
+                        </span>
+                      </span>
+                    </div>
+                    <div class="row">
+                      <p><b>Current City :</b></p>
+
+                      <p *ngIf="!isEditEnable2">{{contactList[0].currentCity | titlecase}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" class="form-control" [(ngModel)]="ContactInfo.currentCity" name="currentCity"
+                        required placeholder="currentCity" #currentcity="ngModel" required pattern="[a-zA-Z ]*">
+                      <span style="color:red" *ngIf="currentcity.invalid && currentcity.touched ">
+                        <span *ngIf="currentcity.errors.required">
+                          Current city is required
+                        </span>
+
+                        <span *ngIf="currentcity.errors.pattern">
+                          Enter Valid city name
+                        </span>
+                      </span>
+                    </div>
+                    <!-- <div *ngIf="isEditEnable">
+                    <input type="text" class="form-control" name="costCenterId" [(ngModel)]="onboarddetailsss.costCenterId">
+                </div> -->
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row">
+                      <p><b>Current Address2 :</b></p>
+                      <p *ngIf="!isEditEnable2">{{contactList[0].currentAddressLine2 | titlecase}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" class="form-control" [(ngModel)]="ContactInfo.currentAddressLine2"
+                        name="currentAddressLine2" placeholder="Address" #currentaddd="ngModel" required>
+                      <span style="color:red" *ngIf="currentaddd.invalid && currentaddd.touched ">
+                        <span *ngIf="currentaddd.errors.required">
+                          Current Address2 is required
+                        </span>
+                      </span>
+                    </div>
+                    <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="buId" [(ngModel)]="onboarddetailsss.buId">
+            </div> -->
+                    <div class="row">
+                      <p><b>Current State :</b></p>
+                      <p *ngIf="!isEditEnable2">{{contactList[0].currentState |titlecase}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <select class="form-control" placeholder="Select state name" name="currentState"
+                        [(ngModel)]="ContactInfo.currentState" (change)="selectOption($event.target.value)" required
+                        placeholder="state name">
+                        <option disabled="true">--Select-- </option>
+                        <option *ngFor="let Statenamelist of StateList" [value]="Statenamelist.id">
+                          {{ Statenamelist.stateName}} </option>
+                      </select>
+                    </div>
+
+
+                    <!-- <div *ngIf="isEditEnable">
+                <input type="text" class="form-control" name="sbuId" [(ngModel)]="onboarddetailsss.sbuId">
+            </div> -->
+                    <div class="row">
+                      <p><b>Pincode :</b></p>
+
+                      <p *ngIf="!isEditEnable2">{{contactList[0].currentPin}}</p>
+                    </div>
+                    <div *ngIf="isEditEnable2">
+                      <input type="text" maxlength="6" name="pincode" class="form-control"
+                        [(ngModel)]="ContactInfo.currentPin" name="currentPin" required pattern="[[0-9]{6}]*"
+                        placeholder="Pincode" #pincode="ngModel">
+
+                      <span style="color:red" *ngIf="pincode.invalid && pincode.touched ">
+                        <span *ngIf="pincode.errors.required">
+                          Pincode is required
+                        </span>
+                        <span [hidden]="!pincode.hasError('pattern')">
+                          Please Enter valid pincode!
+                        </span>
+                        <span [hidden]="!pincode.hasError('minlength')">
+                          Please Enter atleast 6 pincode!
+                        </span>
+
+                      </span>
+                    </div>
+
+
+
+
+                    <!-- <div *ngIf="!user&&isEditEnable">
+                <input type="text" class="form-control" name="bondStatus" [(ngModel)]="onboarddetailsss.bondStatus">
+            </div> -->
+                    <br>
+                    <div class="float-right" style="padding-top: 18px">
+                      <button class="btn" *ngIf="isEditEnable2"
+                        (click)="updateContactdetails();isEditEnable2=!isEditEnable2" type="submit"
+                        [disabled]="!newUserFormcontact.form.valid">Submit</button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn" *ngIf="isEditEnable2"
+                        (click)="isEditEnable2=!isEditEnable2">cancel</button>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+
+            <div *ngIf="contact">
+                <form #contact1="ngForm" (submit)="setContactInformation(contact1.value);contact=!contact"
+                  autocomplete="on">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <p><b>Alternate Mobile No :</b></p>
+                       
+                      </div>
+                     
+                        <input type="text" class="form-control" name="alternateMobileNo"
+                          [(ngModel)]="alternateMobileNo" pattern="[[6-9]\d{9}$]*"
+                          placeholder="Alternate MobileNo" #alternate="ngModel">
+                        <span style="color:red" *ngIf="alternate.invalid && alternate.touched ">
+                          <span *ngIf="alternate.errors.pattern">
+                            Enter Valid Mobile No
+                          </span>
+                        </span>
+                     
+  
+  
+                      <div class="row">
+                        <p ><b>Permanent Address :</b></p>
+                       
+                      </div>
+                   
+                        <input type="text" class="form-control" [(ngModel)]="permanentAddressLine1"
+                          name="permanentAddressLine1" placeholder="Address" #current="ngModel" required>
+                        <span style="color:red" *ngIf="current.invalid && current.touched ">
+                          <span *ngIf="current.errors.required">
+                            Permanent Address is required
+                          </span>
+                        </span>
+                     
+  
+  
+                      <!-- <div *ngIf="isEditEnable">
+                      <input type="text" class="form-control" name="resourceType" [(ngModel)]="onboarddetailsss.resourceType ">
+                  </div> -->
+                      <div class="row">
+                        <p><b>Current Address1 :</b></p>
+                     
+                      </div>
+                     
+                        <input type="text" class="form-control" rows="5" cols="40"
+                          [(ngModel)]="currentAddressLine1" name="currentAddressLine1" placeholder="Address"
+                          #currentadd="ngModel" required>
+                        <span style="color:red" *ngIf="currentadd.invalid && currentadd.touched ">
+                          <span *ngIf="currentadd.errors.required">
+                            Current Address1 is required
+                          </span>
+                        </span>
+                     
+                      <div class="row">
+                        <p><b>Current City :</b></p>
+  
+                     
+                      </div>
+                      
+                        <input type="text" class="form-control" [(ngModel)]="currentCity" name="currentCity"
+                          required placeholder="currentCity" #currentcity="ngModel" required pattern="[a-zA-Z ]*">
+                        <span style="color:red" *ngIf="currentcity.invalid && currentcity.touched ">
+                          <span *ngIf="currentcity.errors.required">
+                            Current city is required
+                          </span>
+  
+                          <span *ngIf="currentcity.errors.pattern">
+                            Enter Valid city name
+                          </span>
+                        </span>
+                    
+                      <!-- <div *ngIf="isEditEnable">
+                      <input type="text" class="form-control" name="costCenterId" [(ngModel)]="onboarddetailsss.costCenterId">
+                  </div> -->
+                    </div>
+  
+                    <div class="col-md-6">
+                      <div class="row">
+                        <p><b>Current Address2 :</b></p>
+                        
+                      </div>
+                     
+                        <input type="text" class="form-control" [(ngModel)]="currentAddressLine2"
+                          name="currentAddressLine2" placeholder="Address" #currentaddd="ngModel" required>
+                        <span style="color:red" *ngIf="currentaddd.invalid && currentaddd.touched ">
+                          <span *ngIf="currentaddd.errors.required">
+                            Current Address2 is required
+                          </span>
+                        </span>
+                     
+                      <!-- <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="buId" [(ngModel)]="onboarddetailsss.buId">
+              </div> -->
+                      <div class="row">
+                        <p><b>Current State :</b></p>
+                       
+                      </div>
+                     
+                        <select class="form-control" placeholder="Select state name" name="currentState"
+                          [(ngModel)]="currentState" (change)="selectOption($event.target.value)" required
+                          placeholder="state name">
+                          <option disabled="true">--Select-- </option>
+                          <option *ngFor="let Statenamelist of StateList" [value]="Statenamelist.id">
+                            {{ Statenamelist.stateName}} </option>
+                        </select>
+                      
+  
+  
+                      <!-- <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="sbuId" [(ngModel)]="onboarddetailsss.sbuId">
+              </div> -->
+                      <div class="row">
+                        <p><b>Pincode :</b></p>
+  
+                        
+                      </div>
+                     
+                        <input type="text" maxlength="6" name="pincode" class="form-control"
+                          [(ngModel)]="currentPin" name="currentPin" required pattern="[[0-9]{6}]*"
+                          placeholder="Pincode" #pincode="ngModel">
+  
+                        <span style="color:red" *ngIf="pincode.invalid && pincode.touched ">
+                          <span *ngIf="pincode.errors.required">
+                            Pincode is required
+                          </span>
+                          <span [hidden]="!pincode.hasError('pattern')">
+                            Please Enter valid pincode!
+                          </span>
+                          <span [hidden]="!pincode.hasError('minlength')">
+                            Please Enter atleast 6 pincode!
+                          </span>
+  
+                        </span>
+                      
+  
+  
+  
+  
+                      <!-- <div *ngIf="!user&&isEditEnable">
+                  <input type="text" class="form-control" name="bondStatus" [(ngModel)]="onboarddetailsss.bondStatus">
+              </div> -->
+                      <br>
+                      <div class="float-right" style="padding-top: 18px">
+                        <button class="btn" 
+                           type="submit"
+                          [disabled]="contact1.invalid">Submit</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn" 
+                          (click)="cancelcontact();contact=!contact">cancel</button>
+                      </div>
+                    </div>
+  
+  
+  
+  
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- <div class="row">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+
+            <div class="float-right col-md-2">
+              <span (click)="onEdit2(contactList[0])" style="color: blue" *ngIf="!user &&!isEditEnable2"><i
+                  class="fa fa-edit" style="font-size:20px"></i></span>
+            </div>
+            <span><b>Contact info</b>
+              <hr></span>
+            <div class="row">
+              <div class="col-md-6">
+               <div class="row">
+                  <p><b>Alternate Mobile Number:</b></p>
+                  <p *ngIf="!isEditEnable2">{{contactList[0].alternateMobileNo}}</p>
+                </div>
+     <input class="form-control" *ngIf="isEditEnable2" [(ngModel)]="ContactInfo.alternateMobileNo" name="alternateMobileNo"  pattern="[[6-9]\d{9}$]*" placeholder="Alternate MobileNo" #alternate="ngModel">
+              
+                <div class="row">
+                  <p *ngIf="!user"><b>PermentAddress :</b></p>
+
+                  <p *ngIf="!user && !isEditEnable2">{{contactList[0].currentAddressLine2}}</p>
+                </div>
+                <input *ngIf="isEditEnable2" class="form-control" id="sel2"
+                  [(ngModel)]="ContactInfo.currentAddressLine2" name="bondStatus" required placeholder="bondStatus"
+                  #activ="ngModel">
+               
+
+
+
+               <div class="row">
+                  <p><b>Curr.Address 1 :</b></p>
+                  <p *ngIf="!isEditEnable2">{{contactList[0].currentAddressLine1}}</p>
+                </div>
+                <input *ngIf="isEditEnable2" class="form-control" [(ngModel)]="ContactInfo.currentAddressLine1"
+                  name="sbu" required #sbu="ngModel">
+
+                <div *ngIf="isEditEnable2">
+                  <label>current address2:</label>
+                  <input class="form-control" id="sel2" [(ngModel)]="ContactInfo.currentAddressLine2"
+                    name="currentAddressLine2" required placeholder="currentAddressLine2" #activ="ngModel">
+                </div>
+
+
+
+
+              
+
+              <div class="col-md-6">
+
+
+                <div class="row">
+                  <p><b>CurrentState :</b></p>
+
+                  <p *ngIf="!isEditEnable2">{{contactList[0].currentState|titlecase}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                  <select type="text" class="form-control" name="branch" [(ngModel)]="ContactInfo.currentState">
+
+                    <option>Select </option>
+                    <option *ngFor="let Statenamelist of StateList" [value]="Statenamelist.id">
+                      {{ Statenamelist.stateName|titlecase}} </option>
+
+                  </select>
+                </div>
+
+                <div *ngIf="isEditEnable2">
+                  <label>Pincode:</label>
+                  <input type="text" class="form-control" name="Pincode" [(ngModel)]="ContactInfo.currentPin"
+                    #Pincode="ngModel">
+                </div>
+
+
+                <div class="row">
+                  <p><b>CurrentCity:</b></p>
+                  <p *ngIf="!isEditEnable2"> {{contactList[0].currentCity|titlecase}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                  <input type="text" class="form-control" name="currentCity" [(ngModel)]="ContactInfo.currentCity"
+                    #currentCity="ngModel">
+                </div>
+
+
+
+
+                <br>
+                <div class="float-right">
+                  <button class="btn" *ngIf="isEditEnable2"
+                    (click)="updateContactdetails();isEditEnable2=!isEditEnable2">Submit</button>
+                  &nbsp;&nbsp;
+                  <button class="btn" *ngIf="isEditEnable2"
+                    (click)="isEditEnable2=!isEditEnable2">cancel</button>
+                </div>
+
+
+
+
+              </div>
+
+
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div> -->
+
+
+  </div>
+
+
+
+
+  <!-- <div class="row">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+
+            <div class="float-right col-md-2">
+              <span (click)="onEdit2(contactList[0])" style="color: blue" *ngIf="!user &&!isEditEnable2"><i
+                  class="fa fa-edit" style="font-size:20px"></i></span>
+            </div>
+            <span><b>Contact info</b>
+              <hr></span>
+            <div class="row">
+              <div class="col-md-6">
+
+
+
+                <!-- <p><b>Account Number:</b></p>
+                  <p *ngIf="!isEditEnable2">{{bankdata.bank_account_no}}</p>
+                  <div *ngIf="isEditEnable2">
+                    <input type="text" class="form-control" name="Account number" [(ngModel)]="bankdata.bank_account_no">
+                  </div>
+                  <p><b>Bank Name :</b></p>
+                  <p *ngIf="!isEditEnable2">{{bankdata.bank_name}}</p>
+                  <div *ngIf="isEditEnable2">
+                    <input type="text" class="form-control" name="bankname" [(ngModel)]="bankdata.bank_name">
+                  </div>
+  
+                  <p><b>City :</b></p>
+                  <p *ngIf="!isEditEnable2">{{bankdata.bank_city}}</p>
+                  <div *ngIf="isEditEnable2">
+                    <input type="text" class="form-control" name="city" [(ngModel)]="bankdata.bank_city">
+                  </div> -->
+
+  <!-- <form #empconData="ngForm" (ngSubmit)="updateonboard(obj);isEditEnable=!isEditEnable">
+                   <div class="row">
+                  <p><b>Alternate Mobile Number:</b></p>
+                  <p *ngIf="!isEditEnable2">{{contactList[0].alternateMobileNo}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                <input class="form-control"  [(ngModel)]="ContactInfo.alternateMobileNo"
+                name="alternateMobileNo"  pattern="[[6-9]\d{9}$]*" placeholder="Alternate MobileNo" #alternate="ngModel">
+
+                <span style="color:red" *ngIf="alternate.invalid && alternate.touched "> 
+                  <span *ngIf="alternate.errors.pattern">
+                   Enter Valid Mobile No
+                 </span>
+                 </span> 
+                </div> -->
+
+  <!-- <div class="row">
+                  <p *ngIf="!user"><b>PermentAddress :</b></p>
+
+                  <p *ngIf="!user && !isEditEnable2">{{contactList[0].currentAddressLine2}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                <input class="form-control" id="sel2"
+                  [(ngModel)]="ContactInfo.permanentAddressLine1"  name="permanentAddressLine1" placeholder="Address" #current="ngModel" required>
+                  <span style="color:red" *ngIf="current.invalid && current.touched ">
+                    <span *ngIf="current.errors.required">
+                        permanent  Address is  required
+                    </span>
+                    </span>
+                  
+
+                </div> -->
+
+
+  <!--      <div class="row">
+                  <p><b>Current Address1 :</b></p>
+                  <p *ngIf="!isEditEnable2">{{contactList[0].currentAddressLine1}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                <input  class="form-control" rows="5" cols="40"  [(ngModel)]="ContactInfo.currentAddressLine1"
+                name="currentAddressLine1" placeholder="Address" #currentadd="ngModel" required>
+                <span style="color:red" *ngIf="currentadd.invalid && currentadd.touched ">
+                  <span *ngIf="currentadd.errors.required">
+                 Current Address1 is  required
+                  </span>
+                  </span>
+                  </div>
+              
+                  <label>current address2:</label>
+                  <p *ngIf="!isEditEnable2">{{contactList[0].currentAddressLine2}}</p>
+                  <div *ngIf="isEditEnable2">
+                  <input class="form-control" id="sel2" [(ngModel)]="ContactInfo.currentAddressLine2"
+                  name="currentAddressLine2"  placeholder="Address" #currentaddd="ngModel" required>
+                  <span style="color:red" *ngIf="currentaddd.invalid && currentaddd.touched ">
+                    <span *ngIf="currentaddd.errors.required">
+                   Current Address2 is  required
+                    </span>
+                    </span>
+
+                </div>
+
+
+              <div class="col-md-6">
+
+
+                <div class="row">
+                  <p><b>CurrentState :</b></p>
+
+                  <p *ngIf="!isEditEnable2">{{contactList[0].currentState|titlecase}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                  <select type="text" class="form-control" [(ngModel)]="ContactInfo.currentState" name="currentState" [(ngModel)]="ContactInfo.currentState"  (change)="selectOption($event.target.value)"   placeholder="state name" required>
+
+                    <option>Select </option>
+                    <option *ngFor="let Statenamelist of StateList" [value]="Statenamelist.id">
+                      {{ Statenamelist.stateName|titlecase}} </option>
+
+                  </select>
+                </div>
+
+
+
+            
+               
+                  <label>Pincode:</label>
+                  <div *ngIf="isEditEnable2">
+                  <input type="text" class="form-control"  maxlength="6" name="Pincode" [(ngModel)]="ContactInfo.currentPin"
+                  name="currentPin" required  pattern="[[0-9]{6}]*" placeholder="Pincode" #pincode="ngModel">
+                    <span style="color:red" *ngIf="pincode.invalid && pincode.touched ">
+                      <span *ngIf="pincode.errors.required">
+                     Pincode is  required
+                      </span>
+                      <span [hidden]="!pincode.hasError('pattern')"  >
+                        Please Enter valid pincode!
+                         </span>
+                         <span [hidden]="!pincode.hasError('minlength')"  >
+                          Please Enter atleast 6 pincode!
+                           </span>
+                       
+                      </span>
+                </div>
+
+
+                <div class="row">
+                  <p><b>CurrentCity:</b></p>
+                  <p *ngIf="!isEditEnable2"> {{contactList[0].currentCity|titlecase}}</p>
+                </div>
+                <div *ngIf="isEditEnable2">
+                  <input type="text" class="form-control"  [(ngModel)]="ContactInfo.currentCity"
+                  name="currentCity"  placeholder="currentCity" #currentcity="ngModel" required pattern="[a-zA-Z ]*" required>
+                  <span style="color:red" *ngIf="currentcity.invalid && currentcity.touched ">
+                    <span *ngIf="currentcity.errors.required">
+                    Current city is required
+                    </span>
+                 
+                    <span *ngIf="currentcity.errors.pattern">
+                      Enter Valid city name
+                    </span>
+                    </span>
+                </div>
+
+
+
+
+                <br>
+                <div class="float-right">
+                  <button class="btn" *ngIf="isEditEnable2"   type="submit"
+                  [disabled]="!empconData.form.valid"
+                    (click)="updateContactdetails();isEditEnable2=!isEditEnable2">Submit</button>
+                  &nbsp;&nbsp;
+                  <button class="btn" type="button" *ngIf="isEditEnable2"
+                    (click)="getContactInformation();isEditEnable2=!isEditEnable2">cancel</button>
+                </div>
+      
+           
+        </div> -->
+
+
+
+  <!--end contact-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+      <!-- <table class="table table-hover  tile" *ngFor="let empbasic of empbasicinfo " style="width: 70%"> -->
+  <!-- <table class="table table-hover  tile" style="width: 70%">
+  
+        <tr>
+          <td><b> First Name :</b> &nbsp;&nbsp;{{empObj.firstname}} </td>
+          <td><b> Middle Name :</b> &nbsp;&nbsp;{{empObj.middlename}} </td>
+        </tr>
+        <tr>
+          <td><b> Last Name :</b> &nbsp;&nbsp;{{empObj.lastname}} </td>
+          <td><b> DOB : </b> &nbsp;&nbsp;{{empObj.dob}} </td>
+        </tr>
+        <tr>
+          <td><b> Gender: </b> &nbsp;&nbsp;{{empObj.gender}} </td>
+          <td><b> Employee Status : </b> &nbsp;&nbsp;{{empObj.status}} </td>
+        </tr>
+        <tr>
+          <td><b> Status Update Date : </b>&nbsp;&nbsp;{{empObj.statusDate}} </td>
+          <td><b> Designation :</b> &nbsp;&nbsp;{{empObj.title}}</td>
+        </tr>
+        <tr>
+          <td><b> Reporting Manager :</b> &nbsp;&nbsp;{{empObj.reportingManager}}</td>
+          <td><b> Email_id :</b> &nbsp;&nbsp;{{empObj.email}}</td>
+        </tr>
+        <tr>
+          <td><b> OfficialEmail :</b> &nbsp;&nbsp;{{empObj.officialEmail}}</td>
+          <td><b> PersonalMobileNo:</b> &nbsp;&nbsp;{{empObj.personalMobileNo}}</td>
+        </tr>
+       
+      </table>
+    </div> -->
+
+
+
+  <!-- Modal -->
+
+
+  <div class="modal right fade" id="myModal11" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h3> Employee Basic Info</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newUserForminfo.reset()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+        <div class="modal-body">
+          <!-- <div *ngFor="let empbasic of empbasicinfo"> -->
+          <form class="tile" #newUserForminfo="ngForm" autocomplete="on">
+
+            <div class="row">
+
+              <div class="d-inline-block">
+                <h5>Employee Id:{{empObj.employeeId}}</h5>
+                <h2>
+                  <p>{{mname}}</p>
+                </h2>
+              </div>
+
+            </div>
+            
+
+
+            <div class="col-md-4" *ngIf="CREATEDBY">
+              <label>EmployeeId</label>
+              <input type="text" class="form-control" [(ngModel)]="empinobj.employeeId" name="employeeId" required
+                placeholder="Enter EmployeeId" #eid="ngModel">
+              <span style="color:red" *ngIf="eid.invalid && eid.touched ">
+                <span *ngIf="email.errors.required">
+                  EmployeeId is required.
+                </span>
+              </span>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>First Name<span class="starColor"> *</span> </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.firstname" name="emp1" required
+                    pattern="[A-Za-z]*" placeholder="First Name" #first="ngModel">
+                  <span style="color:red" *ngIf="first.invalid && first.touched ">
+                    <span *ngIf="first.errors.required">
+                      Firstname is required
+                    </span>
+                    <span *ngIf="first.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Middle Name </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.middlename" name="emp2"
+                    pattern="[A-Za-z]*" placeholder="Middle Name" #middle="ngModel">
+                  <span style="color:red" *ngIf="middle.invalid && middle.touched ">
+                    <span *ngIf="middle.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Last Name<span class="starColor"> *</span> </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.lastname" name="lastname" required
+                    pattern="[A-Za-z]*" placeholder="Last Name" #last="ngModel">
+                  <span style="color:red" *ngIf="last.invalid && last.touched ">
+                    <span *ngIf="last.errors.required">
+                      Last Name is required.
+                    </span>
+                    <span *ngIf="last.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> DOB<span class="starColor"> *</span> </label>
+                  <input class="form-control" [max]="maxDate" [min]="minDate" type="date" [(ngModel)]="empinobj.dob"
+                    name="empname" required placeholder="DD/MM/YYYY" #empdate="ngModel">
+                  <span style="color:red" *ngIf="empdate.invalid && empdate.touched ">
+                    <span *ngIf="empdate.errors.required">
+                      Date is required.
+                    </span>
+                    <span *ngIf="empdate.errors.min">
+                      Enter valid date.
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Status<span class="starColor"> *</span></label>
+                  <select class="form-control" [(ngModel)]="empinobj.status" #status1="ngModel" name="emp02" required>
+
+
+                    <option *ngFor="let estatus of employee_statuslist" [value]="estatus.id">{{ estatus.status }}
+                    </option>
+
+                  </select>
+                  <span style="color:red" *ngIf="status1.invalid && status1.touched ">
+                    <span *ngIf="status1.errors.required">
+                      Status is mandatory.
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Status Date<span class="starColor"> *</span> </label>
+                  <input class="form-control" type="date" [(ngModel)]="empinobj.statusDate" name="statusDate" required
+                    placeholder="DD/MM/YYYY" #stdate="ngModel">
+                  <span style="color:red" *ngIf="stdate.invalid && stdate.touched ">
+                    <span *ngIf="stdate.errors.required">
+                      Date is required.
+                    </span>
+                    <span *ngIf="stdate.errors.min">
+                      Enter valid date.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Gender<span class="starColor"> *</span></label>
+                  <select class="form-control" [(ngModel)]="empinobj.gender" name="emp03" required #Dropdown="ngModel">
+
+
+                    <option *ngFor="let egender of empgenderinfo" [value]="egender.id">{{ egender.gender }}</option>
+
+                  </select>
+                  <span style="color:red" *ngIf="Dropdown.invalid && Dropdown.touched ">
+                    <span *ngIf="Dropdown.errors.required">
+                      Gender is mandatory.
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Designation<span class="starColor"> *</span></label>
+                  <select class="form-control" [(ngModel)]="empinobj.title" name="Title" required
+                    placeholder="Qualification" #title="ngModel" [disabled]="user">
+                    <option>Select Status</option>
+                    <option *ngFor="let etitle of empDesignationlist" [value]="etitle.id">{{etitle.designation}}
+                    </option>
+                  </select>
+                  <span style="color:red" *ngIf="title.invalid && title.touched ">
+                    <span *ngIf="title.errors.required">
+                      Designation is mandatory.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Reporting Manager<span class="starColor"> *</span> </label>
+                  <select type="text" class="form-control" [(ngModel)]="empinobj.reportingManager"
+                    name="reportingManager" placeholder="Reporting Manager" #rep="ngModel">
+                    <option *ngFor="let m of managerdata" value={{m.reportingManager}}>{{m.firstname}}</option>
+                  </select>
+                  <span style="color:red" *ngIf="rep.invalid && rep.touched ">
+
+                    <span *ngIf="rep.errors.required">
+                      Name is required.
+                    </span>
+                    <span *ngIf="rep.errors.pattern">
+                      Enter alphabets only.
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Email ID<span class="starColor"> *</span> </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.email" name="email" email required
+                    placeholder="enter email id" #emaill="ngModel">
+                  <span style="color:red" *ngIf="emaill.invalid && emaill.touched ">
+                    <span *ngIf="emaill.errors.required">
+                      Email id is required
+                    </span>
+                    <span *ngIf="emaill.errors.email">
+                      enter valid email id
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Official Email ID<span class="starColor"> *</span> </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.officialEmail" name="officialEmail"
+                    email required placeholder="enter email id" #officialEmail="ngModel">
+                  <span style="color:red" *ngIf="officialEmail.invalid && officialEmail.touched ">
+                    <span *ngIf="officialEmail.errors.required">
+                      Email id is required
+                    </span>
+                    <span *ngIf="officialEmail.errors.email">
+                      enter valid email id
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Mobile Number<span class="starColor"> *</span> </label>
+                  <input type="text" class="form-control" [(ngModel)]="empinobj.personalMobileNo"
+                    name="personalMobileNo" required pattern="[6-9]{1}[0-9]{9}" placeholder="phone number"
+                    #pno="ngModel">
+                  <span style="color:red" *ngIf="pno.invalid && pno.touched ">
+                    <span *ngIf="pno.errors.required">
+                      phone number is required
+                    </span>
+                    <span *ngIf="pno.errors.pattern">
+                      enter valid phone number
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+
+
+            <button class="btn btn-success float-right margin" (click)="saveemployeeInfo()"
+              [disabled]="newUserForminfo.form.invalid" data-dismiss="modal" aria-label="Close"
+              *ngIf="!isUPDATEDBY">Save</button>
+            <button class="btn btn-success float-right margin" type="submit" (click)="updateemployeeinfo(empinobj)"
+              data-dismiss="modal" aria-label="Close" [disabled]="newUserForminfo.invalid" *ngIf="isUPDATEDBY">
+
+              Update
+            </button>
+
+
+
+
+
+
+            <button class="btn btn-success float-right" (click)="newUserForminfo.reset()">Clear</button>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>Back</button> -->
+            <button class="btn btn-success" data-dismiss="modal">
+              <span aria-hidden="true"></span>Back</button>
+          </form>
+          <!--  </div> -->
+
+
+        </div>
+
+      </div>
+      <!-- modal-content -->
+    </div>
+    <!-- modal-dialog -->
+  </div>
+
+</div>

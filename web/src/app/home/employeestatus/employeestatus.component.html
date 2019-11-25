@@ -1,0 +1,214 @@
+<div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> Employee Status</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item">Masters</li>
+      <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-4">
+      <form >
+        
+          <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search" [disabled]="searchfield">
+  
+        </form>
+  
+      </div> 
+        <div class="col-8 text-right">
+          <button type="submit" (click)="value=!value;employee_status_data='';" *ngIf="addb" class="btn ">Add Employee Status</button>
+  
+        </div>
+      
+  
+    </div>
+  
+  
+  <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+    <form #empstatus="ngForm">
+      <table class="table table-condensed tile" style="width:100%">
+  
+  
+        <thead style="background-color: #1d62a7;color:white" class="text-center">
+          <th  >
+            Employee Status
+          </th>
+          <th >Status</th>
+          <th >Edit</th>
+  
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let employee of employee_statuslist |filter:key| paginate: { itemsPerPage: pageSize, currentPage: p } 
+          | orderBy: order:reverse| filter:searchText; let i=index " class="text-center">
+            <td class="jjtd">
+              <div *ngIf="!employee.isEditable">
+                {{employee.status}}
+              </div>
+              <div *ngIf="employee.isEditable">
+              <input type="text" name="status" [(ngModel)]="employee.status" class="form-control"
+                #empl="ngModel" required pattern="[A-Za-z]{1}[A-Za-z. ]*" />
+                <div style="color:red" *ngIf="empl.invalid && empl.touched ">
+                    <span *ngIf="empl.errors.required">
+                      Please enter employee status
+                    </span>
+                    <span *ngIf="empl.errors.pattern">
+                      Please enter valid employee status
+                    </span>
+                  </div>
+  
+              </div>
+  
+            </td>
+            <td class="jjtd">Active</td>
+  
+            <td>
+  
+              <button class="btn " *ngIf="employee.isEditable"
+                (click)="employee.isEditable=!employee.isEditable;updateEmployeeStatusData(empstatus.value)" [disabled]="empstatus.invalid">Update</button>&nbsp;
+              <button class="btn " (click)="employee.isEditable=!employee.isEditable" (click)="cancel()"
+                *ngIf="employee.isEditable">Cancel</button>
+              <span style="color:#1d62a7;font-size:20px" (click)='employee.isEditable =!employee.isEditable'
+                (click)="edit(employee.id)" *ngIf="!employee.isEditable"> <i class="fa fa-edit" [class.disabled]="noedit"></i></span>
+  
+            </td>
+            <!-- <td><img src="assets/delete.png" width="20px" (click)="deleterow(i)" /></td> -->
+          </tr>
+          <tr *ngIf="value">
+            <td><input name="employee_status_data" [(ngModel)]="employee_status_data" type="text" class="form-control"
+                placeholder="Enter Employee Status" #empsta="ngModel" pattern="[A-Za-z]{1}[A-Za-z. ]*" required>
+              <div *ngIf="empsta.invalid && empsta.touched">
+                <span *ngIf="empsta.errors.pattern" style="color: red">Please enter Employee status </span>
+                <span *ngIf="empsta.errors.required" style="color: red ">Employee status is requried </span>
+  
+              </div>
+  
+  
+            </td>
+  
+            <td><button type="submit" class="btn  " [disabled]="empstatus.invalid"
+                (click)="setEmployeeStatusData()">Save</button>
+              <button type="submit" class="btn  " (click)=cancelbulist()
+                style="margin-left: 20px">Cancel</button></td>
+          </tr>
+  
+        </tbody>
+      </table>
+    </form>
+  </div>
+  
+  <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+  <div class="row">
+    <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+  
+  
+    <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+      <!-- <option [ngValue]="0">0</option> -->
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="15">15</option>
+      <option [ngValue]="20">20</option>
+    </select>
+  
+  </div>
+  <!-- private pageSize: number = 5; -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- <div class="app-title">
+      <div>
+        <h1><i class="fa fa-dashboard"></i>Sub Business unit</h1>
+      </div>
+      <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+      
+      </ul>
+    </div>
+    
+    <div class="topnav">
+     <input type="text" placeholder="Search..">
+    </div><div class="wrapper">
+    <div class="container response">
+      <div class="row">
+        <div class="col-md-6">
+        
+        </div>
+      </div>
+      <div class="input-group  " >
+        <button type="submit" (click)="value=!value"class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+  
+        <div class="tabletop">
+          <table class="table"> 
+            <thead>
+            <tr>
+              <th>Cost Center</th>
+              <th>Business Unit</th>
+              <th>Sub-Business Unit</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bulist of businessunitlist | filter:key | paginate: { itemsPerPage: 5, currentPage: p }; let i=index ">
+              <td>
+                  <div *ngIf="!bulist.isEditable">
+                {{bulist.costCenter}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.costCenter" *ngIf="bulist.isEditable"/>
+            </td>
+            <td>
+                <div *ngIf="!bulist.isEditable">
+                {{bulist.businessUnit}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.businessUnit" *ngIf="bulist.isEditable"/>
+            </td>
+            <td>
+                <div *ngIf="!bulist.isEditable">
+                {{bulist.subbusinessUnit}}
+              </div>
+              <input type="text" [(ngModel)]="bulist.subbusinessUnit" *ngIf="bulist.isEditable"/>
+            </td>
+            <td>
+              
+              <button  class="btn" style="background: #009ee2;border:#009ee2;color:white;" *ngIf="bulist.isEditable" (click)="bulist.isEditable=!bulist.isEditable">Save</button>
+              <img src="assets/pen.png" width = "20" (click)='bulist.isEditable =!bulist.isEditable' *ngIf="!bulist.isEditable">
+              </td>
+            <td><img src="assets/delete.png" width = "25" (click)="deleterow(i)"/></td>
+            </tr>
+             <tr>
+              <td><input id="businessunit" name="businessunit" [(ngModel)]="businessunit" *ngIf="value" type="text" class="form-control" placeholder="Enter BusinessUnit" required ></td>
+              <td><select id="costcenter" name="costcenter" [(ngModel)]="costcenter" *ngIf="value" class='form-control' >
+                <option value="undefined" selected disabled >--Select--</option>
+                <option *ngFor="let cc of costcenterlist">{{cc.costCenter2}}</option>
+              </select></td>
+              <td><input id="subbusinessunit" name="subbusinessunit" [(ngModel)]="subbusinessunit" *ngIf="value" type="text" class="form-control" placeholder="Enter sub-BusinessUnit" required ></td>
+              <td><button type="submit" class="btn btn-primary " *ngIf="value" (click)=saveBu()>Save</button>
+                <button type="submit" class="btn btn-default " *ngIf="value" (click)=cancelbulist()>Cancel</button></td>
+                
+               <td></td>
+             </tr> 
+            
+              </tbody>
+            </table>
+            
+     -->
+  
+  <!--        
+      </div>
+        </div>
+          
+            <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+  
+          </div> -->

@@ -1,0 +1,108 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> State List</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+<div class="row" style="margin-bottom: 25px;">
+  <div  class="col-4">
+    <form >
+        <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+          [disabled]="searchfield">
+        </form>
+      </div>
+      <div class="col-8 text-right">
+        <button type="submit" (click)="value=!value;clear()" *ngIf="addb" class="btn">Add State List</button>
+      </div>
+    
+  <div class="col-md-1" style="padding-left:40px;">
+
+  </div>
+</div>
+<div class=" row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <form #stateList="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+        <tr>
+          <th>State List</th>
+          <th>Status</th>
+          <th>Edit</th>
+          <!-- <th>Delete</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let state of StateList | orderBy: order:reverse:'case-insensitive' | filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index " class="text-center">
+
+          <td>
+            <div *ngIf="!state.isEditable">
+              {{state.stateName}}
+            </div>
+            <div *ngIf="state.isEditable">
+              <input class="form-control" type="text" name="stateName" [(ngModel)]="state.stateName" #des="ngModel"
+                required pattern="[A-Za-z]{1}[A-Za-z. ]*" />
+              <div style="color:red" *ngIf="des.invalid && des.touched ">
+                <span *ngIf="des.errors.required">
+                  Please enter valid state name
+                </span>
+                <span *ngIf="des.errors.pattern">
+                  Please enter valid state name
+                </span>
+              </div>
+
+            </div>
+          </td>
+          <td>Active</td>
+          <td>
+
+            <button class="btn " *ngIf="state.isEditable"
+              (click)="state.isEditable=!state.isEditable;updateStateData(stateList.value); "
+              [disabled]="stateList.invalid">Update</button>&nbsp;
+            <button class="btn " (click)="state.isEditable=!state.isEditable" (click)="cancel()"
+              *ngIf="state.isEditable">Cancel</button>
+            <span style="color:#1d62a7;font-size:20px" (click)='state.isEditable =!state.isEditable'
+              (click)="edit(state.id)" *ngIf="!state.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+          </td>
+          <!-- <td><img src="assets/delete.png" width="20px" (click)="deleteSate(state)"/></td> -->
+        </tr>
+        <tr *ngIf="value">
+          <td><input name="statelist" [(ngModel)]="statelist" type="text" #state="ngModel" required
+              pattern="[A-Za-z]{1}[A-Za-z ]*" class="form-control" placeholder="Enter State">
+            <div *ngIf="state.invalid && state.touched" style="color: red">
+              <span *ngIf="state.errors.required">
+                Please Enter Valid State
+              </span>
+              <span *ngIf="state.errors.pattern">
+                Please enter valid state name
+              </span>
+            </div>
+          </td>
+          <td><button type="submit" class="btn mr-2" (click)=setState(stateList.value)
+              [disabled]="stateList.invalid">Save</button>
+            <button type="submit" class="btn  " (click)=cancelstatelist()>Cancel</button></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>
+<!-- private pageSize: number = 5; -->

@@ -1,0 +1,138 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-dashboard"></i> Separation Type</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+<div class="row" style="margin-bottom: 25px;">
+    <div class="col-4">
+  <form>
+    <input class="form-control" type="text" [(ngModel)]="key1" size="50" name="key1"
+      placeholder="Search" [disabled]="searchfield">
+    </form>
+    </div>
+    <div class="col-8 text-right">
+      <button type="submit" (click)="value=!value;clear()" *ngIf="addb" class="btn ">Add Separation Type</button>
+
+    </div>
+
+  
+
+</div>
+
+<div class="row top table-responsive two" style="margin-right: 0px; margin-left: 0px;">
+  <form #sepname="ngForm">
+
+    <table class="table table-condensed tile" style="width: 100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+        <tr>
+          <th >
+            Separation Type
+
+          </th>
+          <th >Status</th>
+          <th >Edit</th>
+          <!-- | orderBy: order:reverse:'case-insensitive' -->
+          <!-- <th>Delete</th>         -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- |filter:key | paginate: { itemsPerPage: 5, currentPage: p } 
+                | orderBy: order:reverse:'case-insensitive'| filter:searchText; let i=index  -->
+        <tr *ngFor="let separation of separationDetailsList
+                  |filter:key1 | paginate: { itemsPerPage: pageSize, currentPage: p }
+                  | filter:searchText; let i=index" class="text-center">
+          <!-- <td>
+                    <div *ngIf="!separation.isEditable">
+                        {{separation.separationTypeId}}
+                      </div>
+                      <input type="text" [(ngModel)]="separation.separationTypeId" *ngIf="separation.isEditable"/>
+
+                </td> -->
+
+
+          <td>
+            <div *ngIf="!separation.isEditable">
+              {{separation.separationType}}
+            </div>
+            <div *ngIf="separation.isEditable" > 
+            <input type="text" class="form-control" name="separationType" [(ngModel)]="separation.separationType"
+             #sep="ngModel" required pattern="[A-Za-z]{1}[A-Za-z. ]*" />
+              <div style="color:red" *ngIf="sep.invalid && sep.touched ">
+                  <span *ngIf="sep.errors.required">
+                    Please enter separation type
+                  </span>
+                  <span *ngIf="sep.errors.pattern">
+                    Please enter valid separation type
+                  </span>
+                </div>
+              </div>
+
+
+          </td>
+          <td>Active</td>
+
+          <td>
+            <button class="btn " *ngIf="separation.isEditable" (click)="separation.isEditable=!separation.isEditable;
+              updateSeparation(sepname.value);" [disabled]="sepname.invalid">Update</button>&nbsp;
+            <button class="btn " (click)="separation.isEditable=!separation.isEditable" (click)="cancel()"
+              *ngIf="separation.isEditable">Cancel</button>
+            <span style="color: #1d62a7;font-size:20px" (click)='separation.isEditable =!separation.isEditable'
+              (click)="edit(separation.separationTypeId)" *ngIf="!separation.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+          </td>
+
+
+          <!-- <td><img src="assets/delete.png" width="20px" (click)="deleterow(i)"/></td> -->
+        </tr>
+
+        <tr>
+          <!-- <td>
+            <input id="separationtypeid" name="idlist" [(ngModel)]="separationtypeid" 
+            *ngIf="value" type="text" class="form-control" placeholder="Enter id" required >
+           </td> 
+            -->
+          <td *ngIf="value">
+            <input type="text" name="separationtype" [(ngModel)]="separationtype" class="form-control" #sep="ngModel"
+              pattern="[A-Za-z]{1}[A-Za-z. ]*" placeholder="Enter SeparationType" required>
+            <div *ngIf="sep.invalid && sep.touched">
+              <span *ngIf="sep.errors.required" style="color: red"> Separation Type is required </span>
+              <span *ngIf="sep.errors.pattern" style="color: red"> Please enter valid separation type </span>
+
+            </div>
+          </td>
+
+          <td *ngIf="value">
+            <button type="submit" class="btn" [disabled]="sepname.invalid"
+              (click)="setSeparation()">Save</button>
+            <button type="submit" class="btn" style="margin-left: 20px" *ngIf="value"
+              (click)=cancelbulist()>Cancel</button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>
+<!-- private pageSize: number = 5; -->

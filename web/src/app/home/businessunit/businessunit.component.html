@@ -1,0 +1,160 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Business Unit</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+    <div class="col-4">
+         <form>
+         <input type="text" class="form-control " name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+      </form>
+    </div>
+    <div class="col-8 text-right">
+      <button type="button" (click)="value=!value;clear()" *ngIf="addbb" class="btn "
+        style="background-color: #1d62a7; color:white">Add Business Unit</button>
+    </div>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <form #busunitfor="ngForm" >
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color: white;text-align: center;">
+        <tr>
+          <th >Business Unit</th>
+          <th >Cost Center</th>
+          <th>BuHead</th>
+          <th >Status</th>
+          <th  *ngIf="hide">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let bulist of businessUnitList|filter:key|paginate: { itemsPerPage: pageSize, currentPage: p } | orderBy: order:reverse:'case-insensitive' ; let i=index " class="text-center">
+          <td>
+            <div *ngIf="!bulist.isEditable">
+              {{bulist.businessUnitName}}
+            </div>
+            <div *ngIf="bulist.isEditable">
+              <input type="text" class='form-control' name="businessUnitName" [(ngModel)]="bulist.businessUnitName" 
+              #role="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9._ ]*"/>
+
+              <div style="color:red" *ngIf="role.invalid && role.touched ">
+                <span *ngIf="role.errors.required">
+                    Please enter businessUnitName
+                </span>
+                <span *ngIf="role.errors.pattern">
+                    Please enter businessUnitName
+                </span>
+              </div>
+
+            </div>
+          </td>
+          <td>
+            <div *ngIf="!bulist.isEditable">
+              {{bulist.costCenterId}}
+            </div>
+            <select id="costcenter" name="costCenterId" [(ngModel)]="bulist.costCenterId" *ngIf="bulist.isEditable"
+              class='form-control'>
+              <option value="undefined" selected disabled>--Select--</option>
+              <option *ngFor="let costlist of coscentergetlist" value = "{{costlist.id}}">{{costlist.costCenterCode}}</option>
+            </select>
+
+          </td>
+          <td>
+              <div *ngIf="!bulist.isEditable">
+                {{bulist.buHead}}
+              </div>
+              <select id="buHead" name="firstname" [(ngModel)]="buHeadData.firstname" *ngIf="bulist.isEditable"
+                class='form-control'>
+                <option value="undefined" selected disabled>--Select--</option>
+                 <option *ngFor="let bu of buHeadData" value = "{{bu.employeeId}}">{{ bu.firstname}}</option>
+              </select>
+  
+            </td>
+            
+          <td>
+            Active
+          </td>
+          <td *ngIf="hide">
+
+            <span style="color:#1d62a7;font-size:20px" *ngIf="!bulist.isEditable"
+              (click)="(bulist.isEditable=!bulist.isEditable) && edit(bulist)"><i class="fa fa-edit" [class.disabled]="noedit"></i></span>
+            <div *ngIf="bulist.isEditable">
+              <button type="submit" class="btn" style="background-color: #1d62a7; color:white" (click)="saveUpdatedBuData(busunitfor.value)"
+                [disabled]="busunitfor.invalid">update</button>&nbsp;&nbsp;
+              <button type="submit" class="btn " style="background-color: #1d62a7; color:white" (click)="cancel()"
+                (click)="(bulist.isEditable=!bulist.isEditable)">Cancel</button>
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+
+          <td *ngIf="value">
+
+            <input name="businessUnitName" [(ngModel)]="businessUnitName" type="text" #cost="ngModel" 
+              pattern="[A-Za-z]{1}[A-Za-z0-9._ ]*" class="form-control" placeholder="Enter Cost Center" required>
+
+            <div style="color:red" *ngIf="cost.invalid && cost.touched ">
+              <span *ngIf="cost.errors.required">
+                Please enter businessUnitName
+              </span>
+              <span *ngIf="cost.errors.pattern">
+                Please enter alphabet only
+              </span>
+
+
+            </div>
+
+          </td>
+          <td *ngIf="value">
+            <select id="costcenter" name="costcenter" [(ngModel)]="costCenterId" class='form-control'
+              #Dropdown="ngModel" required>
+              <option value="undefined" selected disabled>--Select--</option>
+              <option *ngFor="let cc of coscentergetlist ">{{cc.costCenterCode}}</option>
+
+            </select>
+            <span style="color:red" *ngIf="Dropdown.invalid && Dropdown.touched ">
+              <span *ngIf="Dropdown.errors.required">
+                CostCenterId is mandatory.
+              </span>
+            </span>
+          </td>
+         
+          <td *ngIf="value">
+            <select id="buHead" name="firstname" [(ngModel)]="buHeadData.firstname"  class='form-control' #Dropdown="ngModel" required>
+              <option value="undefined" selected disabled>--Select--</option>
+               <option *ngFor="let bu of buHeadData" value = "{{bu.employeeId}}">{{ bu.firstname}}</option>
+            </select>
+            <span style="color:red" *ngIf="Dropdown.invalid && Dropdown.touched ">
+              <span *ngIf="Dropdown.errors.required">
+                BuHead is mandatory.
+              </span>
+            </span>
+          </td>
+          <td><button type="submit" class="btn  mr-2" *ngIf="value"
+              [disabled]="busunitfor.invalid" style="background-color: #1d62a7; color:white" (click)="setBusinessunit(busunitfor.value)">Save</button>
+            <button type="submit" class="btn  " *ngIf="value" style="background-color: #1d62a7; color:white" (click)=cancelbulist()>Cancel</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+<label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+</div>

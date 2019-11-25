@@ -1,0 +1,49 @@
+<div class="app-title">
+    <div>
+      <h1><i class="fa fa-address-book"></i>&nbsp;Directory</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+  
+      <li class="breadcrumb-item active"><a href="/Dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+<div class="col-1 float-right" ><span (click)="backClicked()" style="font-size: 16px;cursor: pointer;"><i class="fa fa-arrow-left pr-1"  ></i>Back</span></div>
+<div class="row mx-auto col-4">
+<!-- <h2 class="sd">Every one</h2> -->
+<!-- <i class="fa fa-search"></i> -->
+<input type="text" id="myInput" class="form-control" name="key" [(ngModel)]="key" placeholder="&#xf002; Search" style="font-family:Arial, FontAwesome" >
+</div>
+
+<div *ngIf="loading" style="padding-top: 150px;">
+  <div class="loader mx-auto" ></div>
+</div>
+
+<div *ngIf="!loading">
+<div class="row mx-auto col-7" >
+<div class="table-responsive " >
+<table id="myTable" class="table table-hover" >
+  <!-- <tr class="header">
+    <th style="width:60%;">Name</th>
+    <th style="width:40%;">Country</th>
+  </tr> -->
+  <thead >
+  <th></th>
+  <th>Name</th>
+  <th> &#xf0e0; &nbsp;&nbsp; Mail-Id</th>
+  
+  <th> &#xf095; Phone No</th>
+</thead>
+  <tbody>
+  <tr *ngFor="let e of allEmp |  filter:key ; let i=index">
+  
+   <td *ngIf="!e.txt"> <img src="{{e.image}}"  class="image" ></td>
+  <td *ngIf="e.txt" class="text">{{e.text}} </td>
+    <td>{{e.firstname}} {{e.lastname}}  ({{e.employeeId}}) </td>
+    <td>{{e.email}} </td>              <td> {{e.personalMobileNo}}</td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div></div>

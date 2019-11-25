@@ -1,0 +1,48 @@
+.tablefontsize{
+    font-size: 5px;
+    }
+.bttn{
+    background-color: #1d62a7;
+    color:white;
+}
+.in{
+    padding: 20px;
+}
+.header{
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 17px;
+
+}
+label{
+    font-weight: bold;
+}
+.bgColor{
+    background-color: white;
+}
+.marBtom{
+    margin-bottom: 15px;
+}
+.row{
+    padding: 5px;
+}
+span{
+    padding-left: 5px;
+}
+.selectpicker:hover{
+    box-shadow: none;
+    width: 150%;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+
+.search{
+    width: 100%;
+    padding: 7px 7px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

@@ -1,0 +1,1126 @@
+<div>
+  <div class="card shadow" style="padding:20px ;">
+    <div>
+      <span style="font-size: 17px;"><b>Contract Management System</b>
+
+        <button class="btn float-right btn-sm" *ngIf="moreinfo" style="background-color: #1d62a7;color:white"
+          (click)="moreinfo=!moreinfo;contractForm.reset()" aria-hidden="true">Back</button></span>
+    </div>
+    <hr>
+
+    <div class="row" style="padding: 10px 0px 10px 0px;" *ngIf="!moreinfo">
+      <div class="col-md-8 col-sm-6 col-xs-12">
+        <input placeholder="Search" class="col-5 form-control" name="search" [(ngModel)]="search">
+
+        <!-- <mat-form-field>
+            <mat-label>Select Customer</mat-label>
+            <mat-select (selectionChange)="selectedItem($event.value)">
+              <mat-option *ngFor="let data of customersAllData" [value]="data.customerId">{{data.customerName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12" *ngIf="role">
+        <button class="btn float-right" style="background-color: #1d62a7;color: white;" data-toggle="modal"
+          data-target="#myModal" (click)="!status">Create Contract</button>
+
+
+
+
+        <div class="modal" id="myModal" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title">Contract Creation</h6>
+                <button type="button" class="close" data-dismiss="modal"
+                  (click)="contractForm.reset();clear()">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="contractForm">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <mat-form-field>
+                        <mat-label>Select Customer</mat-label>
+                        <mat-select formControlName="selectCustomer" (selectionChange)="selectedItem($event.value)">
+                          <mat-option *ngFor="let data of customersAllData" [value]="data.customerId"
+                            [value]="data.customerName">
+                            {{data.customerName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+
+                    <div class="col-md-4" *ngIf="status">
+
+
+
+                      <label><b>Customer ID : </b>{{customerId}}</label>
+
+
+
+                    </div>
+                    <div class="col-md-4" *ngIf="status">
+
+                      <label><b>Customer Name : </b>{{customerName}}</label>
+
+
+
+
+                    </div>
+                    <div class="col-md-4" *ngIf="status">
+                    </div>
+                    <div class="col-md-4" *ngIf="status">
+
+                      <!-- <mat-label>Select Service</mat-label>
+                                <mat-select placeholder="Services" formControlName="services" multiple>
+                                    <mat-option *ngFor="let service of serviceTypeAssign" [value]="service.id">
+                                        {{service.serviceType}}
+                                    </mat-option>
+                                </mat-select> -->
+
+                      <label><b>Service Name : </b>{{ServiceName}}</label>
+
+
+
+                    </div>
+                    <div class="col-md-4" *ngIf="status">
+
+                      <label><b>BDM Contact Name : </b>{{bdmconatctName}}</label>
+
+
+
+
+                    </div>
+                  </div>
+                  <br>
+
+
+                  <div *ngIf="status">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Contract Name<span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="contractname" formControlName="contractName"
+                            placeholder="Contract Name">
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractName.touched && contractForm.controls.contractName.invalid">
+                            <div *ngIf="contractForm.controls.contractName.errors.required">
+                              <span>please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.contractName.errors.pattern">
+                              <span>please enter alphabet only.</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Contract Owner<span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="contractowner" formControlName="contractOwner"
+                            pattern="[a-zA-Z]*" placeholder="Contract Owner Name">
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractOwner.touched && contractForm.controls.contractOwner.invalid">
+                            <div *ngIf="contractForm.controls.contractOwner.errors.required">
+                              <span>please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.contractOwner.errors.pattern">
+                              <span>please enter alphabet only</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+
+                          <mat-form-field style="width: 100%">
+                            <input matInput [matDatepicker]="picker1" [disabled]="disableDate"
+                              formControlName="contractStartDate" placeholder="Contract Start Date"
+                              (click)="picker1.open()" onkeydown="return false">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractStartDate.touched && contractForm.controls.contractStartDate.invalid">
+                            <div *ngIf="contractForm.controls.contractStartDate.errors.required">
+                              <span>please select field is required</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <mat-form-field style="width: 100%">
+                            <input matInput [min]="contractForm.value.contractStartDate" [matDatepicker]="picker"
+                              formControlName="contractEndDate" placeholder="Contract End Date" (click)="picker.open()"
+                              onkeydown="return false">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractEndDate.touched && contractForm.controls.contractEndDate.invalid">
+                            <div *ngIf="contractForm.controls.contractEndDate.errors.required">
+                              <span>please select field is required</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Contract Value<span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="contractvalue" formControlName="contractValue"
+                            placeholder="Contract Value">
+                          <!-- (keyup.enter)="decimalFloating($event.target.value)" -->
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractValue.touched && contractForm.controls.contractValue.invalid">
+                            <div *ngIf="contractForm.controls.contractValue.errors.required">
+                              <span> please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.contractValue.errors.pattern">
+                              <span>please enter numbers only</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Contract Currency<span class="starColor"> *</span> </label>
+                          <!-- <input type="text" class="form-control" name="contractcurrency"
+                            formControlName="contractCurrency" placeholder="Contract Currency" > -->
+
+                          <div class="input-group mb-4">
+                            <input type="text" class="form-control" name="contractcurrency"
+                              formControlName="contractCurrency" placeholder="Contract Currency"
+                              aria-label="Contract Currency" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="basic-addon2">INR</span>
+                            </div>
+                          </div>
+
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractCurrency.touched && contractForm.controls.contractCurrency.invalid">
+                            <div *ngIf=" contractForm.controls.contractCurrency.errors.required">
+                              <span> please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.contractCurrency.errors.pattern">
+                              <span>please please enter numbers only </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <!-- <label>Delivery Location<span class="starColor"> *</span> </label>
+                          <select class="form-control" name="deliverylocation" formControlName="deliveryLocation">
+                            <option disabled value="">--please select--</option>
+                            <option *ngFor="let delivdata of deleiveryData" [value]="delivdata.deliverylocationId">
+                              {{delivdata.deliverylocationName}}</option>
+                          </select> -->
+
+
+                          <mat-form-field style="width:100%">
+                            <mat-label>Delivery Location</mat-label>
+                            <mat-select formControlName="deliveryLocation" disableOptionCentering>
+                              <mat-option *ngFor="let delivdata of deleiveryData"
+                                [value]="delivdata.deliverylocationName">
+                                {{delivdata.deliverylocationName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.deliveryLocation.touched && contractForm.controls.deliveryLocation.invalid">
+                            <div *ngIf="contractForm.controls.deliveryLocation.errors.required">
+                              <span> please select field is required </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <!-- <label>Service Type<span class="starColor"> *</span> </label>
+                            <select class="form-control" name="servicetype" formControlName="serviceType">
+                              <option disabled value="">--please select--</option>
+                              <option *ngFor="let sertype of serviceTypeList" [value]="sertype.serviceType">
+                                {{sertype.serviceType}}</option>
+                            </select> -->
+
+                          <mat-form-field style="width:100%">
+                            <mat-label>Service Type</mat-label>
+                            <mat-select formControlName="serviceType" disableOptionCentering>
+                              <mat-option *ngFor="let sertype of serviceTypeList" [value]="sertype.serviceType">
+                                {{sertype.serviceType}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.serviceType.touched && contractForm.controls.serviceType.invalid">
+                            <div *ngIf="contractForm.controls.serviceType.errors.required">
+                              <span>please select field is required</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <mat-form-field style="width:100%">
+                            <mat-label> Document Type</mat-label>
+                            <mat-select formControlName="documentType" disableOptionCentering>
+                              <mat-option *ngFor="let doctypedata of documenttypedata"
+                                [value]="doctypedata.documenttype">
+                                {{doctypedata.documenttype}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <!-- <mat-form-field>
+                                <mat-select formControlName="gender" [compareWith]="compareSelectValues">
+                                   <mat-option *ngFor="let gender of genderValues" value="{{gender.id}}">{{gender.label}}</mat-option>
+                                </mat-select>
+                             </mat-form-field> -->
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.documentType.touched && contractForm.controls.documentType.invalid">
+                            <div *ngIf="contractForm.controls.documentType.errors.required">
+                              <span> please select field is required </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+
+                          <mat-form-field style="width:100%">
+                            <mat-label>Document Stage</mat-label>
+                            <mat-select formControlName="documentStage" disableOptionCentering>
+                              <mat-option *ngFor="let docstage of documentstage" [value]="docstage.documentstage">
+                                {{docstage.documentstage}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.documentStage.touched && contractForm.controls.documentStage.invalid">
+                            <div *ngIf="contractForm.controls.documentStage.errors.required">
+                              <span>please select field is required</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+
+                          <mat-form-field style="width:100%">
+                            <mat-label> Contract Company Name </mat-label>
+                            <mat-select formControlName="contractCompany" disableOptionCentering>
+                              <mat-option *ngFor="let contractdata of contractcompanylist"
+                                [value]="contractdata.contractCompany">
+                                {{contractdata.contractCompany}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.contractCompany.touched && contractForm.controls.contractCompany.invalid">
+                            <div *ngIf="contractForm.controls.contractCompany.errors.required">
+                              <span> please select field is required </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <!-- <label> Multilocation Delivery <span class="starColor"> *</span> </label>
+                            <input type="text" class="form-control" name="multilocationdelivery"
+                              formControlName="multilocationDelivery" placeholder="Multilocation Delivery Center Name"> -->
+                          <mat-form-field style="width: 100%">
+                            <mat-label>Multilocation Delivery</mat-label>
+                            <mat-select formControlName="multilocationDelivery" multiple disableOptionCentering>
+                              <mat-option *ngFor="let delivdata of deleiveryData"
+                                [value]="delivdata.deliverylocationName">
+                                {{delivdata.deliverylocationName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.multilocationDelivery.touched && contractForm.controls.multilocationDelivery.invalid">
+                            <div *ngIf=" contractForm.controls.multilocationDelivery.errors.required">
+                              <span> please enter field is required </span>
+                            </div>
+                            <!-- <div *ngIf="contractForm.controls.multilocationDelivery.errors.pattern">
+                                <span>please enter alphabet only</span>
+                              </div> -->
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <!-- <label> Executing Company <span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="executingcompany"
+                            formControlName="executingCompany" placeholder="Executing Company Name"> -->
+
+                          <mat-form-field style="width:100%">
+                            <mat-label> Executing Company </mat-label>
+                            <mat-select formControlName="executingCompany" disableOptionCentering>
+                              <mat-option *ngFor="let contractdata of contractcompanylist"
+                                [value]="contractdata.contractCompany">
+                                {{contractdata.contractCompany}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.executingCompany.touched && contractForm.controls.executingCompany.invalid">
+                            <div *ngIf=" contractForm.controls.executingCompany.errors.required">
+                              <span> please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.executingCompany.errors.pattern">
+                              <span>please enter alphabet only</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <!-- <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Created By<span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="createdby" formControlName="createdBy"
+                            placeholder="Created By Name">
+
+                          <div style="color: red;"
+                            *ngIf="contractForm.controls.createdBy.touched && contractForm.controls.createdBy.invalid">
+                            <div *ngIf=" contractForm.controls.createdBy.errors.required">
+                              <span> please enter field is required </span>
+                            </div>
+                            <div *ngIf="contractForm.controls.createdBy.errors.pattern">
+                              <span>please enter alphabet only</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div> -->
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Document Upload</label>
+                          <abbr><input type="file" class="form-control" (change)="fileSelected($event)" name="document"
+                              formControlName="documentName" accept="application/pdf"></abbr>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Contract Description</label>
+                          <textarea rows="4" cols="50" class="form-control" name="description"
+                            formControlName="contractDescription"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn" style="background-color: #1d62a7;color:white" data-dismiss="modal"
+                  aria-label="Close" type="submit" (click)="saveContract();"
+                  [disabled]="contractForm.invalid">Create</button>
+                <button type="button" class="btn" style="background-color: #1d62a7;color: white" data-dismiss="modal"
+                  (click)="contractForm.reset();clear()">Cancel</button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- <input placeholder="Search" class="col-5 form-control" name="search" [(ngModel)]="search"> -->
+
+    <div class="table-responsive" *ngIf="!moreinfo">
+      <table class="table" style="text-align: center;">
+        <thead style="background-color: #1d62a7;color: white;">
+          <th>Customer ID</th>
+          <th>Contract ID</th>
+          <th>Contract Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Service Type</th>
+          <th>Download</th>
+          <th>Delete</th>
+          <th>More-Info</th>
+        </thead>
+        <tbody>
+
+          <tr
+            *ngFor="let contract of data |filter:search | paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index" [class.active]="contract.contractStatus =='approved'" [class.reject]="contract.contractStatus =='rejected'">
+
+            <td>{{contract.customerid}}</td>
+            <td>{{contract.contractid}} </td>
+            <td>{{contract.contractname}}</td>
+            <td>{{contract.startdate | date:'d/M/yy'}}</td>
+            <td>{{contract.enddate | date:'d/M/yy'}}</td>
+            <td> {{contract.servicetype}}</td>
+            <!-- <td><i class="fa fa-pencil" aria-hidden="true" (click)="getByIdContract(contract.contractid)"
+                data-toggle="modal" data-target="#myModal1"></i></td> -->
+
+
+            <td><i class="fa fa-download" aria-hidden="true" (click)="downloadFile(contract.document)"></i></td>
+            <td> <i class="fa fa-trash" aria-hidden="true" (click)="deleteContract(contract.contractid)"></i></td>
+
+            <td><button class="btn btn-sm" style="background-color: #1d62a7;color:white" data-dismiss="modal"
+                aria-label="Close" type="submit" data-target="#myModal1"
+                (click)="getByIdContract(contract.contractid,contract.customerid);">More-Info</button> </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+
+      <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+      <label>Items per page: </label>&nbsp;&nbsp;&nbsp;
+      <select id="PerPage" [(ngModel)]="pageSize">
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="15">15</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+        <option [ngValue]="40">40</option>
+        <option [ngValue]="50">50</option>
+      </select>
+    </div>
+
+
+    <div class="row col-7 mx-auto" *ngIf="moreinfo">
+      <div class="col-6">
+        <span><b>Contract Status : </b>{{getbyidcontractdata[0].contractStatus}} </span>
+      </div>
+      <div class="col-6" *ngIf="roleStatus  ">
+        <button class="btn btnStyle btn-sm" (click)="approve()">Approve</button>&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal">Reject</button>
+      </div>
+
+    </div>
+    <hr>
+    <div class="col-7 mx-auto">
+
+      <div *ngIf="moreinfo" class="card">
+
+
+        <div class="card-header">
+          <div class="col-md-12">
+            <span style="font-size: 17px;"><b>{{getbyidcontractdata[0].contractname}}
+                ({{getbyidcontractdata[0].contractid}})
+                contract</b>
+            </span>
+
+            <span class="float-right" *ngIf="roleEdit">
+              <i class="fa fa-edit" style="font-size: 20px" aria-hidden="true" (click)="edit()" data-toggle="modal"
+                data-target="#myModal1"></i>
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="card body" style="padding: 15px;">
+          <div class="row pl-5">
+
+            <div class="col-md-6">
+              <table class="table table-borderless">
+                <tr>
+                  <th>Contract Name :</th>
+                  <td>{{getbyidcontractdata[0].contractname}}</td>
+                </tr>
+                <tr>
+                  <th>Contract Owner :</th>
+                  <td>{{getbyidcontractdata[0].contractowner}}</td>
+                </tr>
+                <tr>
+                  <th>Start Date :</th>
+                  <td>{{getbyidcontractdata[0].startdate | date:'d/M/yy'}}</td>
+                </tr>
+                <tr>
+                  <th>End Date :</th>
+                  <td>{{getbyidcontractdata[0].enddate | date:'d/M/yy'}}</td>
+                </tr>
+                <tr>
+                  <th>Contract Value :</th>
+                  <td>{{getbyidcontractdata[0].contractvalue}}</td>
+                </tr>
+                <tr>
+                  <th>Contract Currency :</th>
+                  <td>{{getbyidcontractdata[0].contractcurrency}}</td>
+                </tr>
+                <tr>
+                  <th>Service Type :</th>
+                  <td>{{getbyidcontractdata[0].servicetype}}</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-md-6 p-0">
+
+              <table class="table table-borderless">
+                <tr>
+                  <th>Delivery Location :</th>
+                  <td>{{getbyidcontractdata[0].deliverylocation}}</td>
+                </tr>
+                <tr>
+                  <th>Document Type :</th>
+                  <td>{{getbyidcontractdata[0].documenttype}}</td>
+                </tr>
+                <tr>
+                  <th>Document Stage :</th>
+                  <td>{{getbyidcontractdata[0].documentstage}}</td>
+                </tr>
+                <tr>
+                  <th>Contract Company :</th>
+                  <td>{{getbyidcontractdata[0].contractcompany}}</td>
+                </tr>
+                <tr>
+                  <th>Executing Company :</th>
+                  <td>{{getbyidcontractdata[0].executingcompany}}</td>
+                </tr>
+                <tr>
+                  <th>Multilocation Delivery :</th>
+                  <td>{{getbyidcontractdata[0].multilocationdelivery}}</td>
+                </tr>
+                <tr>
+                  <th>Created By :</th>
+                  <td>{{getbyidcontractdata[0].createdby}}</td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+<!-- edit model -->
+
+        <div class="modal" id="myModal1" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title">Contract Creation</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="contractForm">
+                  <!-- <div class="row">
+                    <div class="col-md-6"> -->
+                  <!-- <div class="form-group"> -->
+                  <!-- <label>Contract Id : {{getcontractId}}</label> -->
+                  <!-- <input type="text" class="form-control" [(ngModel)]="contractDetailsObj.contractid"
+                        name="contractid" formControlName="contractid" required pattern="[0-9]*"
+                        placeholder="Contract Name"> -->
+                  <!-- </div> -->
+                  <!-- </div>
+                  </div> -->
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Contract Name<span class="starColor"> *</span> </label>
+                        <input type="text" class="form-control" name="contractname" formControlName="contractName"
+                          placeholder="Contract Name">
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractName.touched && contractForm.controls.contractName.invalid">
+                          <div *ngIf="contractForm.controls.contractName.errors.required">
+                            <span>please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.contractName.errors.pattern">
+                            <span>please enter alphabet only.</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Contract Owner<span class="starColor"> *</span> </label>
+                        <input type="text" class="form-control" name="contractowner" formControlName="contractOwner"
+                          placeholder="Contract Owner Name">
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractOwner.touched && contractForm.controls.contractOwner.invalid">
+                          <div *ngIf="contractForm.controls.contractOwner.errors.required">
+                            <span>please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.contractOwner.errors.pattern">
+                            <span>please enter alphabet only</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label>Contract Start Date<span class="starColor"> *</span> </label>
+                          <input type="date" class="form-control" name="startdate" formControlName="contractStartDate"
+                            required placeholder="Contract Start Date"> -->
+
+
+                        <mat-form-field style="width: 100%">
+                          <input matInput [matDatepicker]="picker1" formControlName="contractStartDate"
+                            [disabled]="true" placeholder="Contract Start Date" (click)="pick=!pick"
+                            onkeydown="return false">
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                        <div *ngIf="!pick" style="color: red">
+                          <span>cannot edit startdate</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label>Contract End Date<span class="starColor"> *</span> </label>
+                        <input type="date" class="form-control" name="enddate" formControlName="contractEndDate"
+                          required placeholder="Contract End Date"> -->
+
+                        <mat-form-field style="width: 100%">
+                          <input matInput [min]="contractForm.value.contractStartDate" [matDatepicker]="picker"
+                            formControlName="contractEndDate" placeholder="Contract End Date" (click)="picker.open()"
+                            onkeydown="return false">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractEndDate.touched && contractForm.controls.contractEndDate.invalid">
+                          <div *ngIf="contractForm.controls.contractEndDate.errors.required">
+                            <span>please select field is required</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Contract Value<span class="starColor"> *</span> </label>
+                        <input type="text" class="form-control" name="contractvalue" formControlName="contractValue"
+                          placeholder="Contract Value">
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractValue.touched && contractForm.controls.contractValue.invalid">
+                          <div *ngIf="contractForm.controls.contractValue.errors.required">
+                            <span> please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.contractValue.errors.pattern">
+                            <span>please enter numbers only</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Contract Currency<span class="starColor"> *</span> </label>
+                        <!-- <input type="text" class="form-control" name="contractcurrency"
+                          formControlName="contractCurrency" placeholder="Contract Currency"> -->
+
+                        <div class="input-group mb-4">
+                          <input type="text" class="form-control" name="contractcurrency"
+                            formControlName="contractCurrency" placeholder="Contract Currency"
+                            aria-label="Contract Currency" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">INR</span>
+                          </div>
+                        </div>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractCurrency.touched && contractForm.controls.contractCurrency.invalid">
+                          <div *ngIf=" contractForm.controls.contractCurrency.errors.required">
+                            <span> please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.contractCurrency.errors.pattern">
+                            <span>please please enter numbers only </span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label>Delivery Location<span class="starColor"> *</span> </label>
+                          <select class="form-control" name="deliverylocation" formControlName="deliveryLocation">
+                            <option disabled value="">--please select--</option>
+                            <option *ngFor="let delivdata of deleiveryData" [value]="delivdata.deliverylocationId">
+                              {{delivdata.deliverylocationName}}</option>
+                          </select> -->
+
+                        <mat-form-field style="width:100%">
+                          <mat-label>Delivery Location</mat-label>
+                          <mat-select formControlName="deliveryLocation" disableOptionCentering>
+
+
+                            <mat-option *ngFor="let delivdata of deleiveryData"
+                              [value]="delivdata.deliverylocationName">
+                              {{delivdata.deliverylocationName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.deliveryLocation.touched && contractForm.controls.deliveryLocation.invalid">
+                          <div *ngIf="contractForm.controls.deliveryLocation.errors.required">
+                            <span> please select field is required </span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label>Service Type<span class="starColor"> *</span> </label>
+                          <select class="form-control" name="servicetype" formControlName="serviceType">
+                            <option *ngFor="let sertype of serviceTypeList" [value]="sertype.serviceType">
+                             </option>
+                          </select> -->
+
+
+                        <mat-form-field style="width:100%">
+                          <mat-label>Service Type</mat-label>
+                          <mat-select formControlName="serviceType" disableOptionCentering>
+                            <mat-option *ngFor="let sertype of serviceTypeList" [value]="sertype.serviceType">
+                              {{sertype.serviceType}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.serviceType.touched && contractForm.controls.serviceType.invalid">
+                          <div *ngIf="contractForm.controls.serviceType.errors.required">
+                            <span> please select field is required </span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+
+                        <mat-form-field style="width:100%">
+                          <mat-label> Document Type</mat-label>
+                          <mat-select formControlName="documentType" disableOptionCentering>
+                            <mat-option *ngFor="let doctypedata of documenttypedata" [value]="doctypedata.documenttype">
+                              {{doctypedata.documenttype}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.documentType.touched && contractForm.controls.documentType.invalid">
+                          <div *ngIf="contractForm.controls.documentType.errors.required">
+                            <span> please select field is required </span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+
+                        <mat-form-field style="width:100%">
+                          <mat-label>Document Stage</mat-label>
+                          <mat-select formControlName="documentStage" disableOptionCentering>
+                            <mat-option *ngFor="let docstage of documentstage" [value]="docstage.documentstage">
+                              {{docstage.documentstage}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.documentStage.touched && contractForm.controls.documentStage.invalid">
+                          <div *ngIf="contractForm.controls.documentStage.errors.required">
+                            <span>please select field is required</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+
+                        <mat-form-field style="width:100%">
+                          <mat-label> Contract Company Name </mat-label>
+                          <mat-select formControlName="contractCompany" disableOptionCentering>
+                            <mat-option *ngFor="let contractdata of contractcompanylist"
+                              [value]="contractdata.contractCompany">
+                              {{contractdata.contractCompany}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.contractCompany.touched && contractForm.controls.contractCompany.invalid">
+                          <div *ngIf="contractForm.controls.contractCompany.errors.required">
+                            <span> please select field is required </span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label> Multilocation Delivery <span class="starColor"> *</span> </label>
+                          <input type="text" class="form-control" name="multilocationdelivery"
+                            formControlName="multilocationDelivery" placeholder="Multilocation Delivery Center Name"> -->
+                        <mat-form-field style="width: 100%">
+                          <mat-label>Multilocation Delivery</mat-label>
+                          <mat-select formControlName="multilocationDelivery" multiple disableOptionCentering>
+                            <mat-option *ngFor="let delivdata of deleiveryData"
+                              [value]="delivdata.deliverylocationName">
+                              {{delivdata.deliverylocationName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.multilocationDelivery.touched && contractForm.controls.multilocationDelivery.invalid">
+                          <div *ngIf=" contractForm.controls.multilocationDelivery.errors.required">
+                            <span> please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.multilocationDelivery.errors.pattern">
+                            <span>please enter alphabet only</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!-- <label> Executing Company <span class="starColor"> *</span> </label>
+                      <input type="text" class="form-control" name="executingcompany" formControlName="executingCompany"
+                        placeholder="Executing Company Name"> -->
+
+                        <mat-form-field style="width:100%">
+                          <mat-label> Executing Company </mat-label>
+                          <mat-select formControlName="executingCompany" disableOptionCentering>
+                            <mat-option *ngFor="let contractdata of contractcompanylist"
+                              [value]="contractdata.contractCompany">
+                              {{contractdata.contractCompany}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.executingCompany.touched && contractForm.controls.executingCompany.invalid">
+                          <div *ngIf=" contractForm.controls.executingCompany.errors.required">
+                            <span> please enter field is required </span>
+                          </div>
+                          <!-- <div *ngIf="contractForm.controls.executingCompany.errors.pattern">
+                          <span>please enter alphabet only</span>
+                        </div> -->
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Created By<span class="starColor"> *</span> </label>
+                        <input type="text" class="form-control" name="createdby" formControlName="createdBy"
+                          placeholder="Created By Name">
+
+                        <div style="color: red;"
+                          *ngIf="contractForm.controls.createdBy.touched && contractForm.controls.createdBy.invalid">
+                          <div *ngIf=" contractForm.controls.createdBy.errors.required">
+                            <span> please enter field is required </span>
+                          </div>
+                          <div *ngIf="contractForm.controls.createdBy.errors.pattern">
+                            <span>please enter alphabet only</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div> -->
+
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Document Upload</label>
+                        <abbr><input type="file" class="form-control" (change)="fileSelected($event)" name="document"
+                            formControlName="documentName" accept="application/pdf"></abbr>
+
+                      </div>
+                    </div>
+
+
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Contract Description</label>
+                        <textarea rows="4" cols="50" class="form-control" name="description"
+                          formControlName="contractDescription"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn" style="background-color: #1d62a7;color:white" data-dismiss="modal"
+                  aria-label="Close" type="submit"
+                  (click)="updateContract(getcontractId,contractForm.value,cid);contractForm.reset()"
+                  [disabled]="contractForm.invalid">Update</button>
+                <button type="button" class="btn" style="background-color: #1d62a7;color:white"
+                  data-dismiss="modal">Cancel</button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- reject -->
+
+<div class="modal fade" id="rejectModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form #rejectComment="ngForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModal">Reject Reason</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="rejectComment.reset();">
+            <p aria-hidden="true">&times;</p>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea row="10" cols="50" class="form-control active" name="comments" [(ngModel)]="comments"
+            #commentReason="ngModel" required>
+
+                 </textarea>
+          <div *ngIf="commentReason.invalid && commentReason.touched" style="color: red;">
+            <p *ngIf="commentReason.errors.required">Please enter reason to reject</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" style="background-color: #1d62a7;color: white;" data-dismiss="modal"
+            (click)="rejectComment.reset();">Close</button>
+          <button type="submit" class="btn" style="background-color: #1d62a7;color: white;"
+            [disabled]="rejectComment.invalid" (click)="reject(rejectComment.value)"
+            data-dismiss="modal">Reject</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

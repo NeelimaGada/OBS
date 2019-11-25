@@ -1,0 +1,127 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;Budget List</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value=!value; clear()" *ngIf="addb" class="btn ">Add Budget List</button>
+  </div>
+
+
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #budgetlist="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+
+          <th>Budget List</th>
+          <th>Status</th>
+          <th>Edit</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let BudgetListTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!BudgetListTable.isEditable">
+              {{BudgetListTable.budget}}
+            </div>
+            <div *ngIf="BudgetListTable.isEditable">
+              <input type="text" name="budget" #budgetlist="ngModel" required pattern="[0-9]*"
+                [(ngModel)]="BudgetListTable.budget" class="form-control" />
+              <div style="color:red" *ngIf="budgetlist.invalid && budgetlist.touched ">
+                <span *ngIf="budgetlist.errors.required">
+                  Please enter Budget List
+                </span>
+                <span *ngIf="budgetlist.errors.pattern">
+                  Please enter valid Budget List
+                </span>
+              </div>
+            </div>
+          </td>
+
+
+          <td>
+            <div>
+            {{BudgetListTable.status}}
+          </div></td>
+          
+          <td> <span style="color:#1d62a7;font-size:20px" (click)='BudgetListTable.isEditable =!BudgetListTable.isEditable'
+              (click)="edit(BudgetListTable.id,BudgetListTable.status)" *ngIf="!BudgetListTable.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn " *ngIf="BudgetListTable.isEditable"
+              (click)='BudgetListTable.isEditable=!BudgetListTable.isEditable' (click)= "updatebudgetlist(budgetlist.value)"
+              [disabled]="budgetlist.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="BudgetListTable.isEditable"
+              (click)='BudgetListTable.isEditable =!BudgetListTable.isEditable' (click)="cancel()">Cancel</button>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value">
+            <input name="addbudgetlist" [(ngModel)]="budget" type="text" class="form-control" #role="ngModel"
+              placeholder="Enter Budget List" required pattern="[0-9]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter Budget List </span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid Budget List </span>
+            </div>
+          </td>
+          <td *ngIf="value">
+            <button class="btn" type="submit" [disabled]="budgetlist.invalid"
+              (click)="setbudgetlist(budgetlist.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

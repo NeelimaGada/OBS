@@ -1,0 +1,413 @@
+<!-- onbording starts-->
+<div class="tab-pane fade show active" id="nav-onboarding" role="tabpanel" aria-labelledby="nav-onboarding-tab"></div>
+<br>
+<div class="row">
+  <div class="col-md-11" style="margin-bottom: 25px;">
+    <form class="form-inline ">
+      <div class="input-group ">
+        <!-- <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"> -->
+        <div class="input-group-btn">
+          <h1></h1>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="!user">
+    <div class="col-md-1" style="padding-left:40px">
+
+      <div class="input-group " *ngIf="!user && emptyRecord">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4"
+          (click)="OnSave(newUserFormOnboard)"> Add</button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
+  <div class="row">
+    <div *ngFor="let empbasic of empbasicinfo">
+      <div class="d-inline-block">
+        <h5>Employee Id:  &nbsp;{{empbasic.employeeId}}</h5>
+      </div>
+
+
+      <div class="d-inline-block " style="margin-left: 500px;">
+        <h5>Full Name:  &nbsp; {{empbasic.firstname}} {{empbasic.middlename}} {{empbasic.lastname}}</h5>
+      </div>
+
+      <div class="d-inline-block " style="margin-left:1160px;" *ngIf="!user && !emptyRecord">
+        <button class="btn btn-primary" (click)="getboardingdetailsbyId()" data-toggle="modal"
+          data-target="#myModal4" [disabled]="user" style="position: absolute;top:91px;">
+          Edit </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<br>
+
+
+
+<div class="col-md-5" >
+    <div class="card">
+    <div class="card-body"  >
+     
+            <div class="row" >
+              <div class="col-md-5">
+              <h4><b>OnBoarding</b></h4>
+              <hr>
+            
+                  
+                  <p><b>Joining Date :</b></p>
+                  <p *ngIf="!isEditEnable">{{onboarddetailsss.joiningDate  | date:"dd-MM-yyyy"}}</p>
+                  <div *ngIf="isEditEnable">
+                      <input type="text" class="form-control" name="joiningDate" [(ngModel)]="onboarddetailsss.joiningDate ">
+                  </div>
+                  <p><b>ResourceType :</b></p>
+                  <p *ngIf="!isEditEnable">{{onboarddetailsss.resourceType}}</p>
+                   
+                  <div *ngIf="isEditEnable">
+                      <input type="text" class="form-control" name="resourceType" [(ngModel)]="onboarddetailsss.resourceType ">
+                  </div>
+                  <p><b>Cost center :</b></p>
+                  <p *ngIf="!isEditEnable">{{onboarddetailsss.costCenterId}}</p>
+                  <div *ngIf="isEditEnable">
+                      <input type="text" class="form-control" name="costCenterId" [(ngModel)]="onboarddetailsss.costCenterId">
+                  </div>
+               
+            </div>
+           <div class="col-5 mt-5">
+              <p><b>Business Unit :</b></p>
+              <p *ngIf="!isEditEnable">{{onboarddetailsss.buId}}</p>
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="buId" [(ngModel)]="onboarddetailsss.buId">
+              </div>
+              <p><b>Sub-Business Unit :</b></p>
+              <p *ngIf="!isEditEnable">{{onboarddetailsss.sbuId}}</p>
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="sbuId" [(ngModel)]="onboarddetailsss.sbuId">
+              </div>
+
+              <p *ngIf="!user"><b>Bond Status :</b></p>
+              <p *ngIf="!user && !isEditEnable">{{onboarddetailsss.bondStatus}}</p> 
+              <div *ngIf="isEditEnable">
+                  <input type="text" class="form-control" name="bondStatus" [(ngModel)]="onboarddetailsss.bondStatus">
+              </div>
+           </div>
+           <div class="col-md-2">
+           <span (click)="onEdit()" *ngIf="!isEditEnable"><i class="fa fa-edit" style="font-size:20px; color: blue" ></i></span>
+           </div>
+          
+           <button class="btn btn-primary mt-3" *ngIf="isEditEnable" (click)="updateonboard();isEditEnable=!isEditEnable">Submit</button>
+               <button  class="btn btn-primary mx-5 mt-3" *ngIf="isEditEnable" (click)="isEditEnable=!isEditEnable">cancel</button>
+       
+       </div>
+   
+   
+   </div>
+   </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="row top table-responsive">
+
+  <table class="table table-hover mx-auto tile" style="width: 80%"> -->
+    <!--  <thead class="two" style="font-size: 16px"> -->
+
+    <!-- <tr><td><b> Employee Id  :</b> &nbsp;&nbsp;{{onboard.employeeId}}  </td> </tr> -->
+    <!-- <tr>
+      <td><pre><b>Joining Date</b>          :   {{onboarddetailsss.joiningDate  | date:"dd-MM-yyyy"}}</pre> </td>
+      <td><pre><b>ResourceType</b>      :   {{onboarddetailsss.resourceType}}</pre></td>
+    </tr>
+    <tr>
+        <td><pre><b>Cost center</b>            :   {{onboarddetailsss.costCenterId}}</pre></td>
+      <td><pre><b>Business Unit</b>       :   {{onboarddetailsss.buId}}</pre></td>
+    </tr>
+    <tr>
+      <td><pre><b>Sub-Business Unit</b> :   {{onboarddetailsss.sbuId}}</pre></td>
+      <td *ngIf="!user"><pre><b> Bond Status </b>       :   {{onboarddetailsss.bondStatus}}</pre></td>
+
+    </tr> -->
+
+    <!--  </thead> -->
+  <!-- </table> -->
+  <!-- <div class="d-inline-block " style="margin-left:760px;" *ngIf="!user && !emptyRecord">
+    <button class="btn btn-primary" (click)="getboardingdetailsbyId()" data-toggle="modal" data-target="#myModal4" [disabled]="user">
+      Edit </button>
+  </div> -->
+<!-- </div> -->
+
+
+
+
+
+<!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+        <table class="table table-hover  tile">
+          <thead class="two" style="font-size:16px;">
+            <tr>
+              <th>EmployeeId </th>
+              <th>Joining Date</th>
+              <th>ResourceType</th>
+              <th>Bond Status</th>
+              <th>Edit</th>
+            
+
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr *ngFor = "let onboard of onboarding| filter:key | paginate: { itemsPerPage: 100, currentPage:skillpage }; let i=index">
+              <td>{{onboard.employeeId}}</td>
+              <td>{{onboard.joiningDate  | date:"M/d/yy"}}</td>
+              <td>{{onboard.resourceType}}</td>      
+              <td>{{onboard.bondStatus}}</td>
+              <td>
+                <img src="assets/pe.png" width="30" data-toggle="modal" data-target="#myModal4" (click)="getboardingdetailsbyId(onboard)">
+              </td>
+            
+            </tr>
+          </tbody>
+        </table>
+
+      </div> -->
+<div class="container demo">
+
+
+  <!-- Modal -->
+  <div class="modal right fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModal4">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h3>OnBoarding</h3>
+          <button type="button" class="close" (click)="newUserFormOnboard.reset()" data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+          <form class="tile" #newUserFormOnboard="ngForm" (ngSubmit)="onSubmit1(newUserFormOnboard)" autocomplete="on">
+            <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label> Employee Id &nbsp;: &nbsp;</label>{{eid}}
+                        <!-- <input type="text" class="form-control" [disabled]="true" [(ngModel)]="onboarddetailsss.employeeId" name="employeeId" required placeholder="employeeId" #Emp="ngModel">
+                        <span style="color:red" *ngIf="Emp.invalid && Emp.touched ">
+                          <span *ngIf="Emp.errors.required">
+                              Emp Id is required
+                          </span>
+                        </span> -->
+                      </div>
+                    </div>
+                  </div>
+            <div class="row">
+              <!-- <div class="col-md-6" *ngIf="createdByDependent">
+                <div class="form-group">
+                  <label> Employee Id: <span [(ngModel)]="onboarddetailsss.employeeId" name="employeeId"
+                      #id="ngModel">{{eid}}</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="onboarddetailsss.employeeId" name="employeeId" required placeholder="employeeId" > 
+
+                </div>
+
+              </div>  -->
+             <!--  <div class="col-md-6" *ngIf="isupdateDependent">
+                <div class="form-group">
+                  <label> Emp Id: <span [(ngModel)]="onboarddetailsss.employeeId" name="employeeId"
+                      #id="ngModel">{{onboarddetailsss.employeeId}}</span></label>
+
+
+                </div>
+              </div> -->
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Joining Date<span class="starColor"> *</span> </label>
+                  <input type="date" class="form-control" [(ngModel)]="onboarddetailsss.joiningDate" name="joiningDate"
+                    required placeholder="dd/mm/yyyy" #joining="ngModel" [disabled]="user">
+                  <span style="color:red" *ngIf="joining.invalid && joining.touched ">
+                    <span *ngIf="joining.errors.required">
+                      Joining Date is required
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+              <!--  <div class="col-md-4">
+                      <div class="form-group">
+                        <label>resignationDate<span class="starColor"> *</span> </label>
+                        <input type="date" class="form-control" [(ngModel)]="onboarddetailsss.resignationDate" name="resignationDate" required placeholder="dd/mm/yyyy" #registration="ngModel" [disabled]="user">
+                        <span style="color:red" *ngIf="registration.invalid && registration.touched ">
+                          <span *ngIf="registration.errors.required">
+                            Resignation Date is required
+                          </span>
+                        </span>
+                      </div>
+                    </div>  -->
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>resourceType<span class="starColor"> *</span> </label>
+                  <select class="form-control" placeholder="Select resource type" name="resourceType"
+                    [(ngModel)]="onboarddetailsss.resourceType" (change)="selectOption($event.target.value)" required
+                    #resource="ngModel" [disabled]="user">
+                    <option>Select </option>
+                    <option *ngFor="let resourcetypelist of getResourceList" [value]="resourcetypelist.id">
+                      {{ resourcetypelist.resourceTypeName}} </option>
+                  </select>
+                  <span style="color:red" *ngIf="resource.invalid && resource.touched ">
+                    <span *ngIf="resource.errors.required">
+                      resource type is required.
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Bond Status<span class="starColor"> *</span> </label>
+                  <select class="form-control" id="sel2" [(ngModel)]=" onboarddetailsss.bondStatus" name="bondStatus"
+                    required placeholder="bondStatus" #activ="ngModel" [disabled]="user">
+                    <option value = "true">Yes</option>
+                    <option value = "false">No</option>
+                  </select>
+                  <span style="color:red" *ngIf="activ.invalid && activ.touched ">
+                    <span *ngIf="activ.errors.required">
+                      Bond Status is required.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- <div class="col-md-4">
+                <div class="form-group">
+                  <label> Separation Type<span class="starColor"> *</span> </label>
+                  <select class="form-control" [(ngModel)]="onboarddetailsss. separationType" name="separationType"
+                    required placeholder="Separation Type" #separation="ngModel">
+                    <option>Select</option>
+                    <option *ngFor="let separationlist of separationDetailsList"
+                      [value]="separationlist.separationTypeId">{{ separationlist.separationType}} </option>
+                  </select>
+                  <span style="color:red" *ngIf="separation.invalid && separation.touched ">
+                    <span *ngIf="separation.errors.required">
+                      Separation type is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+
+
+              <!-- <div class="col-md-4">
+                <div class="form-group">
+                  <label>Exit Date<span class="starColor"> *</span> </label>
+                  <input type="date" class="form-control" [(ngModel)]="onboarddetailsss.exitDate" name="exitDate"
+                    required placeholder="dd/mm/yyyy" #joiningg="ngModel">
+                  <span style="color:red" *ngIf="joiningg.invalid && joiningg.touched ">
+                    <span *ngIf="joiningg.errors.required">
+                      exitDate is required
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Cost Center<span class="starColor"> *</span> </label>
+                  <select class="form-control" [(ngModel)]="onboarddetailsss.costCenterId" name="costCenter" required
+                    #cost="ngModel" (change)="selectBu($event.target.value)">
+                    <option value="undefined" selected disabled>--Select--</option>
+                    <option value="{{costCenter.id}}" *ngFor="let costCenter of costCenterList">
+                      {{costCenter.costCenterCode}}
+                    </option>
+                  </select>
+                  <span style="color:red" *ngIf="cost.invalid && cost.touched ">
+                    <span *ngIf="cost.errors.required">
+                      Cost center is required!
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Business Unit<span class="starColor"> *</span> </label>
+                  <select class="form-control" [(ngModel)]="onboarddetailsss.buId" name="bu" required #bu="ngModel"
+                    (change)="selectSbu($event.target.value)">
+                    <option value="undefined" selected disabled>--Select--</option>
+                    <option value="{{bun.id}}" *ngFor="let bun of buDrop">{{bun.businessUnitName}}
+                    </option>
+                  </select>
+                  <span style="color:red" *ngIf="bu.invalid && bu.touched ">
+                    <span *ngIf="bu.errors.required">
+                      Business unit is required!
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Sub-Business Unit<span class="starColor"> *</span> </label>
+                  <select class="form-control" [(ngModel)]="onboarddetailsss.sbuId" name="sbu" required #sbu="ngModel">
+                    <option value="undefined" selected disabled>--Select--</option>
+                    <option value="{{sbun.id}}" *ngFor="let sbun of sbuDrop">{{sbun.name}}
+                    </option>
+                  </select>
+                  <span style="color:red" *ngIf="sbu.invalid && sbu.touched ">
+                    <span *ngIf="sbu.errors.required">
+                      Sub-Business unit is required!
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+            <button class="btn btn-success  float-right margin" [disabled]="!newUserFormOnboard.valid"
+              (click)="saveemploymentdetails()" *ngIf="!isupdateDependent" data-dismiss="modal">Save</button>
+            <button class="btn btn-success  float-right margin" [disabled]="!newUserFormOnboard.valid"
+              *ngIf="isupdateDependent" (click)="updateonboardingdetailss()" data-dismiss="modal">update</button>
+            <button class="btn btn-success  float-right " (click)="newUserFormOnboard.reset()">Clear</button>
+            <button class="btn btn-success" data-dismiss="modal"> <span aria-hidden="true"></span>Back</button>
+
+          </form>
+
+
+
+        </div>
+
+      </div>
+      <!-- modal-content -->
+    </div>
+    <!-- modal-dialog -->
+  </div>
+  <!-- modal -->
+
+
+</div>
+
+
+
+<!-- onbording ends-->

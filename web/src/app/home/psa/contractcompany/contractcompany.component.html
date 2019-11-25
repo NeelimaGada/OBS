@@ -1,0 +1,123 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>&nbsp;Contract Company</h1>
+    <p class="pl-4">Ojas Business Suite</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+    <li class="breadcrumb-item">Masters</li>
+    <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<div class="row" style="margin-bottom: 25px;">
+  <div class="col-4">
+    <form>
+
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+        [disabled]="searchfield">
+    </form>
+  </div>
+  <div class="col-8 text-right">
+    <button type="submit" (click)="value1=!value1;clear()" *ngIf="btnhide" class="btn">Add Contract Company </button>
+  </div>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+
+  <form #contcom="ngForm">
+    <table class="table table-condensed tile" style="width:100%">
+      <thead style="background-color: #1d62a7;color:white" class="text-center">
+
+        <tr>
+          <th>Contract Company</th>
+          <th>Status</th>
+          <th>Edit</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let concomlist of comcontabledata| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+          class="text-center">
+
+          <td>
+            <div *ngIf="!concomlist.isEditable">
+              {{concomlist.contractCompany}}
+            </div>
+            <div *ngIf="concomlist.isEditable">
+              <input type="text" name="contcomstatusdata" #contcom="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*"
+                [(ngModel)]="concomlist.contractCompany" class="form-control" />
+              <div style="color:red" *ngIf="contcom.invalid && contcom.touched ">
+                <span *ngIf="contcom.errors.required">
+                  Please enter contract company
+                </span>
+                <span *ngIf="contcom.errors.pattern">
+                  Please enter valid contract company
+                </span>
+              </div>
+            </div>
+          </td>
+
+
+          <td>
+            <div>
+            {{concomlist.value}}
+          </div></td>
+          
+          <td> <span style="color:#1d62a7;font-size:20px" (click)='concomlist.isEditable =!concomlist.isEditable'
+              (click)="edit(concomlist.id,concomlist.value)" *ngIf="!concomlist.isEditable"><i class="fa fa-edit"
+                [class.disabled]="noedit"></i></span>
+
+            <button class="btn " *ngIf="concomlist.isEditable"
+              (click)='concomlist.isEditable=!concomlist.isEditable' (click)= "updatecompanycontract(contcom.value)"
+              [disabled]="contcom.invalid">Update</button>&nbsp;
+            
+              <button type="submit" class="btn " *ngIf="concomlist.isEditable"
+              (click)='concomlist.isEditable =!concomlist.isEditable' (click)="cancel()">Cancel</button>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td *ngIf="value1">
+            <input name="addcontcom" [(ngModel)]="contcomstatusdata" type="text" class="form-control" #role="ngModel"
+              placeholder="Enter contract comapny" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+            <div *ngIf="role.invalid && role.touched">
+              <span *ngIf="role.errors.required" style="color:red;"> Please enter contract company </span>
+              <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid contract company </span>
+            </div>
+          </td>
+
+          <td *ngIf="value1">
+            <button class="btn" type="submit" [disabled]="contcom.invalid"
+              (click)="setcontractcom(contcom.value)">Save</button>&nbsp;
+            <button type="submit" class="btn" (click)=cancelsavelist()>Cancel</button>
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+  </form>
+</div>
+<pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+<div class="row">
+  <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+
+
+  <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5</option>
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="15">15</option>
+    <option [ngValue]="20">20</option>
+  </select>
+
+</div>

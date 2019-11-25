@@ -1,0 +1,59 @@
+.len{
+    padding-left: 160px;
+}
+.piechart{
+    height:auto;
+    width:100%;
+    background-color:white ;
+}
+p {
+    font-family: Lato;
+}
+  .linechart{
+      height:360px;
+      width:600px;
+      background-color:white ;
+  }
+
+  .barchart {
+    height:auto;
+    width:100%;
+    background-color:white ;
+  }
+  .notification_icn{
+    
+        
+        font-size: 1.5rem;
+        text-decoration: none;
+        position: relative;
+       
+      
+      
+  }
+  .notification_icn span {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background:  #6457E8;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    animation: pulse 1s infinite;
+}
+@media(min-width:320px){
+    .piechart{
+      margin-top: 20px;
+    }
+    .barchart{
+        margin-top: 20px;
+    }
+}
+
+.dropdown-item:focus .dropdown-item:hover {
+background-color: #1d62a7 !important;
+color: white !important;
+}
+
+
+

@@ -1,0 +1,158 @@
+<br>
+       <div class="modal right fade" id="myModalskill" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Skill Details</h3>
+         
+              <button type="button" class="close" data-dismiss="modal" (click)="newUserForm1.reset()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+    
+            <div class="modal-body">
+              <form class="tile" #newUserForm1="ngForm" (ngSubmit)="onSubmittitle(newUserForm1)" autocomplete="on">
+                <div class="row">
+                  <div class="col-md-6"*ngIf="CREATEDBY" >
+                      <div class="form-group" >
+                          <label> Employee Id: </label><span ><b>{{eid}} </b></span>
+                        </div>
+                      
+            </div>
+            <div class="col-md-6"*ngIf="!CREATEDBY" >
+                <div class="form-group" >
+                    <label> Employee Id: </label><span >{{SKILLinfo.employee_id}} </span>
+                  </div>
+                
+      </div>
+
+     
+    </div>
+    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group" *ngIf="!isUPDATEDBY">
+                    <label for="skill1"> Level Id<span class="starColor"></span> </label>
+                    <input type="number"  class="form-control" [(ngModel)]="SKILLinfo.level_id" name="level_id" 
+                     placeholder="level Id">
+                  </div>  
+                </div>  
+                <div class="col-md-6">
+                    <div class="form-group" *ngIf="!isUPDATEDBY">
+                        <label for="skill1">Skill name<span class="starColor"></span></label>
+        
+                              <select class="form-control" placeholder="Select skill name" name="skill_id"     [(ngModel)]="SKILLinfo.skill_id"   required placeholder="skill name">
+                                <option value="" disabled selected>Select Your skill</option>
+                    <option *ngFor="let skilltable of skillmasterArray "  [value]="skilltable.id" >{{ skilltable.skill_name}}</option>
+        
+                  </select>
+                         </div>
+                        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" *ngIf="isUPDATEDBY">
+                <label for="skill1"> Level Id<span class="starColor"></span> </label>
+                <input type="number"  class="form-control" [(ngModel)]="SKILLinfo.level_id" name="level_id" 
+                required placeholder="level Id">
+                
+              </div>
+              
+            </div>  
+   
+                <div class="col-md-6">
+
+                    <div class="form-group" *ngIf="isUPDATEDBY">
+                        <label for="skill1">Skill name<span class="starColor"></span></label>
+                        <select class="form-control" placeholder="Select skill name" name="skill_id" [disabled]="user" (change)="selectOption($event.target.value)"   [(ngModel)]="SKILLinfo.skill_id"   required placeholder="skill name">
+                            <option value="" disabled selected>Select Your skill</option>
+                <option *ngFor="let skilltable of skillmasterArray "  [value]="skilltable.id" >{{ skilltable.skill_name}}</option>
+          
+              </select>
+                     </div>
+                    </div>
+      </div>
+            <button class="btn btn-success  float-right margin" type="submit" [disabled]="newUserForm1.form.invalid"  data-dismiss="modal" aria-label="Close" (click)="setSkillInfo()"  *ngIf="!isUPDATEDBY">
+              Save
+              </button>
+              <button class="btn btn-success  float-right margin" type="submit"  [disabled]="newUserForm1.form.invalid"  data-dismiss="modal" aria-label="Close"  (click)="updateSkilldetails(SKILLinfo)" *ngIf="isUPDATEDBY">
+        Update
+                </button>
+           
+            <button class="btn btn-success  float-right" (click)="newUserForm1.reset()" >Clear</button>
+            <button class="btn btn-success" data-dismiss="modal" aria-label="Close" >Back</button> 
+  
+            </form>  
+            </div>
+    
+          </div>
+        </div>
+      </div>
+
+
+
+       <div class="row ">
+        <div class="col-md-11" style="margin-bottom: 25px;">
+          <form class="form-inline ">
+            <div class="input-group ">
+              <div class="input-group-btn">
+                <h1></h1>
+              </div>
+            </div>
+          </form>
+          
+        </div> 
+
+        <div class="col-md-1 " style="padding-left:40px">
+        <div class="input-group add">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalskill"  (click)="addSkillvalue(newUserForm1)"  >Add</button>
+          </div>
+        </div>
+        </div>
+<br>
+
+
+
+<div class="container">
+  <div class="row" >
+    <div *ngFor="let empbasic of empbasicinfo" >
+      
+    
+      <div class="d-inline-block">
+        <h5>Employee Id:  &nbsp;{{empbasic.employeeId}}</h5>
+      </div>
+   
+  
+   
+  <div  class="d-inline-block " style="margin-left: 500px;">
+    <h5>Full Name:  &nbsp;{{empbasic.firstname}} {{empbasic.middlename}} {{empbasic.lastname}}</h5>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  
+     <br>
+
+       <div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;">
+        <table class="table table-bordered ">
+          <thead class="two" style="font-size: 16px;">
+                <tr>                  
+               <th>Skill Name</th>
+                  <th>Level Id</th>
+                  <th>Edit</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let tableData of skillInfoList | filter:key | paginate: { itemsPerPage: 20, currentPage:skillpage }; let i=index">
+                  <td>{{tableData.skill_id}} </td>
+              
+                  <td>{{tableData.level_id}}</td>
+                  <td><img src="/assets/pe.png" width="35px" data-toggle="modal" data-target="#myModalskill" (click)="getdatabyID(tableData)"></td>
+                </tr>
+                </table>
+      </div>
+
+    <pagination-controls class="pull-right" (pageChange)="skillpage = $event"></pagination-controls> 
+
+
+

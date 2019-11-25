@@ -1,0 +1,1033 @@
+<div>
+
+  <div class="card shadow" style="padding:20px ;">
+    <div>
+      <span style="font-size: 17px;"><b>Project Management System</b></span>
+
+      <button *ngIf="!hideToEdit" class="btn float-right" style="background-color: #1d62a7;color: white;"
+        (click)="back()">Back</button>
+
+    </div>
+    <hr>
+
+    <div *ngIf="hideToEdit">
+
+
+      <div class="row" style="padding: 10px 0px 10px 0px;">
+        <div class="col-md-8 col-sm-6 col-xs-12">
+          <input placeholder="Search" name="search" [(ngModel)]="search" class="col-5 form-control">
+
+          <!-- <mat-form-field>
+            <mat-label>Select Customer</mat-label>
+            <mat-select (selectionChange)="selected_customerToTable($event.value)">
+              <mat-option *ngFor="let data of customerData" [value]="data.customerId">{{data.customerName}}</mat-option>
+
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+        <div class="col-md-2 col-xs-12">
+          <!-- <mat-form-field>
+            <mat-label>Select Contract</mat-label>
+            <mat-select [disabled]="contractDisableToTable" (selectionChange)="selected_contractToTable($event.value)">
+              <mat-option *ngFor="let contract of contractIdGet" [value]="contract.contractid">{{contract.contractname}}
+              </mat-option>
+
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12" *ngIf="role">
+          <button class="btn float-right" style="background-color: #1d62a7;color: white;" (click)="editHere()" data-toggle="modal"
+            data-target="#myModal">Create Project</button>
+        </div>
+      </div>
+
+      <!-- {{dataProject[0].projectRateCard.projectValue}} -->
+      <div class="table-responsive" style="padding-top: 15px;">
+        <table class="table " style="text-align: center;">
+          <thead style="background-color: #1d62a7;color: white;">
+            <th>Customer ID</th>
+            <th>Contract ID</th>
+            <th>Project ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>StartDate</th>
+            <th>EndDate</th>
+            <th>Category</th>
+            <th>Delivery Location</th>
+            <th>Number Of Resources</th>
+            <th *ngIf="role">Delete</th>
+            <th>More info</th>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let projectdata of dataProject|filter :search | paginate: { itemsPerPage: ipppd, currentPage:pd, id:'pd' }; "
+              [class.active]="projectdata.status =='Approved'" [class.reject]="projectdata.status =='Rejected'">
+              <td>{{projectdata.customerId}}</td>
+              <td>{{projectdata.contractId}}</td>
+              <td>{{projectdata.projectId}}</td>
+              <td>{{projectdata.projectName}}</td>
+              <td>{{projectdata.projectDescription}}</td>
+              <td>{{projectdata.startDate}}</td>
+              <td>{{projectdata.endDate}}</td>
+              <td>{{projectdata.servicecategory}}</td>
+              <td>{{projectdata.deliveryLocation}}</td>
+
+              <td>{{projectdata.projectResourceMapping.resourceCount}}</td>
+
+              <td *ngIf="role"> <i class="fa fa-trash" style="color: #1d62a7;" (click)="deleteProject(projectdata.projectId)"></i>
+              </td>
+              <td><button class="btn btn-sm" style="background-color: #1d62a7;color: white;"
+                  (click)="moreinfo(projectdata.projectId)">More Info</button></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <label class="m-2">Items Per Page</label>
+      <select [(ngModel)]="ipppd">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+      <pagination-controls (pageChange)="pd = $event" id="pd" style="float:right"></pagination-controls>
+    </div>
+
+    <!-- more Info -->
+    <div *ngIf="!hideToEdit">
+
+
+
+      <div class="mx-auto" style="padding:0px 30px;">
+        <div class="float-right" style="padding-bottom: 50px;" *ngIf="role && roleEdit">
+          <i class="fa fa-edit" *ngIf="editTo" (click)="edit()" style="color: #1d62a7;font-size: 20px;"></i>
+        </div>
+        <span style="font-size: 17px;"><b>More Info</b></span>
+
+
+        <hr>
+        <div class="data mx-auto">
+          <form #statusUpdate="ngForm">
+            <div class="row">
+              <div class="col-4"><b>Project Status : </b> {{getIdData.status}}</div>
+              <div class="col-4">
+                <div *ngIf="reasonFor">
+                  <b>Reason :</b> {{reason}}
+                </div>
+              </div>
+              <div class="col-4 float-right">
+                <div class="row" *ngIf="roleStatus">
+                  <p><button class="btn btn-sm" (click)="approve()"
+                      style="background-color: #1d62a7;color: white;">Approve</button></p>&nbsp;&nbsp;&nbsp;
+                  <p><button class="btn btn-sm" data-toggle="modal" data-target="#rejectModal"
+                      style="background-color: red;color: white;">Reject</button></p>
+                </div>
+
+              </div>
+            </div>
+          </form>
+          <hr>
+          <div class="row">
+            <label class="col-4"><b>Customer -</b>{{custId}} ({{getIdData.customerId}}) </label> 
+            <label class="col-4"><b>Contract -</b>{{contId}} ({{getIdData.contractId}})</label>
+          </div>
+        </div>
+
+
+        <form #updateProject="ngForm">
+
+
+
+
+          <div class="card shadow">
+            <div class="header shadow">
+              <p style="font-size: 17px;text-align: center;"><b>Project Basic-Info</b></p>
+            </div>
+            <div class="row" style="padding: 15px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <table class="table table-borderless ">
+                  <tr>
+                    <th>Project Name :</th>
+                    <td *ngIf="tblupdate">{{getIdData.projectName}}</td>
+                    <td *ngIf="!tblupdate"><input class="form-control" name="projectname"
+                        [(ngModel)]="getIdData.projectName" #name="ngModel" required>
+                      <div *ngIf="name.invalid && name.touched" style="color: red;">
+                        <p *ngIf="name.errors.required">Name is Required</p>
+                      </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Description :</th>
+                    <td *ngIf="tblupdate">{{getIdData.projectDescription}}</td>
+                    <td *ngIf="!tblupdate"><textarea class="form-control" name="description"
+                        [(ngModel)]="getIdData.projectDescription" rows="2" #description="ngModel" required></textarea>
+                      <div *ngIf="description.invalid && description.touched" style="color: red;">
+                        <p *ngIf="description.errors.required">Description is Required</p>
+                      </div>
+                    </td>
+
+                  </tr>
+
+
+                  <tr>
+                    <th>Is Internal :</th>
+                    <td *ngIf="tblupdate">{{getIdData.isInternal}}</td>
+                    <td *ngIf="!tblupdate">
+
+                      <!-- <select class="form-control" name="isinternal" [(ngModel)]="getIdData.isInternal">
+                                              <option value="true">Yes</option>
+                                              <option value="false">No</option>
+                                            </select> -->
+
+                      <mat-form-field>
+
+                        <mat-select name="isinternal" [(ngModel)]="getIdData.isInternal" #internal="ngModel" required>
+                          <mat-option value="true">Yes</mat-option>
+                          <mat-option value="false">No</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="internal.invalid && internal.touched" style="color: red;">
+                        <p *ngIf="internal.errors.required">Is Internal is Required</p>
+                      </div>
+
+
+                    </td>
+
+                  </tr>
+
+                  <tr>
+                    <th>Tasks :</th>
+                    <td *ngIf="tblupdate"> {{getIdData.tasks }}</td>
+                    <td *ngIf="!tblupdate">
+                      <mat-form-field>
+                        <!-- <mat-label *ngIf="taskHide">{{getIdData.tasks }}</mat-label> -->
+                        <mat-select name="tasks" [(ngModel)]="getIdData.tasks" #task="ngModel" required multiple>
+                          <mat-option *ngFor="let tasks of taskList" [value]="tasks.projecttask">{{tasks.projecttask}}
+                          </mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="task.invalid && task.touched" style="color: red;">
+                        <p *ngIf="task.errors.required">Tasks are Required</p>
+                      </div>
+                    </td>
+
+                  </tr>
+
+
+                </table>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <table class="table table-borderless">
+                  <tr>
+                    <th>Start date :</th>
+                    <td *ngIf="tblupdate">{{getIdData.startDate}}</td>
+                    <td *ngIf="!tblupdate">
+
+
+                      <mat-form-field>
+                        <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker"
+                          [disabled]="disableDate" name="startdate" [(ngModel)]="getIdData.startDate"
+                          placeholder="Start date" (click)="picker.open()" onkeydown="return false">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>BU Head :</th>
+                    <td *ngIf="tblupdate"> {{getIdData.buHead }}</td>
+                    <td *ngIf="!tblupdate">
+                      <mat-form-field>
+                        <!-- <mat-label *ngIf="taskHide">{{getIdData.tasks }}</mat-label> -->
+                        <mat-select name="buHead" [(ngModel)]="getIdData.buHead" #bu="ngModel" required>
+                          <mat-option *ngFor="let bu of buListArr" [value]="bu.buHead">{{bu.buHeadName}}
+                            ({{bu.buName}})
+                          </mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="bu.invalid && bu.touched" style="color: red;">
+                        <p *ngIf="bu.errors.required">Business unit is Required</p>
+                      </div>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <th>Delivery Location :</th>
+                    <td *ngIf="tblupdate">{{getIdData.deliveryLocation}}</td>
+                    <td *ngIf="!tblupdate">
+
+                      <mat-form-field>
+                        <!-- <mat-label *ngIf="deliveryHide">{{getIdData.deliveryLocation}}</mat-label> -->
+                        <mat-select name="deliverylocation" [(ngModel)]="getIdData.deliveryLocation" #delivery="ngModel"
+                          required>
+                          <mat-option *ngFor="let delivery of deliveryLoc" [value]="delivery.deliverylocationName">
+                            {{delivery.deliverylocationName}}</mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="delivery.invalid && delivery.touched" style="color: red;">
+                        <p *ngIf="delivery.errors.required">Delivery Location is Required</p>
+                      </div>
+                    </td>
+
+                  </tr>
+
+
+
+
+                </table>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <table class="table table-borderless">
+                  <tr>
+                    <th>End date :</th>
+                    <td *ngIf="tblupdate">{{getIdData.endDate}}</td>
+                    <td *ngIf="!tblupdate">
+
+
+                      <mat-form-field>
+                        <input matInput [min]="project.value.projectStartDate" [max]="maxStartDate"
+                          [matDatepicker]="picker1" [disabled]="disableDate" name="enddate"
+                          [(ngModel)]="getIdData.endDate" placeholder="End date" (click)="picker1.open()"
+                          onkeydown="return false">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+
+
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <th>SBU Head:</th>
+                    <td *ngIf="tblupdate"> {{getIdData.sbuHead }}</td>
+                    <td *ngIf="!tblupdate">
+                      <mat-form-field>
+                        <!-- <mat-label *ngIf="taskHide">{{getIdData.tasks }}</mat-label> -->
+                        <mat-select name="sbuHead" [(ngModel)]="getIdData.sbuHead" #sbu="ngModel" required>
+                          <mat-option *ngFor="let sbu of sbuListArr" [value]="sbu.sbuHead">{{sbu.sbuHeadName}}
+                            ({{sbu.name}})
+                          </mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="sbu.invalid && sbu.touched" style="color: red;">
+                        <p *ngIf="sbu.errors.required">Sub Business unit is Required</p>
+                      </div>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <th>Location Type :</th>
+                    <td *ngIf="tblupdate">{{getIdData.locationType}}</td>
+                    <td *ngIf="!tblupdate">
+                      <mat-form-field>
+                        <!-- <mat-label *ngIf="locHide">{{getIdData.locationType}}</mat-label> -->
+                        <mat-select name="locationtype" [(ngModel)]="getIdData.locationType" #loctype="ngModel"
+                          required>
+                          <mat-option *ngFor="let location of locTypes" [value]="location.locationType">
+                            {{location.locationType}}</mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="loctype.invalid && loctype.touched" style="color: red;">
+                        <p *ngIf="loctype.errors.required">Location Type is Required</p>
+                      </div>
+
+
+                    </td>
+
+                  </tr>
+
+
+
+                </table>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+
+          <div class="row" style="margin-top: 30px;">
+
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="card shadow">
+                <div class="header shadow">
+                  <p style="font-size: 17px;text-align: center;"><b>Financials</b></p>
+                </div>
+                <div class="data">
+                  <table class="table table-borderless">
+                    <tr>
+                      <th>Billing Type :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectRatecard.billingType}}</td>
+                      <td *ngIf="!tblupdate">
+
+
+                        <mat-form-field>
+                          <!-- <mat-label *ngIf="billHide">{{getIdData.projectRatecard.billingType}}</mat-label> -->
+                          <mat-select name="billingtype" [(ngModel)]="getIdData.projectRatecard.billingType"
+                            #bill="ngModel" required>
+                            <mat-option *ngFor="let billing of billingTypes" [value]="billing.name">{{billing.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="bill.invalid && bill.touched" style="color: red;">
+                          <p *ngIf="bill.errors.required">Billing Type is Required</p>
+                        </div>
+
+
+
+
+
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Project Value :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectRatecard.projectValue}}</td>
+                      <td *ngIf="!tblupdate">
+                        <p *ngIf="showBalance" style="font-size: 10px;">Remaining Value :&nbsp;&nbsp;<span
+                            *ngIf="greenShow" style="color: green;">{{valueToShow| number:'1.0-0'}}</span><span
+                            *ngIf="redShow" style="color: red;">{{valueToShow| number:'1.0-0'}}</span> </p>
+                        <input class="form-control" name="value" [(ngModel)]="getIdData.projectRatecard.projectValue"
+                          #value="ngModel" required>
+
+                        <div *ngIf="value.invalid && value.touched" style="color: red;">
+                          <p *ngIf="value.errors.required">Value is Required</p>
+                          <!-- <p *ngIf="value.errors?.max">Value is not more than balance</p> -->
+                        </div>
+
+
+                      </td>
+
+                    </tr>
+
+                    <tr>
+                      <th>Rate Type :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectRatecard.rateType}}</td>
+                      <td *ngIf="!tblupdate">
+                        <mat-form-field>
+                          <!-- <mat-label *ngIf="rateHide">{{getIdData.projectRatecard.rateType}}</mat-label> -->
+                          <mat-select name="ratetype" [(ngModel)]="getIdData.projectRatecard.rateType" #rate="ngModel"
+                            required>
+                            <mat-option *ngFor="let rate of rateTypes" [value]="rate.rateType">{{rate.rateType}}
+                            </mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="rate.invalid && rate.touched" style="color: red;">
+                          <p *ngIf="rate.errors.required">Rate Card is Required</p>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th>Service Type :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectRatecard.serviceType}}</td>
+                      <td *ngIf="!tblupdate">
+
+                        <mat-form-field>
+                          <!-- <mat-label *ngIf="serviceHide">{{getIdData.projectRatecard.serviceType}}</mat-label> -->
+                          <mat-select name="servicetype" [(ngModel)]="getIdData.projectRatecard.serviceType"
+                            #type="ngModel">
+                            <mat-option *ngFor="let service of serviceTypes" [value]="service.serviceType">
+                              {{service.serviceType}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="type.invalid && type.touched" style="color: red;">
+                          <p *ngIf="type.errors.required">Service Type is Required</p>
+                        </div>
+
+
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th>Service Category :</th>
+                      <td *ngIf="tblupdate">{{getIdData.servicecategory}}</td>
+                      <td *ngIf="!tblupdate">
+
+                        <mat-form-field>
+                          <!-- <mat-label *ngIf="catHide">{{getIdData.servicecategory}}</mat-label> -->
+                          <mat-select name="servicecategory" [(ngModel)]="getIdData.servicecategory" #service="ngModel"
+                            required>
+                            <mat-option *ngFor="let servicecat of serviceCategoryList"
+                              [value]="servicecat.serviceategoryName">
+                              {{servicecat.serviceategoryName}}</mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="service.invalid && service.touched" style="color: red;">
+                          <p *ngIf="service.errors.required">Service Category is Required</p>
+                        </div>
+
+
+                      </td>
+
+                    </tr>
+
+
+
+
+
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="card shadow">
+                <div class="header shadow">
+                  <p style="font-size: 17px;text-align: center;"><b>Project Team</b></p>
+                </div>
+                <div class="data">
+                  <table class="table table-borderless">
+                    <tr>
+                      <th>Manager :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectResourceMapping.projectManager}}</td>
+                      <td *ngIf="!tblupdate">
+                        <mat-form-field>
+                          <mat-label>Project Manager</mat-label>
+                          <mat-select name="manager" [(ngModel)]="getIdData.projectResourceMapping.projectManager"
+                            #manager="ngModel" required>
+                            <mat-option *ngFor="let manager of managerdata" [value]="manager.employeeId">
+                              {{manager.firstname}} {{manager.lastname}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <div *ngIf="manager.invalid && manager.touched" style="color: red;">
+                          <p *ngIf="manager.errors.required">Manager name is Required</p>
+                        </div>
+
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th>Technical Lead :</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectResourceMapping.techLead}}</td>
+                      <td *ngIf="!tblupdate">
+
+
+                        <mat-form-field>
+                          <mat-label>Technical Lead</mat-label>
+                          <mat-select name="techlead" [(ngModel)]="getIdData.projectResourceMapping.techLead"
+                            #techlead="ngModel" required>
+                            <mat-option *ngFor="let tech of empObjTech" [value]="tech.employeeId">
+                              {{tech.firstname}} {{tech.lastname}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="techlead.invalid && techlead.touched" style="color: red;">
+                          <p *ngIf="techlead.errors.required">Description is Required</p>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th>Project Tech Stack :</th>
+                      <td *ngIf="tblupdate"> {{getIdData.projectResourceMapping.techStack }}</td>
+                      <td *ngIf="!tblupdate">
+
+
+
+                        <mat-form-field>
+                          <!-- <mat-label *ngIf="techHide">{{getIdData.projectResourceMapping.techStack }}</mat-label> -->
+                          <mat-select name="projecttechstack" [(ngModel)]="getIdData.projectResourceMapping.techStack"
+                            #stack="ngModel" required multiple>
+                            <mat-option *ngFor="let tech of techStacks" [value]="tech.technology">{{tech.technology}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="stack.invalid && stack.touched" style="color: red;">
+                          <p *ngIf="stack.errors.required">Tech Stacks are Required</p>
+                        </div>
+
+
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th>Number of Resources:</th>
+                      <td *ngIf="tblupdate">{{getIdData.projectResourceMapping.resourceCount}}</td>
+                      <td *ngIf="!tblupdate"><input class="form-control" name="resourcecount"
+                          [(ngModel)]="getIdData.projectResourceMapping.resourceCount" #resource="ngModel" required>
+
+                        <div *ngIf="resource.invalid && resource.touched" style="color: red;">
+                          <p *ngIf="resource.errors.required">Resources are Required</p>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td></td>
+                    </tr>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="float-right" *ngIf="!tblupdate">
+            <button type="submit" class="btn" style="background-color: #1d62a7;color: white;"
+              (click)="updateproject(updateProject.value)"
+              [disabled]="updateProject.invalid">Update</button>&nbsp;&nbsp;
+            <button class="btn" style="background-color: #1d62a7;color: white;" (click)="cancel()">Cancel</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Create project Starts -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="project">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Project Creation</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="cancelSave(project)">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <mat-form-field>
+                <mat-label>Select Customer</mat-label>
+                <mat-select formControlName="customerChange" (selectionChange)="selected_customer($event.value)"
+                  [disabled]="onShow" disableOptionCentering>
+                  <mat-option *ngFor="let data of customerData" [value]="data.customerId">{{data.customerName}}
+                  </mat-option>
+
+                </mat-select>
+              </mat-form-field>
+              <div style="color:red"
+                *ngIf="project.get('customerChange').invalid && project.get('customerChange').touched">
+                <span *ngIf="project.get('customerChange').errors.required">Please select customer</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <mat-form-field>
+                <mat-label>Select Contract</mat-label>
+                <mat-select formControlName="contractChange" [disabled]="contractDisable"
+                  (selectionChange)="getContractId($event.value)" disableOptionCentering>
+                  <mat-option *ngFor="let contract of contractIdGet" [value]="contract.contractid">
+                    {{contract.contractname}}
+                  </mat-option>
+
+                </mat-select>
+              </mat-form-field>
+              <div style="color:red"
+                *ngIf="project.get('contractChange').invalid && project.get('contractChange').touched">
+                <span *ngIf="project.get('contractChange').errors.required">Please select contract</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <span *ngIf="cusconeditHide"><b> <p (click)="cusConEdit();project.reset()" style="cursor: pointer;"><img src="assets/pe.png" width="25px" height="25px" >Click Here</p>To Edit Customer and Contract</b>&nbsp;&nbsp;</span>
+            </div>
+
+          </div>
+
+          <div *ngIf="!show">
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+                <label>Name</label>
+                <input class="form-control" formControlName="projectName" placeholder="Project Name">
+
+                <div style="color:red" *ngIf="project.get('projectName').invalid && project.get('projectName').touched">
+                  <span *ngIf="project.get('projectName').errors.required">Project Name is required</span>
+                </div>
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+                <br>
+                <mat-form-field>
+                  <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker"
+                    [disabled]="disableDate" formControlName="projectStartDate" placeholder="Start date"
+                    (click)="picker.open()" onkeydown="return false">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <div style="color:red"
+                  *ngIf="project.get('projectStartDate').invalid && project.get('projectStartDate').touched">
+                  <span *ngIf="project.get('projectStartDate').errors.required">Start date is required</span>
+                </div>
+
+
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <br>
+                <mat-form-field>
+                  <input matInput [min]="project.value.projectStartDate" [max]="maxStartDate" [matDatepicker]="picker1"
+                    [disabled]="disableDate" formControlName="projectEndDate" placeholder="End date"
+                    (click)="picker1.open()" onkeydown="return false">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <div style="color:red"
+                  *ngIf="project.get('projectEndDate').invalid && project.get('projectEndDate').touched">
+                  <span *ngIf="project.get('projectEndDate').errors.required">End date is required</span>
+                </div>
+
+
+
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Project Manager</mat-label>
+                  <mat-select formControlName="projectManager" disableOptionCentering>
+                    <mat-option *ngFor="let manager of managerdata" [value]="manager.employeeId">
+                      {{manager.firstname}} {{manager.lastname}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div style="color:red"
+                  *ngIf="project.get('projectManager').invalid && project.get('projectManager').touched">
+                  <span *ngIf="project.get('projectManager').errors.required">Project Manager Name is required</span>
+                </div>
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Technical Lead</mat-label>
+                  <mat-select formControlName="projectTechnicalLead" disableOptionCentering>
+                    <mat-option *ngFor="let tech of empObjTech" [value]="tech.employeeId">
+                      {{tech.firstname}} {{tech.lastname}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div style="color:red"
+                  *ngIf="project.get('projectTechnicalLead').invalid && project.get('projectTechnicalLead').touched">
+                  <span *ngIf="project.get('projectTechnicalLead').errors.required">Project Technical Lead is
+                    required</span>
+                </div>
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <label>Number Of Resources</label>
+                <input class="form-control" formControlName="numberOfResources" type="number">
+                <div style="color:red"
+                  *ngIf="project.get('numberOfResources').invalid && project.get('numberOfResources').touched">
+                  <span *ngIf="project.get('numberOfResources').errors.required">Please enter number of resources</span>
+                </div>
+
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <label>Project Value</label>
+                <p *ngIf="showBalance" style="font-size: 10px;">Remaining Value :&nbsp;&nbsp;<span *ngIf="greenShow"
+                    style="color: green;">{{valueToShow| number:'1.0-0'}}</span><span *ngIf="redShow"
+                    style="color: red;">{{valueToShow| number:'1.0-0'}}</span> </p>
+                <input type="number" class="form-control" formControlName="projectValue" placeholder="Project Value">
+
+                <div style="color:red"
+                  *ngIf="project.get('projectValue').invalid && project.get('projectValue').touched">
+                  <span *ngIf="project.get('projectValue').errors.required">Project Value is required</span>
+                  <span *ngIf="project['controls']['projectValue'].errors.max">Project Value is not more than remaining
+                    value</span>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Service Type</mat-label>
+                  <mat-select formControlName="serviceType" disableOptionCentering>
+                    <mat-option *ngFor="let service of serviceTypes" [value]="service.serviceType">
+                      {{service.serviceType}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
+                <div style="color:red" *ngIf="project.get('serviceType').invalid && project.get('serviceType').touched">
+                  <span *ngIf="project.get('serviceType').errors.required">Service Type is required</span>
+                </div>
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Billing Type</mat-label>
+                  <mat-select formControlName="billingType" disableOptionCentering>
+                    <mat-option *ngFor="let bill of billingTypes" [value]="bill.name">{{bill.name}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red" *ngIf="project.get('billingType').invalid && project.get('billingType').touched">
+                  <span *ngIf="project.get('billingType').errors.required">Billing Type is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Rate Type</mat-label>
+                  <mat-select formControlName="rateType" disableOptionCentering>
+                    <mat-option *ngFor="let rate of rateTypes" [value]="rate.rateType">{{rate.rateType}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red" *ngIf="project.get('rateType').invalid && project.get('rateType').touched">
+                  <span *ngIf="project.get('rateType').errors.required">Rate Type is required</span>
+                </div>
+
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <br>
+                <mat-form-field>
+                  <mat-label>Project Tech Stack</mat-label>
+                  <mat-select formControlName="projectTechStack" multiple disableOptionCentering>
+                    <mat-option *ngFor="let techstack of techStacks" [value]="techstack.technology">
+                      {{techstack.technology}}
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red"
+                  *ngIf="project.get('projectTechStack').invalid && project.get('projectTechStack').touched">
+                  <span *ngIf="project.get('projectTechStack').errors.required">ProjectTechStack is required</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <br>
+                <mat-form-field>
+                  <mat-label>Service Category</mat-label>
+                  <mat-select formControlName="serviceCategory" disableOptionCentering>
+                    <mat-option *ngFor="let servicecat of serviceCategoryList" [value]="servicecat.serviceategoryName">
+                      {{servicecat.serviceategoryName}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red"
+                  *ngIf="project.get('serviceCategory').invalid && project.get('serviceCategory').touched">
+                  <span *ngIf="project.get('serviceCategory').errors.required">Service Category is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <label>Is Internal</label>
+                <select class="form-control" formControlName="isInternal" disableOptionCentering>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+                <div style="color:red" *ngIf="project.get('isInternal').invalid && project.get('isInternal').touched">
+                  <span *ngIf="project.get('isInternal').errors.required">Please Select Yes/No</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <br>
+                <mat-form-field>
+                  <mat-label>Delivery Location</mat-label>
+                  <mat-select formControlName="projectDelivaryLocation" disableOptionCentering>
+                    <mat-option *ngFor="let delivery of deliveryLoc" [value]="delivery.deliverylocationName">
+                      {{delivery.deliverylocationName}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red"
+                  *ngIf="project.get('projectDelivaryLocation').invalid && project.get('projectDelivaryLocation').touched">
+                  <span *ngIf="project.get('projectDelivaryLocation').errors.required">Project Delivary Location is
+                    required</span>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+
+                <br>
+                <mat-form-field>
+                  <mat-label>Location Type</mat-label>
+                  <mat-select formControlName="locationType" disableOptionCentering>
+                    <mat-option *ngFor="let location of locTypes" [value]="location.locationType">
+                      {{location.locationType}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+
+
+                <div style="color:red"
+                  *ngIf="project.get('locationType').invalid && project.get('locationType').touched">
+                  <span *ngIf="project.get('locationType').errors.required">Location Type is required</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-4">
+                <br>
+                <mat-form-field>
+                  <mat-label>Tasks</mat-label>
+                  <mat-select formControlName="tasks" multiple disableOptionCentering>
+                    <mat-option *ngFor="let tasks of taskList" [value]="tasks.projecttask">{{tasks.projecttask}}
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red" *ngIf="project.get('tasks').invalid && project.get('tasks').touched">
+                  <span *ngIf="project.get('tasks').errors.required">Project Delivary Location is
+                    required</span>
+                </div>
+              </div>
+              <div class="col-4" style="padding-top: 10px;">
+                <br>
+                <mat-form-field>
+                  <mat-label>Business Unit Head</mat-label>
+                  <mat-select formControlName="bu" disableOptionCentering>
+                    <mat-option *ngFor="let bu of buListArr" [value]="bu.buHead">{{bu.buHeadName}} ({{bu.buName}})
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red" *ngIf="project.get('bu').invalid && project.get('bu').touched">
+                  <span *ngIf="project.get('bu').errors.required">Business Head is required</span>
+                </div>
+              </div>
+              <div class="col-4" style="padding-top: 10px;">
+                <br>
+                <mat-form-field>
+                  <mat-label>Sub Business Unit Head</mat-label>
+                  <mat-select formControlName="sbu" disableOptionCentering>
+                    <mat-option *ngFor="let sbu of sbuListArr" [value]="sbu.sbuHead">{{sbu.sbuHeadName}} ({{sbu.name}})
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+                <div style="color:red" *ngIf="project.get('sbu').invalid && project.get('sbu').touched">
+                  <span *ngIf="project.get('sbu').errors.required">Sub Business Head is required</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-12">
+
+                <label>Description</label>
+                <textarea class="form-control" formControlName="projectDescription" rows="3"></textarea>
+                <div style="color:red"
+                  *ngIf="project.get('projectDescription').invalid && project.get('projectDescription').touched">
+                  <span *ngIf="project.get('projectDescription').errors.required">Project Description is required</span>
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn" style="background-color: #1d62a7;color: white;"
+            (click)="createProject(project.value)" data-dismiss="modal" [disabled]="project.invalid">Create &
+            Submit</button>
+          <button type="button" class="btn" (click)="cancelSave(project)"
+            style="background-color: #1d62a7;color: white;" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- reject modal -->
+
+<div class="modal fade" id="rejectModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form #rejectComment="ngForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModal">Reject Reason</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="rejectComment.reset();">
+            <p aria-hidden="true">&times;</p>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea row="10" cols="50" class="form-control active" name="comments" [(ngModel)]="comments"
+            #commentReason="ngModel" required>
+
+               </textarea>
+          <div *ngIf="commentReason.invalid && commentReason.touched" style="color: red;">
+            <p *ngIf="commentReason.errors.required">Please enter reason to reject</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" style="background-color: #1d62a7;color: white;"
+            data-dismiss="modal" (click)="rejectComment.reset();">Close</button>
+          <button type="submit" class="btn" style="background-color: #1d62a7;color: white;"
+            [disabled]="rejectComment.invalid" (click)="reject(rejectComment.value)" 
+            data-dismiss="modal">Reject</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<!-- Create project ends -->

@@ -1,0 +1,1014 @@
+<!-- education starts-->
+
+
+<br>
+
+<div class="container">
+
+
+  <div *ngFor="let empbasic of empbasicinfo">
+<!-- 
+    <div class="col-12">
+
+
+
+      <h5 class="d-inline">Employee Id : &nbsp; {{empbasic.employeeId}}</h5>
+
+      <h5 class="d-inline float-right">Full Name : &nbsp;{{empbasic.firstname}} {{empbasic.middlename}}
+        {{empbasic.lastname}}</h5>
+
+
+    </div> -->
+
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf="!user">
+  <table class="table table-hover tile">
+    <thead class="two" style="font-size: 16px;">
+      <tr class="table-info" style="font-size: 15PX;">
+       
+        <th>Qualification</th>
+        <th>Year Of Passing</th>
+        <th>Percentage Marks</th>
+        <th>Institution Name</th>
+        <th *ngIf="!user">Edit</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let edu of getempeduarr">
+      
+        <td>{{edu.qualification}}</td>
+        <td>{{edu.year_of_passing | date:"M/d/yy"}}</td>
+        <td>{{edu.percentage_marks}}</td>
+        <td>{{edu.institution_name}}</td>
+        <td *ngIf="!user"><img src="assets/pe.png" width="30" data-toggle="modal" data-target="#myModal5"
+            (click)="editEmpEduId(edu)"></td>
+      
+      </tr>
+    </tbody>
+  </table>
+
+</div> -->
+<!-- Modal -->
+
+<div class="modal right fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel5">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3>Education</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+
+      </div>
+
+      <div class="modal-body">
+        <form class="tile" #EmpEducationForm="ngForm" (ngSubmit)="onSubmit1(EmpEducationForm)" autocomplete="on">
+          <div class="row">
+            <div class="col-md-6" *ngIf="isCreatedEduby">
+              <div class="form-group">
+                <label> Emp Id: <span>{{eid}}</span></label>
+                <!-- <label> Emp Id: </label>
+                      <input type="text" class="form-control" [(ngModel)]="editEduEmp.employeeId" name="employeeId" required
+                        placeholder="Employee Id" #emp01="ngModel">
+                        <span style="color:red" *ngIf="emp01.invalid && emp01.touched ">
+                          <span *ngIf="emp01.errors.required">
+                           Employee Id Is required
+                          </span>
+                        </span> -->
+              </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="isUpdatedEduby">
+              <div class="form-group">
+                <label> Emp Id: <span>{{editEduEmp.employeeId}}</span></label>
+                <!-- <input type="text" class="form-control" [(ngModel)]="editEduEmp.employeeId" name="emp01" required placeholder="Employee Id"
+                #empn3="ngModel"> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="!isUpdatedEduby">
+                <label>Year Of Passing<span class="starColor"> *</span></label>
+                <input type="date" class="form-control" [(ngModel)]="editEduEmp.year_of_passing"
+                  onkeydown="return false" name="year_of_passing" placeholder="Year Of Passing" required #yop="ngModel"
+                  [max]="today">
+
+                <span style="color:red" *ngIf="yop.invalid && yop.touched">
+                  <span *ngIf="yop.errors.required">
+                    Year Of Passing is required.
+                  </span>
+                </span>
+
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="!isUpdatedEduby">
+                <label>Qualification<span class="starColor"> *</span></label>
+                <select class="form-control" [(ngModel)]="editEduEmp.qualification" placeholder="Select Qualification"
+                  name="emp02" required placeholder="Qualification" #empn3="ngModel">
+                  <option *ngFor="let qual of EmpQualArray" [value]="qual.id">{{ qual.educationType }}</option>
+                </select>
+
+                <span style="color:red" *ngIf="empn3.invalid && empn3.touched ">
+
+                  <span *ngIf="empn3.errors.required">
+
+                    Qualification is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="isUpdatedEduby">
+                <label>Year Of Passing<span class="starColor"> *</span></label>
+                <input type="date" class="form-control" [(ngModel)]="editEduEmp.year_of_passing" [max]="today"
+                  name="year_of_passing" onkeydown="return false" placeholder="Year Of Passing" required #yop="ngModel"
+                  [disabled]="user">
+
+                <span style="color:red" *ngIf="yop.invalid && yop.touched">
+                  <span *ngIf="yop.errors.required">
+                    Year Of Passing is required.
+                  </span>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="isUpdatedEduby">
+                <label>Qualification<span class="starColor"> *</span></label>
+                <select class="form-control" [(ngModel)]="editEduEmp.qualification" placeholder="Select Qualification"
+                  name="emp02" required placeholder="Qualification" #empn3="ngModel" [disabled]="user">
+                  <option *ngFor="let qual of EmpQualArray" [value]="qual.id">{{ qual.educationType }}</option>
+                </select>
+
+                <span style="color:red" *ngIf="empn3.invalid && empn3.touched ">
+
+                  <span *ngIf="empn3.errors.required">
+
+                    Qualification is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Institution Name<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editEduEmp.institution_name"
+                  name="institution_name" required placeholder="Institution Name" #empn5="ngModel"
+                  pattern="[a-zA-Z]{1}[A-Za-z ]*">
+
+                <span style="color:red" *ngIf="empn5.invalid && empn5.touched ">
+
+                  <span *ngIf="empn5.errors.required">
+
+                    Institution Name is required.
+                  </span>
+                  <span *ngIf="empn5.errors.pattern">
+
+                    Enter alphabet only.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Percentage Of Marks<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editEduEmp.percentage_marks"
+                  name="percentage_marks" required placeholder="Percentage Of Marks" pattern="[0-9]{2}[.][0-9]{2}"
+                  #empn4="ngModel">
+
+                <span style="color:red" *ngIf="empn4.invalid && empn4.touched ">
+
+                  <span *ngIf="empn4.errors.required">
+
+                    Percentage Of Marks is required.
+                  </span>
+                  <span *ngIf="empn4.errors.pattern">
+
+                    Enter correct Percentage (Example 87.99)
+                  </span>
+
+
+                </span>
+              </div>
+
+            </div>
+
+            <!-- <div class="col-md-6">
+                    <label>documents upload</label>
+                    <input type="file"  id="file"  class="form-control"  [(ngModel)]="filen" name="fileData" (change)="onFileSelected($event)" accept=".pdf" #avatar>
+                    </div>  -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>documents upload</label>
+                <abbr title="please upload consolidated Pdf certificates"><input type="file" class="form-control"
+                    (change)="fileSelected($event)" [(ngModel)]="editEduEmp.image" name="fileName" #edfile="ngModel" (click)=" methodCall"
+                    required accept="application/pdf"></abbr>
+                <span style="color:red" *ngIf="edfile.invalid && edfile.touched ">
+
+                  <span *ngIf="edfile.errors.required">
+
+                    File is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+
+          <button class="btn  float-right margin" data-dismiss="modal" aria-label="Close"
+            *ngIf=!isUpdatedEduby (click)="msg='Pending';saveEmpEdu()" [disabled]="EmpEducationForm.invalid">Save</button>
+
+          <button class="btn   float-right margin" data-dismiss="modal" aria-label="Close"
+            *ngIf=isUpdatedEduby (click)="updateEdu(EmpEducationForm)" data-dismiss="modal"
+            [disabled]="EmpEducationForm.invalid">Update</button>
+
+
+          <button class="btn     float-right" (click)="EmpEducationForm.reset()">Clear</button>
+          <button class="btn  " data-dismiss="modal"><span aria-hidden="true"></span>Back</button>
+
+        </form>
+
+
+
+      </div>
+
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- education ends-->
+<!-- !--this is  -->
+
+
+<div id="myModal1" class="modal fade scrollable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #pass="ngForm" (submit)="updateEdu()">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Documents</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- <div class="modal-body">
+             
+              <p *ngFor="let x of getempeduarr">{{x.image}}
+                  <pdf-viewer [src]=" 'data:application/pdf;base64,' + x.image " [original-size]="true"></pdf-viewer>
+                  </p> -->
+
+        <div class="modal-body">
+<!-- 
+          <div *ngFor="let x of getempeduarr" style="text-align: center;">
+            <pdf-viewer [src]=" 'data:application/pdf;base64,' + x.image " [original-size]="false" [autoresize]="true">
+            </pdf-viewer>
+          </div> -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>documents upload</label>
+              <abbr title="please upload consolidated Pdf certificates"> <input id="forfileupload" type="file" class="form-control"
+                  (change)="fileSelected($event)" [(ngModel)]="editEduEmp.image" name="fileName" #edfile="ngModel"
+                  required accept="application/pdf"></abbr>
+              <span style="color:red" *ngIf="edfile.invalid && edfile.touched ">
+
+                <span *ngIf="edfile.errors.required">
+
+                  File is required.
+                </span>
+              </span>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal" (click)="msg='Pending'; updateEdu()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div id="pdf" #pdf>
+        <ul *ngFor="let x of getempeduarr">
+   
+            <div>
+                <pdf-viewer [src]=" 'data:application/pdf;base64,' + x.image " [original-size]="true" style="margin-left:-101px;"></pdf-viewer>
+           </div> 
+
+           </ul>
+    </div> -->
+
+
+
+<main class="container col-12">
+  <div class="card shadow">
+
+    <div>
+
+      <span style="font-size: 17px;"><b>Education</b></span>
+      <button type="button" class="btn btn-sm float-right" *ngIf="rolemanagerflag"
+        (click)="clickaddEdu(EmpEducationForm)" data-toggle="modal" data-target="#myModal5"><i class="fa fa-plus"></i>
+        Add</button>
+       
+      <!-- <h5 class="d-inline"  >Education</h5>
+          <div class="input-group  d-inline" >
+                     <button type="button" class="btn btn-primary  float-right" data-toggle="modal" (click)="clickaddEdu(EmpEducationForm)"
+                       data-target="#myModal5" > <i class="fa fa-plus" ></i>Add</button>
+                   </div> -->
+    </div>
+
+
+    <hr>
+<!-- decline modal starts -->
+   
+<div id="declinemodal" class="modal fade scrollable" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #modalform="ngForm" >
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Decline Education Certificates</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <input placeholder="Type reason to decline" [(ngModel)]="username" name="uname" #declinevalue="ngModel"
+                class="form-control" required minlength="3" 
+                [ngClass]="{'is-invalid': declinevalue.touched && declinevalue.invalid ,'is-valid':declinevalue.valid}">
+
+              <section *ngIf="declinevalue.touched && declinevalue.invalid">
+
+                <p *ngIf="declinevalue.errors.required" class="txt"> Reason required*</p>
+
+                <p *ngIf="declinevalue.errors.minlength" class="txt">atleast 3 characters</p>
+
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn" data-dismiss="modal" (click)="msg='Decline';save(modalform);updateEdu()"
+           [disabled]="declinevalue.invalid">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!-- decline modal close -->
+
+    <div class="row" style="padding:15px;">
+      <section class="col-6">
+        <h6>Consolidated Education certificates</h6>
+      </section>
+
+      <section class="col-1">
+        <h5><i class="fa fa-download" (click)="download()" style="color:#1d62a7"></i><p  *ngIf="view "style="display: inline-block;font-size: 9px;">Please Download for Preview</p></h5>
+      </section>
+      <section class="col-1">
+        <section class="col-2" *ngIf="hide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span>
+            <span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+        </section>
+        <section class="col-2" *ngIf="emphide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span>
+            <span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+        </section>
+
+      </section>
+      <div >
+      <section class="col-1" *ngIf="rolemanagerflag">
+        <!-- <h5><span data-toggle="modal" data-target="#editModal"  (click)="updatekye(kye)"><i class="fas fa-edit"></i></span></h5> -->
+        <span data-toggle="modal" data-target="#myModal1" (click)="show()" ><i class="fa fa-edit" style="color:#1d62a7"></i></span>
+      </section>
+    </div>
+      <section class="col-1" *ngIf="hide">
+        <button class="btn btn-sm" (click)="msg='Accepted';reason=' ';updateEdu()">Accept</button>
+      </section>
+      <section class="col-1" *ngIf="hide">
+        <!-- <button class="btn btn-sm" (click)="msg='Decline';updateEdu()" data-toggle="modal" data-target="#declinemodal">Decline</button> -->
+        <button class="btn btn-sm"  data-toggle="modal" data-target="#declinemodal">Decline</button>
+      </section>
+
+    </div>
+
+  </div>
+
+
+</main>
+
+
+
+<!-- Skill start -->
+
+<!-- <p>
+  skill works!
+</p> -->
+<!--skill data starts -->
+<!-- <div class="tab-pane fade" id="nav-skill" role="tabpanel" aria-labelledby="nav-skill-tab"> -->
+
+<!--skill data starts -->
+
+
+<div class="modal right fade" id="myModalskill" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Skill Details</h3>
+
+        <button type="button" class="close" data-dismiss="modal" (click)="newUserForm1.reset()" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <form class="tile" #newUserForm1="ngForm" (ngSubmit)="onSubmittitle(newUserForm1)" autocomplete="on">
+          <div class="row">
+            <div class="col-md-6" *ngIf="CREATEDBY">
+              <div class="form-group">
+                <label> Employee Id: </label><span><b>{{eid}} </b></span>
+                <!-- <label> Employee Id: </label>
+                   
+                   <input type="text" class="form-control" name="key" [(ngModel)]="SKILLinfo.employee_id" name="employeeId" placeholder="employeeId"> -->
+              </div>
+
+            </div>
+            <div class="col-md-6" *ngIf="!CREATEDBY">
+              <div class="form-group">
+                <label> Employee Id: </label><span>{{SKILLinfo.employee_id}} </span>
+
+                <!-- <input type="text" class="form-control" name="key" [(ngModel)]="SKILLinfo.employee_id" name="employeeId" placeholder="employeeId" disabled> -->
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="row">
+
+
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="!isUPDATEDBY">
+                <label for="skill1"> Level Id<span class="starColor"></span> </label>
+                <input type="text" class="form-control" [(ngModel)]="SKILLinfo.level_id" name="level_id" 
+                  placeholder="level Id" #level="ngModel" required pattern="^(?:[1-9]|0[1-9]|10)$">
+                  <div style="color:red" *ngIf="level.invalid && level.touched">
+                    <span *ngIf="level.errors.required">
+                      Enter valid level id
+                    </span>
+                    <!-- <span *ngIf="level.errors.maxlength">
+                      Enter only numeric value upto 10
+                    </span> -->
+                    <span *ngIf="level.errors.pattern">
+                      Enter only numeric value upto 10 
+                    </span>
+                  </div>
+                
+                <!-- <option>Basic Level</option>
+             <option>Intermediate Level</option>
+             <option>Advanced Level</option>
+             </select> -->
+                <!-- <span style="color:red" *ngIf="skill.invalid && skill.touched ">
+             
+                <span *ngIf="skill.errors.required">
+                 Level Id  is required.
+                </span>
+                
+              </span> -->
+
+
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <div class="form-group" *ngIf="!isUPDATEDBY">
+                <label for="skill1">Skill name<span class="starColor"></span></label>
+              
+                <!-- <input type="number" class="form-control"  [(ngModel)]="SKILLinfo.skill_id" name="skill_id" placeholder="skill Id"> -->
+                <!-- <select class="form-control" id="skill1" [(ngModel)]="skill_id" name="skill_id"
+                       required placeholder="Skill Id" #empid2="ngModel">
+                         <option>Java</option>
+                         <option>c</option>
+                         <option>.net</option>
+                         </select> -->
+                <!-- <span style="color:red" *ngIf="empid2.invalid && empid2.touched ">
+                
+                           <span *ngIf="empid2.errors.required">
+                               Skill Id  is required.
+                           </span>
+                           
+                         </span> -->
+
+
+
+                <select class="form-control" placeholder="Select skill name" name="skill_id"
+                  (change)="selectOption($event.target.value)" [(ngModel)]="SKILLinfo.skill_id" required
+                  placeholder="skill name" #cr="ngModel">
+                  <option value="" disabled selected>Select Your skill</option>
+                  <option *ngFor="let skilltable of skillmasterArray " [value]="skilltable.id">
+                    {{ skilltable.skill_name}}</option>
+
+                </select>
+                <span style="color:red" *ngIf="cr.invalid && cr.touched ">
+
+                  <span *ngIf="cr.errors.required">
+
+                    Skill Name is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="isUPDATEDBY">
+                <label for="skill1"> Level Id<span class="starColor"></span> </label>
+                <input type="text" class="form-control" [(ngModel)]="SKILLinfo.level_id" name="level_id" required
+                  placeholder="level Id" #rc="ngModel" max="10" maxlength="2">
+                  
+                  <div style="color:red" *ngIf="rc.invalid && rc.touched">
+                    <span *ngIf="rc.errors.required">
+                      Enter valid level id
+                    </span>
+                    <span *ngIf="rc.errors.maxlength">
+                      Enter valid level id
+                    </span>
+                    
+                  </div>
+
+
+
+                <!-- <option>Basic Level</option>
+         <option>Intermediate Level</option>
+         <option>Advanced Level</option>
+         </select> -->
+                <!-- <span style="color:red" *ngIf="skill.invalid && skill.touched ">
+         
+            <span *ngIf="skill.errors.required">
+             Level Id  is required.
+            </span>
+            
+          </span> -->
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <div class="form-group" *ngIf="isUPDATEDBY">
+                <label for="skill1">Skill name<span class="starColor"></span></label>
+                <select class="form-control" placeholder="Select skill name" name="skill_id" [disabled]="user"
+                  (change)="selectOption($event.target.value)" [(ngModel)]="SKILLinfo.skill_id" required #rc="ngModel"
+                  placeholder="skill name">
+                  <option value="" disabled selected>Select Your skill</option>
+                  <option *ngFor="let skilltable of skillmasterArray " [value]="skilltable.id">
+                    {{ skilltable.skill_name}}</option>
+
+                </select>
+               
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- <div class="col-md-6" *ngIf="CREATEDBY" >
+ <div class="form-group">
+     <label> Createdby: </label>
+     
+     <input type="text" class="form-control" [(ngModel)]="SKILLinfo.created_by" name="created_by" placeholder="created_by">
+   </div>
+ 
+
+</div>
+<div class="col-md-6" *ngIf="!CREATEDBY" >
+<div class="form-group">
+<label>updatedBy: </label>
+<input type="text" class="form-control" [(ngModel)]="SKILLinfo.update_by"   name="update_by" required placeholder="updated_By">
+</div>
+
+</div> -->
+          <!-- <div class="col-md-6" >
+<div class="form-group">
+    <label>Flag: </label>
+    <input type="text" class="form-control" [(ngModel)]="SKILLinfo.flag"   name="flag" required placeholder="flag">
+    </div>
+    
+    </div> -->
+
+
+
+          <button class="btn  float-right margin" type="submit" [disabled]="newUserForm1.form.invalid"
+            data-dismiss="modal" aria-label="Close" (click)="setSkillInfo()" *ngIf="!isUPDATEDBY">
+            Save
+          </button>
+          <button class="btn  float-right margin" type="submit" [disabled]="newUserForm1.form.invalid"
+            data-dismiss="modal" aria-label="Close" (click)="updateSkilldetails(SKILLinfo)" *ngIf="isUPDATEDBY">
+            Update
+          </button>
+
+          <button class="btn  float-right" (click)="newUserForm1.reset()">Clear</button>
+          <button class="btn" data-dismiss="modal" aria-label="Close">Back</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row ">
+  <div class="col-md-11" style="margin-bottom: 25px;">
+    <form class="form-inline ">
+      <div class="input-group ">
+        <!-- <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"> -->
+        <div class="input-group-btn">
+          <h1></h1>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="col-12">
+
+  
+ 
+       <h5 class="d-inline">Skills</h5>
+     
+        
+           <div class="input-group  d-inline">
+            <button type="button" class="btn btn-primary  float-right" data-toggle="modal" data-target="#myModalskill"  (click)="addSkillvalue(newUserForm1)">
+              <i class="fa fa-plus"></i>Add</button>
+             </div>
+         
+   
+
+</div> -->
+
+
+
+
+<div class="container col-12">
+  <div class="card shadow">
+    <div>
+      <span style="font-size: 17px;"><b>Skills</b></span>
+      <button type="button" class="btn btn-sm float-right" data-toggle="modal" *ngIf="rolemanagerflag"
+        (click)="addSkillvalue(newUserForm1)" data-target="#myModalskill"><i class="fa fa-plus"></i> Add</button>
+    </div>
+    <hr>
+    <div class="row top table-responsive" style="margin-top:0px;margin-right: 0px; margin-left: 0px;">
+      <table class="table  table-condensed text-center">
+        <thead class="two">
+          <tr>
+            <!-- <th>Employee Id</th> -->
+
+            <th>Skill Name</th>
+            <th>Level Id</th>
+            <th *ngIf="rolemanagerflag">Edit</th>
+
+          </tr>
+        </thead>
+        <tr
+          *ngFor="let tableData of skillInfoList | filter:key | paginate: { itemsPerPage: ipps, currentPage:ps, id:'ps' }; let i=index">
+          <!-- <td>{{tableData.employee_id}}</td> -->
+          <td>{{tableData.skill_id}} </td>
+
+          <td>{{tableData.level_id}}</td>
+          <td *ngIf="rolemanagerflag"><img src="/assets/pe.png" width="35px" data-toggle="modal"
+              data-target="#myModalskill" (click)="getdatabyID(tableData)"></td>
+          <!-- <td><img src="assets/delete.png" width="20px" (click)="deleteSkillInfo(tableData)"></td>   -->
+        </tr>
+      </table>
+      <label class="m-2">Items Per Page</label>
+      <select [(ngModel)]="ipps">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+      <pagination-controls (pageChange)="ps = $event" id="ps" style="float:right"></pagination-controls>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<!--skill data ends -->
+
+
+<!-- Certfication start -->
+
+<!-- <p>
+  certification works!
+</p> -->
+
+<!--certification  data starts -->
+<!-- <div class="tab-pane fade" id="nav-certification" role="tabpanel" aria-labelledby="nav-certification-tab"> -->
+
+
+<div class="modal right fade" id="myModalcertificate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3>Certification Details</h3>
+        <button type="button" class="close" data-dismiss="modal" (click)="newUserFormCer.reset()"
+          aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <!--modal Body-->
+      <div class="model-body">
+        <form class="tile" #newUserFormCer="ngForm" (ngSubmit)="onSubmitCer(newUserFormCer).reset()" autocomplete="on">
+          <div class="row">
+            <div class="col-md-6" *ngIf="createdBY">
+              <div class="form-group">
+                <label>Employee Id </label><span>{{eid}}</span>
+                <!-- <label>Employee Id </label>
+                  <input type="text" class="form-control" [(ngModel)]="Certification.employeeId" name="employeeId"
+                    required placeholder=" Emp Id" #Idemp="ngModel">
+                  <span style="color:red" *ngIf="Idemp.invalid && Idemp.touched ">
+                    <span *ngIf="Idemp.errors.required">
+                      emp id Name is required.
+                    </span>
+                  </span> -->
+              </div>
+
+            </div>
+            <div class="col-md-6" *ngIf="!createdBY">
+              <div class="form-group">
+                <label>Employee Id </label><span>{{Certification.employeeId}}</span>
+                <!-- <input type="text" class="form-control" [(ngModel)]="Certification.employeeId" name="employeeId" required
+                                 placeholder=" Emp Id"  #Idemp="ngModel" disabled>
+                                 <span style="color:red" *ngIf="Idemp.invalid && Idemp.touched ">
+                                     <span *ngIf="Idemp.errors.required">
+                                       emp id Name is required.
+                                     </span>
+                                   </span> -->
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Certification Name<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="Certification.certificationName"
+                  name="certificationName" required placeholder=" Certification Name" #cerName="ngModel"
+                  pattern="[a-zA-Z][a-zA-Z ]*" required>
+                <span style="color:red" *ngIf="cerName.invalid && cerName.touched ">
+                  <span *ngIf="cerName.errors.required">
+                    Certification Name is required.
+                  </span>
+
+                  <span *ngIf="cerName.errors.pattern">
+                    Enter only alphabet.
+
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Date of issuse<span class="starColor"> *</span></label>
+                <input type="date" class="form-control" [(ngModel)]="Certification.dateOfIssue" name="dateOfIssue"
+                  onkeydown="return false" required placeholder="dd/mm/yyyy" #date="ngModel" [max]="today">
+                <span style="color:red" *ngIf="date.invalid &&date.touched ">
+                  <span *ngIf="date.errors.required">
+                    Date of issuse is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Issued by<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="Certification.issuedBy" name="issuedBy"
+                  placeholder="Authority/Organization" #Issued="ngModel" pattern="[a-zA-Z][a-zA-Z ]*" required>
+                <span style="color:red" *ngIf="Issued.invalid &&Issued.touched ">
+                  <span *ngIf="Issued.errors.required">
+                    Issued by is required.
+                  </span>
+                  <span *ngIf="Issued.errors.pattern">
+                    Enter only alphabet.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+          <div class="row">
+
+
+
+
+            <!-- <div class="col-md-6">
+                          <div class="form-group">
+                               <label>flag: </label>
+                               <input type="text" class="form-control" [(ngModel)]="Certification.flag"  name="flag" required placeholder="flag">
+  
+                                      </div>
+                                   </div> -->
+            <!-- <div class="col-md-6" *ngIf="createdBY">
+                      <div class="form-group">
+                           <label>createdBy: </label>
+                           <input type="text" class="form-control" [(ngModel)]="Certification.createdBy"  name="createdBy" required placeholder="created_By">
+  
+                                  </div>
+                               </div> -->
+            <!-- <div class="col-md-6" *ngIf="!createdBY" >
+                                <div class="form-group">
+                                     <label>updatedBy: </label>
+                                     <input type="text" class="form-control" [(ngModel)]="Certification.updatedBy"   name="updatedBy" required placeholder="updated_By"
+                                     #updatedby="ngModel">
+                                     </div>
+                                     </div> -->
+
+          </div>
+
+
+
+
+          <button type="submit" class="btn float-right margin" [disabled]="newUserFormCer.form.invalid"
+            data-dismiss="modal" aria-label="Close" (click)="setCertificationDetails()"
+            *ngIf="!isUpdateBy">Save</button>
+
+          <button type="submit" class="btn float-right margin" [disabled]="newUserFormCer.form.invalid"
+            data-dismiss="modal" aria-label="Close" (click)="updateCertificationdetails()"
+            *ngIf="isUpdateBy">Update</button>
+
+          <button class="btn  float-right" (click)="newUserFormCer.reset()">Clear</button>
+          <button class="btn" data-dismiss="modal" aria-label="Close">Back</button>
+
+        </form>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div>
+
+
+<div class="row ">
+  <div class="col-md-11" style="margin-bottom: 25px;">
+    <form class="form-inline ">
+      <div class="input-group ">
+        <!-- <input type="text" class="form-control" name="searchText" [(ngModel)]="searchText" size="50"
+            placeholder="Search"> -->
+        <div class="input-group-btn">
+          <h1></h1>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h5 class="d-inline">Certification</h5>
+       
+          
+             <div class="input-group  d-inline">
+              <button type="add" class="btn btn-primary float-right" data-target="#myModalcertificate" data-toggle="modal"
+              (click)="Addvalue(newUserFormCer)"><i class="fa fa-plus"></i>Add</button>
+               </div> -->
+
+
+
+
+
+
+
+
+
+
+<div class="container col-12">
+  <div class="card shadow">
+    <div>
+      <span style="font-size: 17px;"><b>Certification</b></span><button type="button" class="btn btn-sm float-right"
+        *ngIf="rolemanagerflag" (click)="Addvalue(newUserFormCer)" data-toggle="modal"
+        data-target="#myModalcertificate"><i class="fa fa-plus"></i> Add</button>
+    </div>
+
+    <hr>
+    <div class="row top table-responsive" style="margin-top:0px;margin-right: 0px; margin-left: 0px;">
+      <table class="table table-condensed text-center">
+        <thead>
+          <tr style="font-size: 16px ;">
+            <!-- <th>Emp Id</th> -->
+            <th>Certification Name</th>
+            <th>Issued by</th>
+            <th>Date Of Issuse</th>
+            <th *ngIf="rolemanagerflag">Edit</th>
+            <!-- <td>Delete</td> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let certifications of cerDetailsList| filter:searchText | paginate: { itemsPerPage: ippc, currentPage: pc, id:'pc'}; let i=index">
+            <!-- <td>{{certifications.employeeId}}</td> -->
+            <td>{{certifications.certificationName}}</td>
+            <td>{{certifications.issuedBy}}</td>
+            <td>{{certifications.dateOfIssue}}</td>
+            <td *ngIf="rolemanagerflag"> <img src="/assets/pe.png" width="35px" (click)="getDatabyId(certifications)"
+                data-target="#myModalcertificate" data-toggle="modal"></td>
+            <!-- <td><img src="assets/delete.png" width="20px" (click)="deleteCertificationDetails(certifications)"></td> -->
+        </tbody>
+
+      </table>
+      <label class="m-2">Items Per Page</label>
+      <select [(ngModel)]="ippc">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+      <pagination-controls (pageChange)="pc = $event" id="pc" style="float:right"></pagination-controls>
+    </div>
+  </div>
+</div>
+<!-- <pagination-controls class="pull-right" (pageChange)="certificationDetails = $event"></pagination-controls>  -->
+
+
+<!--certification  data ends -->

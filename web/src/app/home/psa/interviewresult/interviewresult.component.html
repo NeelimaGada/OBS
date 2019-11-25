@@ -1,0 +1,127 @@
+<div class="app-title">
+    <div>
+      <h1><i class="fa fa-th-list"></i>&nbsp;Interview Result</h1>
+      <p class="pl-4">Ojas Business Suite</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item">Masters</li>
+      <li class="breadcrumb-item active"><a routerLink="/dashboard">Dashboard</a></li>
+    </ul>
+  </div>
+  
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-4">
+      <form>
+  
+        <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"
+          [disabled]="searchfield">
+      </form>
+    </div>
+    <div class="col-8 text-right">
+      <button type="submit" (click)="value=!value; clear()" *ngIf="addb" class="btn ">Add Interview Result</button>
+    </div>
+  
+  
+  </div>
+  
+  
+  <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  
+    <form #InterviewResultf="ngForm">
+      <table class="table table-condensed tile" style="width:100%">
+        <thead style="background-color: #1d62a7;color:white" class="text-center">
+  
+          <tr>
+  
+            <th>Interview Result</th>
+            <th>Status</th>
+            <th>Edit</th>
+  
+          </tr>
+        </thead>
+  
+        <tbody>
+  
+          <tr
+            *ngFor="let InterviewResultTable of table| filter:key |  paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index "
+            class="text-center">
+  
+            <td>
+              <div *ngIf="!InterviewResultTable.isEditable">
+                {{InterviewResultTable.interviewResult}}
+              </div>
+              <div *ngIf="InterviewResultTable.isEditable">
+                <input type="text" name="interviewResult" #InterviewResultf="ngModel" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*"
+                  [(ngModel)]="InterviewResultTable.interviewResult" class="form-control" />
+                <div style="color:red" *ngIf="InterviewResultf.invalid && InterviewResultf.touched ">
+                  <span *ngIf="InterviewResultf.errors?.required">
+                    Please enter Interview Result
+                  </span>
+                  <span *ngIf="InterviewResultf.errors?.pattern">
+                    Please enter valid Interview Result
+                  </span>
+                </div>
+              </div>
+            </td>
+  
+  
+            <td>
+              <div>
+              {{InterviewResultTable.status}}
+            </div></td>
+            
+            <td> <span style="color:#1d62a7;font-size:20px" (click)='InterviewResultTable.isEditable =!InterviewResultTable.isEditable'
+                (click)="edit(InterviewResultTable.interviewresultId,InterviewResultTable.status)" *ngIf="!InterviewResult.isEditable"><i class="fa fa-edit"
+                  [class.disabled]="noedit"></i></span>
+  
+              <button class="btn " *ngIf="InterviewResultTable.isEditable"
+                (click)='InterviewResultTable.isEditable=!InterviewResultTable.isEditable' (click)= "updateInterviewResult(InterviewResultf.value)"
+                [disabled]="InterviewResultf.invalid">Update</button>&nbsp;
+              
+                <button type="submit" class="btn " *ngIf="InterviewResultTable.isEditable"
+                (click)='InterviewResultTable.isEditable =!InterviewResultTable.isEditable' (click)="cancel()">Cancel</button>
+            </td>
+          </tr>
+  
+          <tr>
+  
+            <td *ngIf="value">
+              <input name="addResult" [(ngModel)]="interviewResult" type="text" class="form-control" #role="ngModel"
+                placeholder="Enter Interview Result" required pattern="[A-Za-z]{1}[A-Za-z0-9. ]*">
+              <div *ngIf="role.invalid && role.touched">
+                <span *ngIf="role.errors.required" style="color:red;"> Please enter InterviewResult </span>
+                <span *ngIf="role.errors.pattern" style="color:red;"> Please enter valid InterviewResult </span>
+              </div>
+            </td>
+            <td *ngIf="value">
+              <button class="btn" type="submit" [disabled]="InterviewResultf.invalid"
+                (click)="setInterviewResult(InterviewResultf.value)">Save</button>&nbsp;
+              <button type="submit" class="btn" (click)=cancelbulist()>Cancel</button>
+  
+            </td>
+  
+          </tr>
+  
+  
+        </tbody>
+  
+  
+      </table>
+  
+    </form>
+  </div>
+  
+  <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+  <div class="row">
+    <label class="ml-3">Items per page: </label>&nbsp;&nbsp;&nbsp;
+  
+  
+    <select id="PerPage" class="pull-right" [(ngModel)]="pageSize">
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="15">15</option>
+      <option [ngValue]="20">20</option>
+    </select>
+  
+  </div>

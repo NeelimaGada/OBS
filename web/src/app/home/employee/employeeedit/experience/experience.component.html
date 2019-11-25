@@ -1,0 +1,1297 @@
+<!-- <p>
+  experience works!
+</p> -->
+<!-- experience starts-->
+<!-- <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab"> -->
+<br>
+
+
+<!-- modal -->
+<div class="modal right fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <!-- <h4 class="modal-title" id="myModalLabel2">Employee Experience</h4> -->
+        <h3>Experience</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="newUserFormEmpExp.reset()"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <form class="tile" #newUserFormEmpExp="ngForm" (ngSubmit)="onSubmit(newUserFormEmpExp)">
+          <div class="row">
+            <div class="col-md-6">
+
+
+              <div class="form-group" *ngIf=isUpdate>
+                <label> Emp Id: </label>
+                <span>{{editemparrlist.employee_Id}}</span>
+                <!-- <input type="text" class="form-control" [(ngModel)]="editemparrlist.employee_Id" 
+                                              name="empname3"
+                                              required placeholder="Emp Id" #empid4="ngModel" disabled>
+                                              <span style="color:red" *ngIf="empid4.invalid && empid4.touched ">
+                                              
+                                                 <span *ngIf="empid4.errors.required">
+                                                  Empoyee id is required.
+                                                 </span>
+                                                 
+                                               </span> -->
+              </div>
+
+
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Emp Id: </label>
+                <span> <b>{{eid}}</b></span>
+                <!-- <input type="text" class="form-control" [(ngModel)]="editemparrlist.employee_Id" 
+                                              name="employee_Id"
+                                              required placeholder="Emp Id" #emexp1="ngModel">
+                                              <span style="color:red" *ngIf="emexp1.invalid && emexp1.touched ">
+                                              
+                                                 <span *ngIf="emexp1.errors.required">
+                                                  Empoyee id is required.
+                                                 </span>
+                                                 
+                                               </span> -->
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+
+
+              <!-- <div class="form-group" *ngIf = isCreated>
+                                              <label> created_by: </label>
+                                              <input type="text" class="form-control" [(ngModel)]="editemparrlist.created_by" 
+                                              name="empname03" 
+                                              required placeholder="Created by">
+                                            </div> -->
+
+              <div class="form-group" *ngIf=!isCreated>
+                <!-- <label> updated_by: </label> -->
+                <input type="hidden" class="form-control" [(ngModel)]="editemparrlist.created_by"
+                  name="editemparrlist.created_by" required placeholder="Updated by" #emexp001="ngModel">
+
+                <span style="color:red" *ngIf="emexp001.invalid && emexp001.touched ">
+
+                  <span *ngIf="emexp001.errors.required">
+                    Created by id is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Joining Date<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="editemparrlist.joining_date" name="joining_date"
+                  onkeydown="return false" required placeholder="joining date" #emexp2="ngModel" [max]="today">
+                <span style="color:red" *ngIf="emexp2.invalid && emexp2.touched ">
+                  <span *ngIf="emexp2.errors.required">
+                    Joining Date is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+
+            <div class="col-md-6" *ngIf=booleanValue>
+              <div class="form-group" *ngIf=!isUpdate>
+                <label> Relieving Date<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="editemparrlist.exit_date" onkeydown="return false"
+                  name="exit_date" required placeholder="Exit Date" #emexp3="ngModel"
+                  [min]="editemparrlist.joining_date" [max]="today">
+                <span style="color:red" *ngIf="emexp3.invalid && emexp3.touched ">
+
+                  <span *ngIf="emexp3.errors.required">
+                    Relieving Date is required.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf=isUpdate>
+                <label> Joining Date<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="editemparrlist.joining_date" name="joining_date"
+                  required placeholder="joining date" #emexp2="ngModel" [disabled]="user">
+                <span style="color:red" *ngIf="emexp2.invalid && emexp2.touched ">
+                  <span *ngIf="emexp2.errors.required">
+                    Joining Date is required.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+
+
+
+
+            <div class="col-md-6">
+              <div class="form-group" *ngIf=isUpdate>
+                <label> Relieving Date<span class="starColor"> *</span> </label>
+                <input type="date" class="form-control" [(ngModel)]="editemparrlist.exit_date" name="exit_date" required
+                  placeholder="Exit Date" #emexp4="ngModel" [disabled]="user">
+                <span style="color:red" *ngIf="emexp4.invalid && emexp4.touched ">
+
+                  <span *ngIf="emexp4.errors.required">
+                    Relieving Date is required.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Salary<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.salary" name="salary" required
+                  placeholder="Salary" minlength="4" maxlength="7" pattern="[0-9]*" #emexp5="ngModel">
+                <span style="color:red" *ngIf="emexp5.invalid && emexp5.touched ">
+
+                  <span *ngIf="emexp5.errors.required">
+                    Salary is required.
+                  </span>
+                  <!-- pattern="^[0-9]*$" -->
+                  <span *ngIf="emexp5.errors.pattern">
+                    Enter numbers only.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Location<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.location"
+                  name="editemparrlist.location" required placeholder="Location" #emexp6="ngModel" pattern="[A-Za-z]{1}[a-zA-Z ]*">
+                <span style="color:red" *ngIf="emexp6.invalid && emexp6.touched ">
+
+                  <span *ngIf="emexp6.errors.required">
+                    Location is required.
+                  </span>
+                  <span *ngIf="emexp6.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Is Current Company<span class="starColor"> *</span> </label>
+                <select class="form-control" [(ngModel)]="editemparrlist.is_current_company" name="is_current_company"
+                  required placeholder="Current Company" #emexp7="ngModel">
+                  <!-- {{booleanValue|field}} -->
+                  <option [value]="1">Yes</option>
+                  <option [value]="0">No</option>
+                </select>
+                <span style="color:red" *ngIf="emexp7.invalid && emexp7.touched ">
+
+                  <span *ngIf="emexp7.errors.required">
+                    Please select.
+                  </span>
+
+                </span>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Reference Name </label>
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.first_Reference_Name"
+                  name="editemparrlist.first_Reference_Name" placeholder="reference Name" #emexp8="ngModel" required
+                  pattern="[A-Za-z]{1}[a-zA-Z ]*">
+                <span style="color:red" *ngIf="emexp8.invalid && emexp8.touched ">
+
+                  <span *ngIf="emexp8.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+                  <span *ngIf="emexp8.errors.required">
+                    Enter alphabet only.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Reference Contact </label>
+
+
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.first_Reference_Contact"
+                  name="editemparrlist.first_Reference_Contact" placeholder="Reference Contact" #abc="ngModel" required
+                  pattern="[0-9]{1}[0-9]{9}">
+                <span style="color:red" *ngIf="abc.invalid && abc.touched ">
+                  <!-- <span *ngIf="abc.errors.required">
+                                                                Reference Contact is required.
+                                                              </span> -->
+                  <span *ngIf="abc.errors.pattern">
+                    Please enter valid phone number.
+                  </span>
+                  <span *ngIf="abc.errors.required">
+                    Please enter valid phone number.
+                  </span>
+                </span>
+
+
+                <!--      minlength="10" maxlength="10"pattern="^[0][6-9]\d{9}$|^[1-9]\d{9}$"<span style="color:red" *ngIf="emexp9.invalid && emexp9.touched ">
+                                                             
+                                                                <span *ngIf="emexp9.errors.required">
+                                                                  Reference Contact is required.
+                                                                </span>
+
+                                                                <span *ngIf="emexp9.errors.pattern">
+                                                                  Reference Contact  should start with 6,7,8 or 9 is required.
+                                                                </span>
+                                                                <span *ngIf="emexp9.errors.minlength">
+                                                                  Reference Contact is required.
+                                                                </span>
+                                                              </span>   -->
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Company Name<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.company_name"
+                  name="editemparrlist.company_name" required placeholder="Company Name" #emexp10="ngModel"
+                  pattern="[A-Za-z]{1}[A-Za-z ]*">
+                <span style="color:red" *ngIf="emexp10.invalid && emexp10.touched ">
+
+                  <span *ngIf="emexp10.errors.required">
+                    Company Name is required.
+                  </span>
+                  <span *ngIf="emexp10.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>documents upload</label>
+                <input type="file" class="form-control" (change)="exfileSelected($event)"
+                  [(ngModel)]="editemparrlist.image" name="fileName" #exfile="ngModel" accept="application/pdf">
+                <span style="color:red" *ngIf="exfile.invalid && exfile.touched ">
+
+                  <span *ngIf="exfile.errors.required">
+
+                    File is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+                                                  <div class="col-md-6">
+                                                     <div class="form-group">
+                                                         <!-- <label> Reference Contact2: </label> --
+                                                         <input type="hidden" class="form-control" [(ngModel)]="editemparrlist.second_Reference_Contact"
+                                                          name="editemparrlist.second_Reference_Contact" required placeholder="Reference Contact2">
+                                                          
+                                                       </div>
+                                                      
+                                                  </div>
+  
+                                                  <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <!-- <label> Reference Name2: </label> --
+                                                      <input type="hidden" class="form-control" [(ngModel)]="editemparrlist.second_Reference_Name" 
+                                                      name="editemparrlist.second_Reference_Name" 
+                                                      required placeholder="Reference Name2"  >
+                                                      <!-- <span style="color:red" *ngIf="empid13.invalid && empid13.touched ">
+                                                      
+                                                         <span *ngIf="empid13.errors.required">
+                                                          Reference Name2 is required.
+                                                         </span>
+                                                         
+                                                       </span> --
+                                                    </div>
+                                                  </div>
+                                              </div> -->
+          <!-- [disabled]="newUserFormEmpExp.invalid" -->
+
+          <!-- <button class="btn btn-primary  float-right margin" >Save</button> -->
+          <!-- [disabled]="newUserFormEmpExp.invalid" -->
+          <button class="btn float-right margin" type="submit" data-dismiss="modal" aria-label="Close"
+            *ngIf=isCreated (click)="msg='Pending'; saveEmpExp()" [disabled]="newUserFormEmpExp.invalid">Save</button>
+          <!-- <button class="btn btn-primary  float-right margin" data-dismiss="modal" aria-label="Close"
+                  *ngIf=!isUpdatedEduby (click)="saveEmpEdu()" [disabled]="EmpEducationForm.invalid">Save</button> -->
+
+
+
+
+          <button class="btn  float-right margin" type="submit" data-dismiss="modal" aria-label="Close"
+            *ngIf=isUpdate (click)="updateEmpExp()" [disabled]="newUserFormEmpExp.invalid">Update</button>
+
+
+          <button class="btn  float-right" (click)="newUserFormEmpExp.reset()">Clear</button>
+
+          <button class="btn" data-dismiss="modal" aria-label="Close">Cancel</button>
+        </form>
+      </div>
+
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+    <div class="row" >
+      <div *ngFor="let empbasic of empbasicinfo" >
+        
+      
+<<<<<<< .mine
+       
+      <div  class="d-inline-block marginLeft">
+        <h5>Full Name:{{emp.firstname}} {{emp.middlename}} {{emp.lastname}}</h5>
+      </div>
+      </div>
+      
+      </div>
+      </div> -->
+
+
+<div class="container">
+
+
+  <div *ngFor="let empbasic of empbasicinfo">
+
+    <!-- <div class="col-12">
+
+
+
+      <h5 class="d-inline">Employee Id : &nbsp; {{empbasic.employeeId}}</h5>
+
+      <h5 class="d-inline float-right">Full Name : &nbsp;{{empbasic.firstname}} {{empbasic.middlename}}
+        {{empbasic.lastname}}</h5>
+
+
+    </div> -->
+
+  </div>
+</div>
+
+
+
+<!-- <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+                        <table class="table table-hover  tile">
+                          <thead class="two" style="font-size: 16px;">
+                                <tr>                   
+                                
+                                  <th>Company Name</th>
+                                  <th>Joining Date</th>
+                                  <th>Relieving Date</th>
+                                  <th>Salary</th>
+                                  <th>Location</th>
+                                  <th>Is current company</th>
+                                  <th>Reference name </th>
+                                  <th>Reference contact</th>
+                                 
+                                  <th *ngIf="!user">Edit</th>
+                                
+                                </tr>
+                                </thead>
+                                <tr *ngFor = "let emp of empexpdetails">
+                                  
+                                  <td>
+                                     {{emp.company_name}} 
+                                  </td>
+                                  <td>
+                                    {{emp.joining_date}} 
+                                  </td>
+                                  <td>
+                                    {{emp.exit_date}}
+                                  </td>
+                                  <td>
+                                    {{emp.salary}} 
+                                  </td>
+                                  <td>
+                                    {{emp.location}}     
+                                  </td>
+                                  <td>
+                                    {{emp.is_current_company}}
+                                </td>
+                                  <td>
+                                    {{emp.first_Reference_Name}}
+                                  </td>
+                                  <td>
+                                    {{emp.first_Reference_Contact}}
+                                  </td>
+                                  
+                                  <td *ngIf="!user">
+                                    <img src="/assets/pe.png" width="35px" data-toggle="modal" data-target="#myModal1" 
+                                     (click)="editempexpbyid(emp)">
+                                    
+                                    
+                                    
+                                    </td>
+                                  
+                                </tr>
+                                </table>
+  </div> -->
+
+
+<div id="myModal2" class="modal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form #pass="ngForm" (submit)="updateEmpExp()">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Documents</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- <div *ngFor="let x of empexpdetails">
+
+            <pdf-viewer [src]=" 'data:application/pdf;base64,' + x.image " [original-size]="true"></pdf-viewer>
+
+          </div> -->
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>documents upload</label>
+              <abbr title="please upload consolidated Pdf certificates"> <input type="file" class="form-control"
+                  (change)="exfileSelected($event)" [(ngModel)]="editemparrlist.image" name="fileName" #exfile="ngModel"
+                  required accept="application/pdf"></abbr>
+              <span style="color:red" *ngIf="exfile.invalid && exfile.touched ">
+
+                <span *ngIf="exfile.errors.required">
+
+                  File is required.
+                </span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal" (click)="msg='Pending'; updateEmpExp()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!-- decline modal starts -->
+   
+<div id="declinemodal" class="modal fade scrollable" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <form #modalform="ngForm" >
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Decline Experience Certificates</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <input placeholder="Type reason to decline" [(ngModel)]="username" name="uname" #declinevalue="ngModel"
+                class="form-control" required minlength="3" 
+                [ngClass]="{'is-invalid': declinevalue.touched && declinevalue.invalid ,'is-valid':declinevalue.valid}">
+
+              <section *ngIf="declinevalue.touched && declinevalue.invalid">
+
+                <p *ngIf="declinevalue.errors.required" class="txt"> Reason required*</p>
+
+                <p *ngIf="declinevalue.errors.minlength" class="txt">atleast 3 characters</p>
+
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn" data-dismiss="modal" (click)="msg='Decline';save(modalform);updateEmpExp()"
+           [disabled]="declinevalue.invalid">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!-- decline modal close -->
+
+<main class="container col-12">
+
+
+  <div class="card shadow">
+
+    <div>
+
+
+
+      <!-- <h5 class="d-inline">Experience</h5>
+        
+           
+              <div class="input-group  d-inline">
+               <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal1"
+               (click)="addempexp(newUserFormEmpExp)"><i class="fa fa-plus"></i> Add</button>
+                </div> -->
+
+      <span style="font-size: 17px;"><b>Experience</b></span>
+      <button type="button" class="btn  btn-sm float-right" data-toggle="modal" *ngIf="rolemanagerflag"
+        (click)="addempexp(newUserFormEmpExp)" data-target="#myModal1"><i class="fa fa-plus"></i> Add</button>
+
+
+
+    </div>
+    <hr>
+
+    <div class="row" style="padding:15px;">
+      <section class="col-6">
+        <h6><b>Consolidated Experience certificates</b></h6>
+      </section>
+
+      <section class="col-1">
+        <h5><i class="fa fa-download" (click)="download()" style="color:#1d62a7"></i> <p  *ngIf="view "style="display: inline-block;font-size: 9px;">Please Download for Preview</p></h5>
+      </section>
+      <section class="col-1">
+        <section class="col-2" *ngIf="hide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span>
+            <span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+        </section>
+
+        <section class="col-2" *ngIf="emphide">
+          <h5><span *ngIf="Access" style="color: green"><i class="fa fa-check"></i></span>
+            <span *ngIf="!Access" style="color: red"><i class="fa fa-times"></i></span></h5>
+        </section>
+        <!-- !Access &&  -->
+      </section>
+      <section class="col-1" *ngIf="rolemanagerflag">
+        <!-- <h5><span data-toggle="modal" data-target="#editModal"  (click)="updatekye(kye)"><i class="fas fa-edit"></i></span></h5> -->
+        <span data-toggle="modal" data-target="#myModal2" (click)="show()"><i class="fa fa-edit" style="color:#1d62a7"></i></span>
+      </section>
+
+      <section class="col-1" *ngIf="hide">
+        <button class="btn btn-sm" (click)="msg='Accepted'; reason=' ';updateEmpExp()">Accept</button>
+      </section>
+      <section class="col-1" *ngIf="hide">
+        <button class="btn btn-sm" data-toggle="modal" data-target="#declinemodal">Decline</button>
+      </section>
+
+    </div>
+
+  </div>
+
+
+</main>
+
+
+<!-- experience ends-->
+
+
+
+<!-- projectDetails starts -->
+
+
+
+<div class="row">
+  <div class="col-md-11 " style="margin-bottom: 25px;">
+    <form class="form-inline ">
+      <div class="input-group ">
+        <!-- <input type="text" class="form-control" name="key" [(ngModel)]="key" size="50" placeholder="Search"> -->
+        <div class="input-group-btn">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-1 " style="padding-left:40px">
+
+  </div>
+</div>
+
+<br>
+<!-- 
+<div class="container">
+  <div class="row" >
+    <div *ngFor="let empbasic of empbasicinfo" >
+      
+    
+      <div class="d-inline-block">
+        <h5>Employee Id:  &nbsp; {{empbasic.employeeId}}</h5>
+      </div>
+   
+  
+   
+  <div  class="d-inline-block" style="margin-left: 500px;">
+    <h5>Full Name:  &nbsp;{{empbasic.firstname}} {{empbasic.middlename}} {{empbasic.lastname}}</h5>
+  </div>
+  </div>
+  
+  </div>
+  </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container col-12" >
+
+
+
+  <div class="card shadow">
+
+
+
+    <div>
+
+
+
+      <!-- <h5 class="d-inline">Project Details</h5>
+        
+           
+              <div class="input-group  d-inline">
+               <button type="button" class="btn btn-primary  float-right" data-toggle="modal"
+               (click)="valueAdd(newUserFormProject)" data-target="#myModalProject">
+               <i class="fa fa-plus"></i> Add
+             </button>
+                </div>
+             -->
+      <span style="font-size: 17px;"><b>Project Details</b></span>
+      <button type="button" class="btn  btn-sm float-right" data-toggle="modal"
+        (click)="valueAdd(newUserFormProject)" data-target="#myModalProject"><i class="fa fa-plus"></i> Add</button>
+
+    </div>
+
+    <hr>
+
+    <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px; margin-top:0px;">
+      <table class="table table-condensed text-center">
+        <thead class="table-light" style="font-size: 16px;">
+          <tr>
+
+            <th>Project Name</th>
+
+            <th>Start Date</th>
+            <th>End Date</th>
+
+            <th>Project Tech Stack</th>
+            <th>Customer</th>
+            <th>Location</th>
+
+            <th>Project Type</th>
+            <th>Project Status</th>
+
+            <th>Is Internal</th>
+            <th >Edit</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr
+            *ngFor="let user of projectDetailsLi | filter:key | paginate: { itemsPerPage: ipppd, currentPage:pd, id:'pd' }; let i=index">
+            <!-- <td>
+                                <div *ngIf="!user.isEditable">
+                                {{user.employeeId}}
+                              </div>
+                              <input  class="form-control" type="text" [(ngModel)]="user.idList" *ngIf="user.isEditable"/>
+                              </td> -->
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.projectName}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.idList" *ngIf="user.isEditable" />
+            </td>
+
+            <!-- <td >
+                          <div *ngIf="!user.isEditable">
+                            {{user.contractId}}
+                            </div>
+                            <input class="form-control" type="text" [(ngModel)]="user.userList" *ngIf="user.isEditable"/>
+                          
+                          </td> -->
+            <!-- <td>
+                          <div *ngIf="!user.isEditable">
+                            {{user.rateId}}
+                          </div>
+                          <input class="form-control" type="text" [(ngModel)]="user.roleList" *ngIf="user.isEditable"/>
+                          </td> -->
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.startDate | date:"M/d/yy"}}              
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.emailList" *ngIf="user.isEditable" />
+            </td>
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.endDate | date:"M/d/yy"}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <!-- <td>
+                            <div *ngIf="!user.isEditable">
+                              {{user.billingId}}
+                            </div>
+                            <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                            </td> -->
+            <!-- <td>
+                            <div *ngIf="!user.isEditable">
+                              {{user.employeeId}}
+                            </div>
+                            <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                            </td> -->
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.projectTechStack}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.customer}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.location}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <!-- <td>
+                              <div *ngIf="!user.isEditable">
+                                {{user.gstApplicable}}
+                              </div>
+                              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                              </td> -->
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.projectType}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.projectStatus}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+            <!-- <td>
+                                <div *ngIf="!user.isEditable">
+                                  {{user.bdmContact}}
+                                </div>
+                                <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                </td> -->
+            <!-- <td>
+                                <div *ngIf="!user.isEditable">
+                                  {{user.flag}}
+                                </div>
+                                <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                </td> -->
+            <!-- <td>
+                                <div *ngIf="!user.isEditable">
+                                  {{user.createdBy}}
+                                </div>
+                                <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                </td> -->
+            <!-- <td>
+                                  <div *ngIf="!user.isEditable">
+                                    {{user.updatedBy}}
+                                  </div>
+                                  <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                  </td> -->
+
+            <!-- <td>
+                                  <div *ngIf="!user.isEditable">
+                                    {{user.createdDate}}
+                                  </div>
+                                  <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                  </td> -->
+            <!-- <td>
+                                    <div *ngIf="!user.isEditable">
+                                      {{user.updatedDate}}
+                                    </div>
+                                    <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable"/>
+                                    </td> -->
+            <td>
+              <div *ngIf="!user.isEditable">
+                {{user.isInternal}}
+              </div>
+              <input class="form-control" type="text" [(ngModel)]="user.mobileList" *ngIf="user.isEditable" />
+            </td>
+
+
+
+            <td >
+              <!-- <button class="btn btn-primary" (click)='bulist.isEditable =!bulist.isEditable' *ngIf="!bulist.isEditable">Edit</button> -->
+              <button class="btn" style="background: #009ee2;border:#009ee2;color:white;" *ngIf="user.isEditable"
+                (click)="user.isEditable=!user.isEditable">Save</button>
+              <img src="assets/pe.png" width="30px" data-toggle="modal" data-target="#myModalProject"
+                (click)="getdatabyId1(user);">
+            </td>
+            <!-- <td><img src="assets/delete.png" width="20px" (click)="deleteproj(user)"/></td> -->
+          </tr>
+
+
+        </tbody>
+      </table>
+      <label class="m-2">Items Per Page</label>
+      <select [(ngModel)]="ipppd">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+      <pagination-controls (pageChange)="pd = $event" id="pd" style="float:right"></pagination-controls>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal right fade " id="myModalProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3>Project Details</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="newUserFormProject.reset()"><span aria-hidden="true">&times;</span></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <form class="tile " #newUserFormProject="ngForm" (ngSubmit)="onSubmitProject(newUserFormProject)"
+          autocomplete="on">
+          <div class="row">
+            <div class="col-md-6" *ngIf="!isUpdate">
+              <div class="form-group">
+                <label> Emp Id: <span [(ngModel)]="projectDetailss.employeeId" name="employeeId"
+                    #id="ngModel">{{eid}}</span></label>
+                <!-- <input type="text" class="form-control" [(ngModel)]="projectDetailss.employeeId" name="employeeId" required placeholder="employeeId" > -->
+
+              </div>
+
+            </div>
+            <div class="col-md-6" *ngIf="isUpdate">
+              <div class="form-group">
+                <label> Emp Id: <span [(ngModel)]="projectDetailss.employeeId" name="employeeId"
+                    #id="ngModel">{{projectDetailss.employeeId}}</span></label>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Project Name<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.projectName" name="projectName"
+                  required placeholder="Project Name" #Project="ngModel" pattern="[A-Za-z]{1}[a-zA-Z ]*">
+                <span style="color:red" *ngIf="Project.invalid && Project.touched ">
+                  <span *ngIf="Project.errors.required">
+                    Project Name is required.
+                  </span>
+                  <span *ngIf="Project.errors.pattern">
+                    Alphabets only.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Contract Id<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.contractId" name="contractId"
+                  required placeholder="Contract Id" maxlength="5" minlength="1" #contract="ngModel" pattern="[0-9]{1}[0-9]*">
+                <span style="color:red" *ngIf="contract.invalid && contract.touched ">
+                  <span *ngIf="contract.errors.required">
+                    Contract Id is required.
+                  </span>
+                  <span *ngIf="contract.errors.pattern">
+                    Enter digits only.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Rate Id<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.rateId" maxlength="5" name="rateId"
+                  required pattern="[0-9]{1}[0-9]*" placeholder="Rate Id" #rate="ngModel">
+                <span style="color:red" *ngIf="rate.invalid && rate.touched ">
+                  <span *ngIf="rate.errors.required">
+                    Rate Id is required.
+                  </span>
+                  <span *ngIf="contract.errors.pattern">
+                    Enter numbers only.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Start Date<span class="starColor"> *</span></label>
+                <input type="date" class="form-control" [(ngModel)]="projectDetailss.startDate" name="StartDate"
+                  [max]="today" onkeydown="return false" required placeholder="Start Date" #startD="ngModel">               
+                <span style="color:red" *ngIf="startD.invalid && startD.touched ">
+                  <span *ngIf="startD.errors.required">
+                    Start Date is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>End Date<span class="starColor"> *</span></label>
+                <input type="date" class="form-control" [(ngModel)]="projectDetailss.endDate"
+                  [min]="projectDetailss.startDate" [max]="today" name="EndDate" required onkeydown="return false"
+                  placeholder="End Date" #endD="ngModel">
+                <span style="color:red" *ngIf="endD.invalid && endD.touched ">
+                  <span *ngIf="endD.errors.required">
+                    End Date is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Billing Id<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.billingId" name="billingId"
+                  required placeholder="Billing Id"  pattern="[0-9]{1}[0-9]{4}*" #billing="ngModel">
+                <span style="color:red" *ngIf="billing.invalid && billing.touched ">
+                  <span *ngIf="billing.errors.required">
+                    Billing Id is required.
+                  </span>
+                  <span *ngIf="contract.errors.pattern">
+                    Enter digits only.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Project Tech Stack<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.projectTechStack"
+                  name="projectTechStack" required placeholder="Project Tech Stack" #techStack="ngModel"
+                  pattern="[A-Za-z]{1}[a-zA-Z ]*">
+                <span style="color:red" *ngIf="techStack.invalid &&techStack.touched ">
+                  <span *ngIf="techStack.errors.required">
+                    Project Tech Stack is required.
+                  </span>
+                  <span *ngIf="techStack.errors.pattern">
+                    Enter numbers only.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Customer<span class="starColor"> *</span></label>
+
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.customer" name="customer"
+                  placeholder="Customer" #cus="ngModel" required pattern="[A-Za-z]{1}[a-zA-Z ]*">
+
+                <span style="color:red" *ngIf="cus.invalid &&cus.touched ">
+                  <span *ngIf="cus.errors.required">
+                    customer is required.
+                  </span>
+                  <span *ngIf="cus.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <!-- <div class="col-md-4">
+
+
+
+              <div class="form-group">
+                <label for="sel2">Location<span class="starColor"> *</span></label>
+                <select class="form-control" id="sel2" [(ngModel)]="projectDetailss.location" name="location" required
+                  placeholder="location Applicable" #locationName="ngModel" required>
+                  <option disabled="true">--Select--</option>
+                  <option>Mumbai</option>
+                  <option>Pune</option>
+                  <option>Chennai</option>
+                  <option>Hyderabad</option>
+                </select>
+
+                <span style="color:red" *ngIf="locationName.invalid &&locationName.touched ">
+                  <span *ngIf="locationName.errors.required">
+                    Location is required.
+                  </span>
+                </span>
+              </div>
+
+            </div> -->
+            <div class="col-md-4">
+              <!-- <div class="form-group">
+                <label> Location<span class="starColor"> *</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="editemparrlist.location"
+                  name="editemparrlist.location" required placeholder="Location" #emexp6="ngModel">
+                <span style="color:red" *ngIf="emexp6.invalid && emexp6.touched ">
+
+                  <span *ngIf="emexp6.errors.required">
+                    Location is required.
+                  </span>
+
+                </span>
+              </div> -->
+              <!-- (change)="selectOption($event.target.value)" -->
+
+              <label> Location<span class="starColor"> *</span> </label>
+
+              <select class="form-control" placeholder="Select Location Name" name="editemparrlist.location"
+                [(ngModel)]="projectDetailss.location" required placeholder="Location">
+                <option value="" disabled selected>-Select Your Location- </option>
+                <option *ngFor="let statelist of StateList " [value]="statelist.id">{{ statelist.stateName}}</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+
+              <div class="form-group">
+                <label for="sel2">GST Applicable<span class="starColor"> *</span></label>
+                <select class="form-control" id="sel2" [(ngModel)]="projectDetailss.gstApplicable" name="gstApplicable"
+                  required placeholder="GST Applicable" #Gst="ngModel" required>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+
+                <span style="color:red" *ngIf="Gst.invalid &&Gst.touched ">
+                  <span *ngIf="Gst.errors.required">
+                    GST Applicable is required.
+                  </span>
+                </span>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Project Type<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.projectType" name="projectType"
+                  required placeholder="Project Type" pattern="[A-Za-z]{1}[a-zA-Z ]*" #pType="ngModel" required>
+                <span style="color:red" *ngIf="pType.invalid && pType.touched ">
+                  <span *ngIf="pType.errors.required">
+                    Project Type is required.
+                  </span>
+                  <span *ngIf="pType.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Project Status<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.projectStatus" name="projectStatus"
+                  required placeholder="Project Status" #projectS="ngModel" pattern="[A-Za-z]{1}[a-zA-Z ]*" required>
+                <span style="color:red" *ngIf="projectS.invalid && projectS.touched ">
+                  <span *ngIf="projectS.errors.required">
+                    Project Status is required.
+                  </span>
+                  <span *ngIf="projectS.errors.pattern">
+                    Enter alphabet only.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <!-- <div class="col-md-4">
+                  <div class="form-group" *ngIf="isUpdate">
+                    <label>Project Name<span class="starColor"> *</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="projectDetailss.projectName" name="projectName" 
+                    required placeholder="Project Name"
+                    #Project="ngModel" [disabled]="user">
+                    <span style="color:red" *ngIf="Project.invalid && Project.touched ">
+                    <span *ngIf="Project.errors.required">
+                        Project Name is required.
+                    </span>
+                    </span>
+                    </div>
+             </div> -->
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>BDM Contact<span class="starColor"> *</span></label>
+                <input type="text" class="form-control" [(ngModel)]="projectDetailss.bdmContact" maxlength="10" name="bdmContact"
+                  required placeholder="BDM Contact" #Bdm="ngModel" required pattern="[6-9]{1}[0-9]{9}">
+                <span style="color:red" *ngIf="Bdm.invalid &&Bdm.touched ">
+                  <span *ngIf="Bdm.errors.pattern">
+                    Enter valid phone number
+                  </span>
+                  <span *ngIf="Bdm.errors.required">
+                    BDM Contact is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-group">
+                <label for="sel2">Is internal<span class="starColor"> *</span></label>
+                <select class="form-control" id="sel2" [(ngModel)]="projectDetailss.isInternal" name="isInternal"
+                  required placeholder="Is internal" #Internal="ngModel" required>
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+                </select>
+
+                <span style="color:red" *ngIf="Internal.invalid &&Internal.touched ">
+                  <span *ngIf="Internal.errors.required">
+                    Is internal is required.
+                  </span>
+                </span>
+              </div>
+
+            </div>
+            <!-- <div class="col-md-4" *ngIf="createdby">
+         <div class="form-group">
+          <label for="sel2">Created By:</label> 
+          <input type="text" class="form-control" id="sel2" [(ngModel)]="projectDetailss.createdBy" name="createdBy" 
+          required placeholder="create"
+          #create="ngModel">
+          <span style="color:red" *ngIf="create.invalid &&create.touched ">
+          <span *ngIf="create.errors.required">
+            create is required.
+          </span>
+          </span>
+          </div>
+        </div> -->
+
+          </div>
+          <div class="row">
+            <!-- <div class="col-md-4">
+            <div class="form-group">
+             <label for="sel2">employee id:</label> 
+             <input type="text" class="form-control" id="sel2" [(ngModel)]="projectDetailss.employeeId" name="employeeId" 
+             required placeholder="employee"
+             #employee="ngModel">
+             <span style="color:red" *ngIf="employee.invalid &&employee.touched ">
+             <span *ngIf="employee.errors.required">
+                employeeId is required.
+             </span>
+             </span>
+             </div>
+           </div> -->
+            <!-- <div class="col-md-4" *ngIf="!createdby">
+            <div class="form-group">
+             <label for="sel2">Updated By:</label> 
+             <input type="text" class="form-control" id="sel2" [(ngModel)]="projectDetailss.updatedBy" name="updatedBy" 
+             required placeholder="updatedBy"
+             #create4="ngModel">
+             <span style="color:red" *ngIf="create4.invalid &&create4.touched ">
+             <span *ngIf="create4.errors.required">
+              updatedBy is required.
+             </span>
+             </span>
+             </div>
+           </div> -->
+
+          </div>
+
+
+          <button type="submit" class="btn float-right margin" [disabled]="newUserFormProject.form.invalid"
+            *ngIf="!isUpdate" (click)="setProject();" data-dismiss="modal">Save</button>
+          <button type="submit" class="btn float-right margin" [disabled]="newUserFormProject.form.invalid"
+            *ngIf="isUpdate" (click)="updateprojdata(user);" data-dismiss="modal">Update</button>
+          <button class="btn  float-right" (click)="newUserFormProject.reset()">Clear</button>
+
+          <button class="btn" data-dismiss="modal" aria-label="Close" (click)="savedata();">Back</button>
+        </form>
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- project Details Ends -->
